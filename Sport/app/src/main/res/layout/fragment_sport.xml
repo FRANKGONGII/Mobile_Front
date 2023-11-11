@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@mipmap/background">
+
+    <Button
+        android:id="@+id/ButtonGo"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/button_circle"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="@string/button_go"
+        android:textColor="@color/white"
+        android:textIsSelectable="false"
+        android:textSize="50sp" />
+
+
+</LinearLayout>

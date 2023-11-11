@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Design.BottomNavigationView">
+
+    <item
+        android:id="@+id/home_fragment"
+        android:icon="@drawable/baseline_home_24"
+        android:title="我的"
+        app:itemBackground="@color/white"/>
+    <item
+        android:id="@+id/sport_fragment"
+        android:icon="@drawable/baseline_directions_run_24"
+        android:title="运动"
+        app:itemBackground="@color/white"/>
+    <item
+        android:id="@+id/community_fragment"
+        android:icon="@drawable/baseline_wifi_find_24"
+        android:title="发现"
+        app:itemBackground="@color/white"/>
+    <item
+        android:id="@+id/course_fragment"
+        android:icon="@drawable/baseline_school_24"
+        android:title="课程"
+        app:itemBackground="@color/white"/>
+
+</menu>
