@@ -11,6 +11,9 @@
         android:name="com.example.myapplication.fragment.SportFragment"
         android:label="sport_fragment"
         tools:layout="@layout/fragment_sport">
+        <action
+            android:id="@+id/action_sport_fragment_to_start_sport_fragment"
+            app:destination="@id/start_sport_fragment" />
     </fragment>
 
     <fragment
@@ -30,6 +33,12 @@
         android:name="com.example.myapplication.fragment.HomeFragment"
         android:label="home_fragment"
         tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/start_sport_fragment"
+        android:name="com.example.myapplication.fragment.StartSportFragment"
+        android:label="start_sport_fragment"
+        tools:layout="@layout/fragment_start_sport" />
 
 
 </navigation>
