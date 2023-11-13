@@ -24,7 +24,7 @@ import com.example.myapplication.RecordingActivity;
 
 public class SportFragment extends Fragment {
 
-    String sport_type = "running";//默认运动是跑步
+    String sport_type = "跑步";//默认运动是跑步
     private AlertDialog alertDialog2;
 
     @Nullable
@@ -45,6 +45,7 @@ public class SportFragment extends Fragment {
         setButtonChoose(view);
     }
 
+    //
     public void setButtonGO(@NonNull View view) {
         Button button = view.findViewById(R.id.ButtonGo);
         button.setOnClickListener(
@@ -122,8 +123,9 @@ public class SportFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Toast.makeText(getActivity(), items[i], Toast.LENGTH_SHORT).show();
-                Log.d("CHOOSE_TEST","CHOOSE:"+String.valueOf(i));
+
                 choose[0] =i;
+                //Log.d("CHOOSE_TEST","CHOOSE:"+String.valueOf(choose[0]));
             }
         });
 
@@ -131,7 +133,9 @@ public class SportFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Log.d("CHOOSE_TEST",String.valueOf(choose[0]));
-
+                if(choose[0]!=-1)sport_type = items[choose[0]];
+                Button button = view.findViewById(R.id.ButtonChooseType);
+                button.setText(sport_type);
                 alertDialog2.dismiss();
             }
         });
