@@ -115,6 +115,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id = "@+id/sum_distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="3dp"
@@ -158,6 +159,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/week_distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="3dp"
