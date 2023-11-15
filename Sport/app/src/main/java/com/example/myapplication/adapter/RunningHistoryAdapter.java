@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.R;
 import com.example.myapplication.bean.Activity;
 
 import java.util.ArrayList;
@@ -32,8 +33,8 @@ public class RunningHistoryAdapter extends RecyclerView.Adapter<RunningHistoryAd
             super(view);
             activityView = view;
             recordTime = view.findViewById(R.id.record_time);
-            distance = view.findViewById(R.id.username);
-            duration = view.findViewById(R.id.video);
+            distance = view.findViewById(R.id.distance);
+            duration = view.findViewById(R.id.duration);
         }
     }
 
@@ -44,7 +45,7 @@ public class RunningHistoryAdapter extends RecyclerView.Adapter<RunningHistoryAd
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_video, parent, false);//解析layout
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_activity, parent, false);//解析layout
         final ViewHolder viewHolder = new ViewHolder(view);//新建一个viewHolder绑定解析到的view
         //监听每一项的点击事件
         viewHolder.activityView.setOnClickListener(new View.OnClickListener() {
