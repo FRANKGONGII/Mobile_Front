@@ -15,8 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.adapter.RunningHistoryAdapter;
+import com.example.myapplication.bean.Activity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity{
+    private List<Activity> activityList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +31,7 @@ public class HistoryActivity extends AppCompatActivity{
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);//添加布局管理器
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);  //设置为横向水平滚动
         recyclerView.setLayoutManager(layoutManager);//设置布局管理器
-        RunningHistoryAdapter adapter = new RunningHistoryAdapter(weatherList);
+        RunningHistoryAdapter adapter = new RunningHistoryAdapter(activityList);
         recyclerView.setAdapter(adapter);
     }
 }
