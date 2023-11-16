@@ -2,16 +2,18 @@ package com.example.myapplication.bean;
 
 import java.util.Locale;
 
-enum SportsType{
-    RUNNING,RIDING,WALKING,FITNESS
-}
+
 public class Activity {
+    public enum SportsType{
+        RUNNING,RIDING,WALKING,FITNESS
+    }
     SportsType sportsType;
     String recordTime; // 运动日期
     double distance; // 跑步距离
     int duration; // 跑步时间，秒计
 
-    Activity(String time,double dist,int duration){
+    public Activity(SportsType sportsType, String time, double dist, int duration){
+        this.sportsType = sportsType;
         this.recordTime = time;
         this.distance = dist;
         this.duration = duration;
