@@ -16,7 +16,7 @@
     <com.amap.api.maps2d.MapView
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="500sp">
     </com.amap.api.maps2d.MapView>
 
 
@@ -31,6 +31,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="80sp"
             android:layout_marginTop="100sp"
@@ -47,12 +48,14 @@
             android:layout_marginStart="10sp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/speed"
+                android:layout_width="100sp"
+                android:layout_height="100sp"
                 android:text="0.40"
                 android:textSize="40sp">
             </TextView>
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="公里"
@@ -60,13 +63,15 @@
             </TextView>
 
             <TextView
+                android:id="@+id/distance"
                 android:layout_marginStart="50sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100sp"
+                android:layout_height="100sp"
                 android:text="3.31"
                 android:textSize="40sp">
             </TextView>
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="配速(分/公里)"

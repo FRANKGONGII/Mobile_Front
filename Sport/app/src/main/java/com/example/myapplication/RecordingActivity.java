@@ -2,6 +2,8 @@ package com.example.myapplication;
 
 
 
+import static java.lang.Thread.sleep;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.PackageManager;
@@ -9,7 +11,11 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,89 +54,31 @@ public class RecordingActivity extends Activity {
     public float speed = 0;
     public float distance = 0;
 
+    public int timeCnt = 0;
+
+    TextView speedVal = null;
+    TextView distanceVal = null;
 
 
+    public void Update(){
+        Log.d("CHANGE_UI",speedVal+" "+distanceVal);
+        speedVal.setText(String.format("%.2f", speed));
+        distanceVal.setText(String.format("%.2f", distance));
 
+        Log.d("CHANGE_UI",String.format("%.2f", speed)+" "+String.format("%.2f", distance));
+        Log.d("CHANGE_UI",distanceVal.getText()+" "+distanceVal.getText());
+    }
 
-
-
-
-//    public AMapLocationListener mapLocationListener = new AMapLocationListener() {
-//        @Override
-//        public void onLocationChanged(AMapLocation aMapLocation) {
-//            Log.d("LOC_TEST",String.valueOf(aMapLocation==null)+String.valueOf(aMapLocation.getErrorCode()));
-//            if (aMapLocation != null) {
-//                if (aMapLocation.getErrorCode() == 0) {
-//                    latitude = aMapLocation.getLatitude();
-//                    longitude = aMapLocation.getLongitude();
-//                    String province = aMapLocation.getProvince();
-//                    String city = aMapLocation.getCity();
-//                    String district = aMapLocation.getDistrict();
-//                    String streetNumber = aMapLocation.getStreetNum();
-//                    String text = "经度: " + longitude + "\n"
-//                            + "纬度: " + latitude + "\n"
-//                            + "详细位置: " + province + city + district + streetNumber;
-//                    //position.setText(text);
-//                    Log.d("LOC_TEST",text);
-//
-//
-//                    latLngList.add(new LatLng(39.898323,116.057694));
-//                    latLngList.add(new LatLng(39.900430,116.265061));
-//                    latLngList.add(new LatLng(39.955192,116.140092));
-//
-//                    Point newPos = aMap.getProjection().toScreenLocation(new LatLng(latitude,longitude));
-//                    latLngList.add(new LatLng(latitude,longitude));
-//                    Polyline polyline =aMap.addPolyline(new PolylineOptions().
-//                            addAll(latLngList).width(10).color(Color.argb(255, 1, 1, 1)));
-//
-//                } else {
-//                    Log.d("LOC_TEST", "location Error, ErrCode:"
-//                            + aMapLocation.getErrorCode() + ", errInfo:"
-//                            + aMapLocation.getErrorInfo());
-//                    //position.setText("定位失败");
-//                }
-//            }
-//        }
-//    };
-//
-//    private TextView position;
-//    public AMapLocationClientOption mLocationOption=null;
-//
-//    @SuppressLint("MissingInflatedId")
-//    protected void onCreate(Bundle savedInstanceState) {
-//        Log.d("LOC_TEST","1");
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_recording);
-//        position=findViewById(R.id.position_text);
-//        Log.d("LOC_TEST","2");
-//        AMapLocationClient.updatePrivacyShow(getApplicationContext(),true,true);
-//        AMapLocationClient.updatePrivacyAgree(getApplicationContext(),true);
-//        try {
-//            mLocationClient=new AMapLocationClient(getApplicationContext());
-//            Log.d("LOC_TEST","1");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        mLocationClient.setLocationListener(mapLocationListener);
-//        mLocationOption=new AMapLocationClientOption();
-//        mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
-//        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-//        Log.d("LOC_TEST",String.valueOf(mLocationClient==null));
-//        if(null!=mLocationClient)
-//        {
-//            mLocationClient.setLocationOption(mLocationOption);
-//            mLocationClient.stopLocation();
-//            mLocationClient.startLocation();
-//        }
-//    }
-//
-//    public void onDestroy() {
-//        super.onDestroy();
-//        mLocationClient.onDestroy();
-//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_recording);
+        speedVal = findViewById(R.id.speed);
+        distanceVal = findViewById(R.id.distance);
+        Handler handler = new Handler(Looper.getMainLooper());
+
+
+
         if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION)!=
                 PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
@@ -159,6 +107,7 @@ public class RecordingActivity extends Activity {
             public void onMyLocationChange(Location location) {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
+
                 Log.d("LOC_TEST",String.valueOf(latitude)+" "+String.valueOf(longitude));
                 latLngList.add(new LatLng(latitude,longitude));
                 PolylineOptions options = new PolylineOptions();
@@ -173,13 +122,31 @@ public class RecordingActivity extends Activity {
                             latLngList.get(latLngList.size()-2).longitude),
                             new LatLng(latitude, longitude));
                     distance += speed;
-                    Log.d("LOC_TEST","speed: "+String.valueOf(distance));
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // 在UI线程更新UI
+                                    Update();
+                                }
+                            });
+                        }
+                    }).start();
+
+
+                    Log.d("LOC_TEST",latLngList.toString());
                 }
                 //Polyline polyline =aMap.addPolyline(options.
                            //addAll(latLngList).width(10).color(Color.argb(255, 36, 164, 255)));
                 aMap.addPolyline(options);
             }
         });
+
+
+
+
 
 
 
