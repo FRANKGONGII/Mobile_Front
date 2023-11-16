@@ -85,6 +85,10 @@ public class RecordingActivity extends Activity {
         }
         setContentView(R.layout.activity_recording);//设置对应的XML布局文件
 
+        // 打开权限，否则我的手机无法定位 --q1w2e3r4
+        AMapLocationClient.updatePrivacyShow(this.getApplicationContext(),true,true);
+        AMapLocationClient.updatePrivacyAgree(this.getApplicationContext(),true);
+
         MapView mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mapView.getMap();

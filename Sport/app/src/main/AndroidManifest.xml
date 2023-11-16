@@ -49,7 +49,7 @@
             </intent-filter>
         </activity>
         <meta-data android:name="com.amap.api.v2.apikey"
-            android:value="20ab218af4d1cea77b431b723aba0b89">
+            android:value="094f396af462c5df8ba75d81fbee0912">
         </meta-data>
 
 
