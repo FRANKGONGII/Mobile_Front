@@ -34,15 +34,16 @@ public class LocalData implements DataService {
 
     private void generateActvities(){
         activities = new ArrayList<>();
-        Activity a = new Activity(Activity.SportsType.RUNNING,"12月2日",2.4,1000);
-        Activity b = new Activity(Activity.SportsType.RUNNING,"11月5日",2.0,800);
+        Activity a = new Activity(Activity.ActivityType.RUNNING,"12月2日",2.4,1000);
+        Activity b = new Activity(Activity.ActivityType.RUNNING,"11月5日",2.0,800);
+        Activity c = new Activity(Activity.ActivityType.RIDING,"11月20日",5.0,1300);
         activities.add(a);
         activities.add(b);
-        activities.add(a);
+        activities.add(c);
         activities.add(b);
         activities.add(a);
-        activities.add(b);
+        activities.add(c);
         activities.add(a);
-        activities.add(b);
+        activities.add(c);
     }
 }

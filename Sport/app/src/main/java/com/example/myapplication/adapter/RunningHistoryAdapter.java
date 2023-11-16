@@ -29,12 +29,15 @@ public class RunningHistoryAdapter extends RecyclerView.Adapter<RunningHistoryAd
 
         TextView duration; // 跑步时间，秒计
 
+        TextView activity_type;
+
         public ViewHolder(View view) {
             super(view);
             activityView = view;
             recordTime = view.findViewById(R.id.record_time);
             distance = view.findViewById(R.id.distance);
             duration = view.findViewById(R.id.duration);
+            activity_type = view.findViewById(R.id.activity_type);
         }
     }
 
@@ -71,6 +74,7 @@ public class RunningHistoryAdapter extends RecyclerView.Adapter<RunningHistoryAd
         holder.recordTime.setText(activity_bean.getRecordTime());
         holder.duration.setText(activity_bean.getDuration());
         holder.distance.setText(activity_bean.getDistance());
+        holder.activity_type.setText(activity_bean.getType());
     }
 
     @Override
