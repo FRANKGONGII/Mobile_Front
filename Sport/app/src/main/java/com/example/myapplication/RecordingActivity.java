@@ -45,6 +45,9 @@ public class RecordingActivity extends Activity {
     AMap aMap = null;
     public List<LatLng> latLngList = new ArrayList();
 
+    public float speed = 0;
+    public float distance = 0;
+
 
 
 
@@ -165,10 +168,11 @@ public class RecordingActivity extends Activity {
                             latLngList.get(latLngList.size()-2).longitude));
                     //当前的经纬度
                     options.add(new LatLng(latitude, longitude));
-                    float distance =  AMapUtils.calculateLineDistance(
+                    speed =  AMapUtils.calculateLineDistance(
                             new LatLng(latLngList.get(latLngList.size()-2).latitude,
                             latLngList.get(latLngList.size()-2).longitude),
                             new LatLng(latitude, longitude));
+                    distance += speed;
                     Log.d("LOC_TEST","speed: "+String.valueOf(distance));
                 }
                 //Polyline polyline =aMap.addPolyline(options.
