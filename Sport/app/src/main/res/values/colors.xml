@@ -58,9 +58,9 @@
         <color name="gray9">#DBDFE0</color>
         <color name="gray10">#ffbebebe</color>
 
-        <color name="sport_bg">#0ba78c</color>
-        <color name="center_sport_bg">#550ba78c</color>
-        <color name="end_sport_bg">#280ba78c</color>
+        <color name="sport_bg">#00CCFF</color>
+        <color name="center_sport_bg">#5500CCFF</color>
+        <color name="end_sport_bg">#2800CCFF</color>
 
         <color name="btn_green_p">#49B557</color>
         <color name="btn_green_n">#01BF71</color>
