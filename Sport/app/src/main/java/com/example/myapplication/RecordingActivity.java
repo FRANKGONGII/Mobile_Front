@@ -16,6 +16,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,11 +54,18 @@ public class RecordingActivity extends Activity {
 
     public float speed = 0;
     public float distance = 0;
+    public int seconds = 0;
 
     public int timeCnt = 0;
 
     TextView speedVal = null;
     TextView distanceVal = null;
+
+    Chronometer passtime = null;
+
+    private MyRunnable mRunnable = null;
+
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
 
     public void Update(){
@@ -69,13 +77,25 @@ public class RecordingActivity extends Activity {
         Log.d("CHANGE_UI",distanceVal.getText()+" "+distanceVal.getText());
     }
 
+    private class MyRunnable implements Runnable {
+        @Override
+        public void run() {
+            Log.d("TIME_TEST",String.valueOf(seconds));
+            passtime.setText(formatseconds());
+            mHandler.postDelayed(this, 1000);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recording);
         speedVal = findViewById(R.id.speed);
         distanceVal = findViewById(R.id.distance);
-        Handler handler = new Handler(Looper.getMainLooper());
+        passtime = findViewById(R.id.cm_passtime);
+
+        if(mRunnable==null)mRunnable=new MyRunnable();
+        mHandler.postDelayed(mRunnable, 0);
 
 
 
@@ -84,6 +104,9 @@ public class RecordingActivity extends Activity {
             ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
         //setContentView(R.layout.activity_recording);//设置对应的XML布局文件
+
+
+
 
         // 打开权限，否则我的手机无法定位 --q1w2e3r4
         AMapLocationClient.updatePrivacyShow(this.getApplicationContext(),true,true);
@@ -97,6 +120,25 @@ public class RecordingActivity extends Activity {
         aMap.moveCamera(cameraUpdate);
 
 
+        startLocation();
+    }
+
+    public String formatseconds() {
+        Log.d("TIME_TEST",String.valueOf(seconds));
+        String hh = seconds / 3600 > 9 ? seconds / 3600 + "" : "0" + seconds
+                / 3600;
+        String mm = (seconds % 3600) / 60 > 9 ? (seconds % 3600) / 60 + ""
+                : "0" + (seconds % 3600) / 60;
+        String ss = (seconds % 3600) % 60 > 9 ? (seconds % 3600) % 60 + ""
+                : "0" + (seconds % 3600) % 60;
+
+        seconds++;
+
+        return hh + ":" + mm + ":" + ss;
+    }
+
+    public void startLocation(){
+        Handler handler = new Handler(Looper.getMainLooper());
         MyLocationStyle myLocationStyle;
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW);
@@ -116,16 +158,17 @@ public class RecordingActivity extends Activity {
                 latLngList.add(new LatLng(latitude,longitude));
                 PolylineOptions options = new PolylineOptions();
                 //Log.d("LOC_TEST", latLngList.toString());
-                if(latLngList.size()>=2){
+                if(latLngList.size()>=3){
                     options.add(new LatLng(latLngList.get(latLngList.size()-2).latitude,
                             latLngList.get(latLngList.size()-2).longitude));
                     //当前的经纬度
                     options.add(new LatLng(latitude, longitude));
                     speed =  AMapUtils.calculateLineDistance(
                             new LatLng(latLngList.get(latLngList.size()-2).latitude,
-                            latLngList.get(latLngList.size()-2).longitude),
+                                    latLngList.get(latLngList.size()-2).longitude),
                             new LatLng(latitude, longitude));
-                    distance += speed;
+                    distance += speed/1000;
+                    speed = speed*3600/1000;
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -143,20 +186,11 @@ public class RecordingActivity extends Activity {
                     Log.d("LOC_TEST",latLngList.toString());
                 }
                 //Polyline polyline =aMap.addPolyline(options.
-                           //addAll(latLngList).width(10).color(Color.argb(255, 36, 164, 255)));
+                //addAll(latLngList).width(10).color(Color.argb(255, 36, 164, 255)));
                 aMap.addPolyline(options);
             }
         });
-
-
-
-
-
-
-
-
     }
-
 
 
 
