@@ -83,7 +83,7 @@ public class RecordingActivity extends Activity {
                 PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
-        setContentView(R.layout.activity_recording);//设置对应的XML布局文件
+        //setContentView(R.layout.activity_recording);//设置对应的XML布局文件
 
         // 打开权限，否则我的手机无法定位 --q1w2e3r4
         AMapLocationClient.updatePrivacyShow(this.getApplicationContext(),true,true);
