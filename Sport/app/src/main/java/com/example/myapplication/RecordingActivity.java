@@ -60,12 +60,21 @@ public class RecordingActivity extends Activity {
 
     TextView speedVal = null;
     TextView distanceVal = null;
-
     Chronometer passtime = null;
+
+    TextView finish = null;
+    TextView stop = null;
+    TextView goon = null;
+
+    boolean ifStart = false;
 
     private MyRunnable mRunnable = null;
 
     private Handler mHandler = new Handler(Looper.getMainLooper());
+
+    MyLocationStyle myLocationStyle;
+
+    boolean ifStartPoint = true;
 
 
     public void Update(){
@@ -93,6 +102,40 @@ public class RecordingActivity extends Activity {
         speedVal = findViewById(R.id.speed);
         distanceVal = findViewById(R.id.distance);
         passtime = findViewById(R.id.cm_passtime);
+        finish = findViewById(R.id.tv1);
+        stop = findViewById(R.id.tv2);
+        goon = findViewById(R.id.tv3);
+
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ifStart = false;
+                if (null != mRunnable) {
+                    mHandler.removeCallbacks(mRunnable);
+                    mRunnable = null;
+                    myLocationStyle.interval(Long.MAX_VALUE);
+                    aMap.setMyLocationStyle(myLocationStyle);
+                }
+            }
+        });
+
+        goon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ifStart = true;
+                if (mRunnable == null){
+                    mRunnable = new MyRunnable();
+                    mHandler.postDelayed(mRunnable, 0);
+                    myLocationStyle.interval(1000);
+                    aMap.setMyLocationStyle(myLocationStyle);
+                    ifStartPoint = true;
+                }
+            }
+        });
+
+
+
+
 
         if(mRunnable==null)mRunnable=new MyRunnable();
         mHandler.postDelayed(mRunnable, 0);
@@ -139,7 +182,7 @@ public class RecordingActivity extends Activity {
 
     public void startLocation(){
         Handler handler = new Handler(Looper.getMainLooper());
-        MyLocationStyle myLocationStyle;
+
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW);
         //myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
@@ -151,14 +194,18 @@ public class RecordingActivity extends Activity {
         aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
+
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
 
                 Log.d("LOC_TEST",String.valueOf(latitude)+" "+String.valueOf(longitude));
-                latLngList.add(new LatLng(latitude,longitude));
+
+                //trick, 避免定位不到直插非洲的大黑线
+                if(latitude!=0&& longitude!=0)latLngList.add(new LatLng(latitude,longitude));
+
                 PolylineOptions options = new PolylineOptions();
                 //Log.d("LOC_TEST", latLngList.toString());
-                if(latLngList.size()>=3){
+                if(latLngList.size()>=3&&!ifStartPoint){
                     options.add(new LatLng(latLngList.get(latLngList.size()-2).latitude,
                             latLngList.get(latLngList.size()-2).longitude));
                     //当前的经纬度
@@ -188,9 +235,73 @@ public class RecordingActivity extends Activity {
                 //Polyline polyline =aMap.addPolyline(options.
                 //addAll(latLngList).width(10).color(Color.argb(255, 36, 164, 255)));
                 aMap.addPolyline(options);
+
+                if(ifStartPoint)ifStartPoint = false;
             }
         });
     }
+
+//    @OnClick({R.id.tv_mode, R.id.tv1, R.id.tv2, R.id.tv3})
+//    public void onViewClicked(View view) {
+//        switch (view.getId()) {
+//            case R.id.tv_mode:
+//                setMode();
+//                break;
+//            case R.id.tv1:
+//                ISSTARTUP = true;
+//
+//                mHandler.removeCallbacks(mRunnable);
+//                mRunnable = null;
+//
+//                unBindService();
+//
+//                hiddenAnim1.start();
+////                apperaAnim2.start_bg();
+//                hiddenAnim3.start();
+//
+//                //保存数据
+//                if (null != record && null != record.getPathline() && !record.getPathline().isEmpty()) {
+//                    saveRecord();
+//                } else {
+//                    ToastUtils.showShort("没有记录到路径!");
+//                    finish();
+//                }
+//                break;
+//            case R.id.tv2:
+//                ISSTARTUP = false;
+//
+//                if (null != mRunnable) {
+//                    mHandler.removeCallbacks(mRunnable);
+//                    mRunnable = null;
+//                }
+//
+//                unBindService();
+//
+//                mEndTime = System.currentTimeMillis();
+//
+//                aMap.moveCamera(CameraUpdateFactory.newLatLngBounds(getBounds(mSportLatLngs), 20));
+//
+//                apperaAnim1.start();
+//                hiddenAnim2.start();
+//                apperaAnim3.start();
+//                break;
+//            case R.id.tv3:
+//                ISSTARTUP = true;
+//
+//                if (mRunnable == null)
+//                    mRunnable = new MyRunnable();
+//                mHandler.postDelayed(mRunnable, 0);
+//
+//                startUpLocation();
+//
+//                hiddenAnim1.start();
+//                apperaAnim2.start();
+//                hiddenAnim3.start();
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
 
 
