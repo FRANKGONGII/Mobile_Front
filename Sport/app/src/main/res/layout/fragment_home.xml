@@ -5,7 +5,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/NoActionBarTheme">
+    android:fitsSystemWindows="true"
+    android:theme="@style/SysWinTspTheme">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_height="match_parent"
@@ -17,8 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:fitsSystemWindows="true"
-            android:background="@color/blue_1">
-
+            android:background="@android:color/transparent">
 
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -37,7 +37,8 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/user_bkg_test"
                     android:scaleType="centerCrop"
-                    app:layout_collapseMode="parallax" />
+                    app:layout_collapseMode="parallax"
+                    android:fitsSystemWindows="true" />
 
 <!--                <androidx.appcompat.widget.Toolbar-->
 <!--                    android:id="@+id/toolbar"-->
@@ -84,11 +85,13 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="60dp"
             android:background="@android:color/transparent"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_collapseMode="pin"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            android:fitsSystemWindows="true"
+            app:showTitle="false"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_collapseMode="pin" />
 
     </FrameLayout>
 

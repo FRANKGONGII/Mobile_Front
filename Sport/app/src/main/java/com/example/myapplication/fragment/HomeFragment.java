@@ -43,15 +43,14 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home,container, false);
 
-        //Toolbar toolbar = view.findViewById(R.id.toolbar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        //activity.setSupportActionBar(toolbar);
-        //activity.getSupportActionBar().setTitle("Top Bar");
 
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setTitle("TOP");
 
+
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         setHasOptionsMenu(true);
 
