@@ -46,10 +46,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".HistoryActivity"
+            android:exported="true">
+        </activity>
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="20ab218af4d1cea77b431b723aba0b89"></meta-data>
-
         <service android:name="com.amap.api.location.APSService" />
     </application>
 

@@ -47,6 +47,7 @@ import com.hjq.toast.ToastUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import com.example.myapplication.bean.Record;
 
 
 
@@ -287,6 +288,7 @@ public class RecordingActivity extends Activity {
 
 
         //TODO:记录结果即可
+        
 
         Intent intent2 = new Intent(this, ResultActivity.class);
         startActivity(intent2);
