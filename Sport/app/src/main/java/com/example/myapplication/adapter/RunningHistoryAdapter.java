@@ -65,11 +65,11 @@ public class RunningHistoryAdapter extends RecyclerView.Adapter<RunningHistoryAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Record activity_bean = activityList.get(position);
-        holder.recordTime.setText(activity_bean.getRecordTime());
-        holder.duration.setText(activity_bean.getDuration());
-        holder.distance.setText(activity_bean.getDistance());
-        holder.activity_type.setText(activity_bean.getType());
+        Record record_bean = activityList.get(position);
+        holder.recordTime.setText(record_bean.getStartTime().toString());
+        holder.duration.setText(record_bean.getDuration());
+        holder.distance.setText(record_bean.getDistance());
+        holder.activity_type.setText(record_bean.getType());
     }
 
     @Override

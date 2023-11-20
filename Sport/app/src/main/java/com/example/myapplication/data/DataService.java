@@ -5,11 +5,11 @@ import com.example.myapplication.bean.Record;
 import java.util.List;
 
 public interface DataService {
-    public List<Record> getActivities();
+    public List<Record> getAllRecords();
 
-    public Record getOneActivity(int index);
+    public Record getRecord(int index);
 
-    public void updateActivity(Record activity);
+    public void updateRecord(Record record);
 
 
 }

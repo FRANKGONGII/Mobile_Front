@@ -1,49 +1,56 @@
 package com.example.myapplication.data;
 
+import android.util.Log;
+
 import com.example.myapplication.bean.Record;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LocalData implements DataService {
-    private ArrayList<Record> activities = null;
-    @Override
-    public List<Record> getActivities(){
-        if(activities == null){
-            generateActvities();
+    private static ArrayList<Record> records = null;
+    public List<Record> getAllRecords(){
+        if(records == null){
+            Log.d("SAVE_TEST","?");
+            generateRecords();
         }
-        return activities;
+        Log.d("SAVE_TEST",""+records.size());
+        return records;
     }
 
     @Override
-    public Record getOneActivity(int index){
-        if(getActivities().size() <= index){
-            System.out.println("index out of bound in arr(activities)");
+    public Record getRecord(int index){
+        if(getAllRecords().size() <= index){
+            System.out.println("index out of bound in arr(records)");
             throw new RuntimeException();
         }
 
-        return getActivities().get(index);
+        return getAllRecords().get(index);
     }
 
 
     @Override
-    public void updateActivity(Record activity){
-        if(activities == null) generateActvities();
-        activities.add(activity);
+    public void updateRecord(Record record){
+        if(records == null) generateRecords();
+        Log.d("SAVE_TEST",record.toString());
+        records.add(record);
+        Log.d("SAVE_TEST",""+records.size());
     }
 
-    private void generateActvities(){
-        activities = new ArrayList<>();
-        Record a = new Record(Record.ActivityType.RUNNING,"12月2日",2.4,1000);
-        Record b = new Record(Record.ActivityType.RUNNING,"11月5日",2.0,800);
-        Record c = new Record(Record.ActivityType.RIDING,"11月20日",5.0,1300);
-        activities.add(a);
-        activities.add(b);
-        activities.add(c);
-        activities.add(b);
-        activities.add(a);
-        activities.add(c);
-        activities.add(a);
-        activities.add(c);
+    private void generateRecords(){
+        records = new ArrayList<>();
+        long now = System.currentTimeMillis();
+        Record a = new Record(Record.RecordType.RUNNING,new Date(now-1000000),new Date(now-9000000),2.4,1000);
+        Record b = new Record(Record.RecordType.RUNNING,new Date(now-30000000),new Date(now-29999200),2.0,800);
+        Record c = new Record(Record.RecordType.RIDING,new Date(now-100000000),new Date(now-99998700),5.0,1300);
+        records.add(a);
+        records.add(b);
+        records.add(c);
+        records.add(b);
+        records.add(a);
+        records.add(c);
+        records.add(a);
+        records.add(c);
     }
 }

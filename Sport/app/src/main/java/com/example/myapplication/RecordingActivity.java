@@ -41,6 +41,8 @@ import com.amap.api.maps2d.model.MyLocationStyle;
 import com.amap.api.maps2d.model.Polyline;
 import com.amap.api.maps2d.model.PolylineOptions;
 import com.example.myapplication.R;
+import com.example.myapplication.data.DataService;
+import com.example.myapplication.data.LocalData;
 import com.hjq.toast.ToastUtils;
 
 
@@ -75,6 +77,7 @@ public class RecordingActivity extends Activity {
 
     boolean ifStart = false;
 
+    private DataService dataService = null;
     private MyRunnable mRunnable = null;
 
     private Handler mHandler = new Handler(Looper.getMainLooper());
@@ -118,6 +121,8 @@ public class RecordingActivity extends Activity {
         startTime = System.currentTimeMillis();
         ToastUtils.init(this.getApplication());
 
+        dataService = new LocalData();
+
 
         stop.setOnClickListener(new View.OnClickListener() {
             //运动暂停
@@ -155,7 +160,7 @@ public class RecordingActivity extends Activity {
                 endTime = System.currentTimeMillis();
                 Log.d("SAVE_TEST",String.valueOf(new Date(startTime)));
                 Log.d("SAVE_TEST",String.valueOf(new Date(endTime)));
-                if(distance<0.1||latLngList.size()<3){
+                if(false && (distance<0.1||latLngList.size()<3)){
                     //TODO:时间太短的结束可能还要完善一下
                     ToastUtils.show("运动时间或距离太短啦");
                     //Log.d("SAVE_TEST",String.valueOf(ToastUtils.isInit()));
@@ -286,8 +291,8 @@ public class RecordingActivity extends Activity {
         Intent intent = getIntent();
         String sport_type = intent.getStringExtra("sport_type");
 
-
-        //TODO:记录结果即可
+        Record record = new Record(Record.RecordType.getValue(sport_type),new Date(startTime),new Date(endTime),distance,seconds,latLngList);
+        dataService.updateRecord(record);
         
 
         Intent intent2 = new Intent(this, ResultActivity.class);
