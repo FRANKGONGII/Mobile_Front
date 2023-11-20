@@ -92,7 +92,7 @@ public class SportFragment extends Fragment {
                                 }
                                 Intent intent = new Intent(getActivity(), RecordingActivity.class);
 
-                                intent.putExtra("mydata", "来自main");
+                                intent.putExtra("sport_type", sport_type);
                                 startActivity(intent);
                             }
                         });

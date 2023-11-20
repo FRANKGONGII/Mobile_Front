@@ -29,5 +29,6 @@
     <dimen name="line">1dp</dimen>
     <dimen name="spacing_normal">0dp</dimen>
     <dimen name="spacing_3dp">3dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

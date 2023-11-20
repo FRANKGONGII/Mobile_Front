@@ -2,10 +2,12 @@ package com.example.myapplication;
 
 
 
+import static android.app.PendingIntent.getActivity;
 import static java.lang.Thread.sleep;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -39,9 +41,13 @@ import com.amap.api.maps2d.model.MyLocationStyle;
 import com.amap.api.maps2d.model.Polyline;
 import com.amap.api.maps2d.model.PolylineOptions;
 import com.example.myapplication.R;
+import com.hjq.toast.ToastUtils;
+
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 
 
 public class RecordingActivity extends Activity {
@@ -76,6 +82,9 @@ public class RecordingActivity extends Activity {
 
     boolean ifStartPoint = true;
 
+    private long startTime = 0;
+    private long endTime = 0;
+
 
     public void Update(){
         Log.d("CHANGE_UI",speedVal+" "+distanceVal);
@@ -105,8 +114,12 @@ public class RecordingActivity extends Activity {
         finish = findViewById(R.id.tv1);
         stop = findViewById(R.id.tv2);
         goon = findViewById(R.id.tv3);
+        startTime = System.currentTimeMillis();
+        ToastUtils.init(this.getApplication());
+
 
         stop.setOnClickListener(new View.OnClickListener() {
+            //运动暂停
             @Override
             public void onClick(View v) {
                 ifStart = false;
@@ -120,6 +133,7 @@ public class RecordingActivity extends Activity {
         });
 
         goon.setOnClickListener(new View.OnClickListener() {
+            //运动继续
             @Override
             public void onClick(View v) {
                 ifStart = true;
@@ -129,6 +143,32 @@ public class RecordingActivity extends Activity {
                     myLocationStyle.interval(1000);
                     aMap.setMyLocationStyle(myLocationStyle);
                     ifStartPoint = true;
+                }
+            }
+        });
+
+        finish.setOnClickListener(new View.OnClickListener() {
+            //运动完成
+            @Override
+            public void onClick(View v) {
+                endTime = System.currentTimeMillis();
+                Log.d("SAVE_TEST",String.valueOf(new Date(startTime)));
+                Log.d("SAVE_TEST",String.valueOf(new Date(endTime)));
+                if(distance<0.1||latLngList.size()<3){
+                    //TODO:时间太短的结束可能还要完善一下
+                    ToastUtils.show("运动时间或距离太短啦");
+                    //Log.d("SAVE_TEST",String.valueOf(ToastUtils.isInit()));
+                    finish();
+                } else{
+                    ToastUtils.show("保存运动记录");
+                    ifStart = false;
+                    if (null != mRunnable) {
+                        mHandler.removeCallbacks(mRunnable);
+                        mRunnable = null;
+                        myLocationStyle.interval(Long.MAX_VALUE);
+                        aMap.setMyLocationStyle(myLocationStyle);
+                    }
+                    save();
                 }
             }
         });
@@ -241,68 +281,16 @@ public class RecordingActivity extends Activity {
         });
     }
 
-//    @OnClick({R.id.tv_mode, R.id.tv1, R.id.tv2, R.id.tv3})
-//    public void onViewClicked(View view) {
-//        switch (view.getId()) {
-//            case R.id.tv_mode:
-//                setMode();
-//                break;
-//            case R.id.tv1:
-//                ISSTARTUP = true;
-//
-//                mHandler.removeCallbacks(mRunnable);
-//                mRunnable = null;
-//
-//                unBindService();
-//
-//                hiddenAnim1.start();
-////                apperaAnim2.start_bg();
-//                hiddenAnim3.start();
-//
-//                //保存数据
-//                if (null != record && null != record.getPathline() && !record.getPathline().isEmpty()) {
-//                    saveRecord();
-//                } else {
-//                    ToastUtils.showShort("没有记录到路径!");
-//                    finish();
-//                }
-//                break;
-//            case R.id.tv2:
-//                ISSTARTUP = false;
-//
-//                if (null != mRunnable) {
-//                    mHandler.removeCallbacks(mRunnable);
-//                    mRunnable = null;
-//                }
-//
-//                unBindService();
-//
-//                mEndTime = System.currentTimeMillis();
-//
-//                aMap.moveCamera(CameraUpdateFactory.newLatLngBounds(getBounds(mSportLatLngs), 20));
-//
-//                apperaAnim1.start();
-//                hiddenAnim2.start();
-//                apperaAnim3.start();
-//                break;
-//            case R.id.tv3:
-//                ISSTARTUP = true;
-//
-//                if (mRunnable == null)
-//                    mRunnable = new MyRunnable();
-//                mHandler.postDelayed(mRunnable, 0);
-//
-//                startUpLocation();
-//
-//                hiddenAnim1.start();
-//                apperaAnim2.start();
-//                hiddenAnim3.start();
-//                break;
-//            default:
-//                break;
-//        }
-//    }
+    public void save(){
+        Intent intent = getIntent();
+        String sport_type = intent.getStringExtra("sport_type");
 
+
+        //TODO:记录结果即可
+
+        Intent intent2 = new Intent(this, ResultActivity.class);
+        startActivity(intent2);
+    }
 
 
 }

@@ -27,6 +27,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -50,6 +53,9 @@ dependencies {
     //搜索功能
     implementation 'com.amap.api:search:latest.integration'
     implementation 'pub.devrel:easypermissions:3.0.0'
+    // 吐司框架：https://github.com/getActivity/ToastUtils
+    implementation 'com.github.getActivity:ToastUtils:10.5'
+
 
 
 }
