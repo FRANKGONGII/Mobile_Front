@@ -152,6 +152,8 @@ public class SportFragment extends Fragment {
                 if(choose[0]!=-1)sport_type = items[choose[0]];
                 Button button = view.findViewById(R.id.ButtonChooseType);
                 button.setText(sport_type);
+                Button button2 = view.findViewById(R.id.ButtonGo);
+                button2.setText(sport_type+"\n"+"GO");
                 alertDialog2.dismiss();
             }
         });

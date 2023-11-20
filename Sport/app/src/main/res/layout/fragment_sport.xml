@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="跑步方法"
+            android:text="运动方法"
             android:textColor="@color/text_color_1"
             android:textSize="@dimen/textsize_4" />
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_edge"
             android:lineSpacingExtra="@dimen/lineSpacingExtra"
-            android:text="2.不要跑太快，心率保持在140~160之间"
+            android:text="2.不要剧烈运动，心率保持在140~160之间"
             android:textColor="@color/text_color_2"
             android:textSize="@dimen/textsize_2" />
 
@@ -155,16 +155,15 @@
         android:background="@drawable/button_circle"
         android:ellipsize="end"
 
-        android:maxLines="1"
+        android:maxLines="2"
         android:maxHeight="0dp"
         android:minHeight="0dp"
 
         android:outlineProvider="none"
-        android:singleLine="true"
         android:text="@string/button_go"
         android:textColor="@color/white"
         android:textIsSelectable="false"
-        android:textSize="50sp"
+        android:textSize="40sp"
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent"
