@@ -26,13 +26,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 
 import com.example.myapplication.R;
 import com.google.android.material.navigation.NavigationView;
 
+
+
 public class HomeFragment extends Fragment {
 
     public static final String TAG = "HomeFragment";
+
+
 
     private AppCompatActivity activity;
     private View view;
@@ -72,12 +77,6 @@ public class HomeFragment extends Fragment {
 //        ImageView imageView = view.findViewById(R.id.userBkgImg);
 //        imageView.setImageResource(R.drawable.user_bkg_test);
 
-        //填充页面
-        TextView textView = view.findViewById(R.id.test_text);
-        String txt = "Banana~";
-        for (int i = 0; i < 10; ++i) txt += txt;
-        textView.setText(txt);
-
 
         return view;
     }
@@ -111,7 +110,7 @@ public class HomeFragment extends Fragment {
         ActionBar actionBar = activity.getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.baseline_home_24);
+            actionBar.setHomeAsUpIndicator(R.drawable.baseline_format_list_bulleted_24);
         }
     }
 
