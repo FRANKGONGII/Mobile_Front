@@ -286,7 +286,14 @@ public class RecordingActivity extends Activity {
 //                    aMap.addPolyline(options.color(0x33FF33));
 //                }
                 //aMap.addPolyline(options);
-                aMap.addPolyline(options.width(10).color(Color.argb(255, 36, 164, 255)));
+                //aMap.addPolyline(options.width(10).color(Color.argb(255, 36, 164, 255)));
+                if(speed>6) {
+                    aMap.addPolyline(options.width(10).color(Color.argb(255, 204, 0, 51)));
+                } else if(speed<=6&&speed>=4){
+                    aMap.addPolyline(options.width(10).color(Color.argb(255, 255, 255, 0)));
+                }else{
+                    aMap.addPolyline(options.width(10).color(Color.argb(255, 36, 164, 255)));
+                }
 
 
 
