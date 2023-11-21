@@ -97,7 +97,7 @@
                     android:padding="3dp"
                     android:text="km"
                     android:textColor="@color/text_color_2"
-                    android:textSize="15dp" />
+                    android:textSize="30sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -141,7 +141,7 @@
                     android:padding="3dp"
                     android:text="km"
                     android:textColor="@color/text_color_2"
-                    android:textSize="15dp" />
+                    android:textSize="30sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

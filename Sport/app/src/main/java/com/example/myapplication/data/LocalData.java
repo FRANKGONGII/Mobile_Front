@@ -10,6 +10,11 @@ import java.util.List;
 
 public class LocalData implements DataService {
     private static ArrayList<Record> records = null;
+
+    static{
+        generateRecords();
+    }
+
     public List<Record> getAllRecords(){
         if(records == null){
             Log.d("SAVE_TEST","?");
@@ -20,8 +25,9 @@ public class LocalData implements DataService {
     }
 
     @Override
-    public Record getRecord(int index){
-        if(getAllRecords().size() <= index){
+    public Record getRecord(int id){
+        int index = id-1; // id从1开始计数，需要-1
+        if(index >= getAllRecords().size()){
             System.out.println("index out of bound in arr(records)");
             throw new RuntimeException();
         }
@@ -38,7 +44,12 @@ public class LocalData implements DataService {
         Log.d("SAVE_TEST",""+records.size());
     }
 
-    private void generateRecords(){
+    @Override
+    public void init(){
+        generateRecords();
+    }
+
+    private static void generateRecords(){
         records = new ArrayList<>();
         long now = System.currentTimeMillis();
         Record a = new Record(Record.RecordType.RUNNING,new Date(now-1000000),new Date(now-9000000),2.4,1000);
@@ -46,11 +57,6 @@ public class LocalData implements DataService {
         Record c = new Record(Record.RecordType.RIDING,new Date(now-100000000),new Date(now-99998700),5.0,1300);
         records.add(a);
         records.add(b);
-        records.add(c);
-        records.add(b);
-        records.add(a);
-        records.add(c);
-        records.add(a);
         records.add(c);
     }
 }
