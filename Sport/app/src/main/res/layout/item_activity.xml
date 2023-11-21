@@ -30,16 +30,16 @@
                 android:padding="3dp"
                 android:text="10月15日"
                 android:textColor="#40000000"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <TextView
-                android:id = "@+id/activity_type"
+                android:id = "@+id/record_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="跑步"
                 android:textColor="#40000000"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout

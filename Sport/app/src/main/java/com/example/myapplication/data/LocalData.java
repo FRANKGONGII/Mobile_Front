@@ -5,6 +5,8 @@ import android.util.Log;
 import com.example.myapplication.bean.Record;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -16,11 +18,13 @@ public class LocalData implements DataService {
     }
 
     public List<Record> getAllRecords(){
-        if(records == null){
-            Log.d("SAVE_TEST","?");
-            generateRecords();
-        }
         Log.d("SAVE_TEST",""+records.size());
+        Collections.sort(records, new Comparator<Record>(){
+            @Override
+            public int compare(Record r1, Record r2) {
+                return r2.getStartTime().compareTo(r1.getStartTime());
+            }
+        });
         return records;
     }
 
@@ -38,8 +42,6 @@ public class LocalData implements DataService {
 
     @Override
     public void updateRecord(Record record){
-        if(records == null) generateRecords();
-        Log.d("SAVE_TEST",record.toString());
         records.add(record);
         Log.d("SAVE_TEST",""+records.size());
     }
