@@ -194,9 +194,6 @@ public class RecordingActivity extends Activity {
         }
         //setContentView(R.layout.activity_recording);//设置对应的XML布局文件
 
-
-
-
         // 打开权限，否则我的手机无法定位 --q1w2e3r4
         AMapLocationClient.updatePrivacyShow(this.getApplicationContext(),true,true);
         AMapLocationClient.updatePrivacyAgree(this.getApplicationContext(),true);
@@ -261,7 +258,9 @@ public class RecordingActivity extends Activity {
                                     latLngList.get(latLngList.size()-2).longitude),
                             new LatLng(latitude, longitude));
                     distance += speed/1000;
+                    float tmp1 = speed;
                     speed = speed*3600/1000;
+
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -274,13 +273,22 @@ public class RecordingActivity extends Activity {
                             });
                         }
                     }).start();
-
-
                     Log.d("LOC_TEST",latLngList.toString());
+
                 }
-                //Polyline polyline =aMap.addPolyline(options.
-                //addAll(latLngList).width(10).color(Color.argb(255, 36, 164, 255)));
-                aMap.addPolyline(options);
+//                Polyline polyline =aMap.addPolyline(options.
+//                addAll(latLngList).width(10).color(Color.argb(255, 36, 164, 255)));
+
+//                if(speed>6)aMap.addPolyline(options.width(10).color(0xCC0033));
+//                else if(speed<=6&&speed>=4){
+//                    aMap.addPolyline(options.color(0xFFFF00));
+//                }else{
+//                    aMap.addPolyline(options.color(0x33FF33));
+//                }
+                //aMap.addPolyline(options);
+                aMap.addPolyline(options.width(10).color(Color.argb(255, 36, 164, 255)));
+
+
 
                 if(ifStartPoint)ifStartPoint = false;
             }
@@ -292,10 +300,24 @@ public class RecordingActivity extends Activity {
         String sport_type = intent.getStringExtra("sport_type");
 
         Record record = new Record(Record.RecordType.getValue(sport_type),new Date(startTime),new Date(endTime),distance,seconds,latLngList);
+
         dataService.updateRecord(record);
+
+        Log.d("ID_TEST","new re:"+String.valueOf(record.getId()));
         
 
         Intent intent2 = new Intent(this, ResultActivity.class);
+//        int len = latLngList.size();
+//        int index  =0;
+//        double[] array1 = new double[len];
+//        double[] array2 = new double[len];
+//        for(LatLng l:latLngList){
+//            array1[index] = l.latitude;
+//            array2[index] =l.longitude;
+//            index++;
+//        }
+//        intent2.putExtra("latitude",array1);
+        intent2.putExtra("passId",record.getId());
         startActivity(intent2);
     }
 
