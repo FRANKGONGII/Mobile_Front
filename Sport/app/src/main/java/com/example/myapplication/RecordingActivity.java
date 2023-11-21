@@ -2,10 +2,12 @@ package com.example.myapplication;
 
 
 
+import static android.app.PendingIntent.getActivity;
 import static java.lang.Thread.sleep;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -16,6 +18,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,9 +41,16 @@ import com.amap.api.maps2d.model.MyLocationStyle;
 import com.amap.api.maps2d.model.Polyline;
 import com.amap.api.maps2d.model.PolylineOptions;
 import com.example.myapplication.R;
+import com.example.myapplication.data.DataService;
+import com.example.myapplication.data.LocalData;
+import com.hjq.toast.ToastUtils;
+
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import com.example.myapplication.bean.Record;
+
 
 
 public class RecordingActivity extends Activity {
@@ -53,11 +63,31 @@ public class RecordingActivity extends Activity {
 
     public float speed = 0;
     public float distance = 0;
+    public int seconds = 0;
 
     public int timeCnt = 0;
 
     TextView speedVal = null;
     TextView distanceVal = null;
+    Chronometer passtime = null;
+
+    TextView finish = null;
+    TextView stop = null;
+    TextView goon = null;
+
+    boolean ifStart = false;
+
+    private DataService dataService = null;
+    private MyRunnable mRunnable = null;
+
+    private Handler mHandler = new Handler(Looper.getMainLooper());
+
+    MyLocationStyle myLocationStyle;
+
+    boolean ifStartPoint = true;
+
+    private long startTime = 0;
+    private long endTime = 0;
 
 
     public void Update(){
@@ -69,13 +99,92 @@ public class RecordingActivity extends Activity {
         Log.d("CHANGE_UI",distanceVal.getText()+" "+distanceVal.getText());
     }
 
+    private class MyRunnable implements Runnable {
+        @Override
+        public void run() {
+            Log.d("TIME_TEST",String.valueOf(seconds));
+            passtime.setText(formatseconds());
+            mHandler.postDelayed(this, 1000);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recording);
         speedVal = findViewById(R.id.speed);
         distanceVal = findViewById(R.id.distance);
-        Handler handler = new Handler(Looper.getMainLooper());
+        passtime = findViewById(R.id.cm_passtime);
+        finish = findViewById(R.id.tv1);
+        stop = findViewById(R.id.tv2);
+        goon = findViewById(R.id.tv3);
+        startTime = System.currentTimeMillis();
+        ToastUtils.init(this.getApplication());
+
+        dataService = new LocalData();
+
+
+        stop.setOnClickListener(new View.OnClickListener() {
+            //运动暂停
+            @Override
+            public void onClick(View v) {
+                ifStart = false;
+                if (null != mRunnable) {
+                    mHandler.removeCallbacks(mRunnable);
+                    mRunnable = null;
+                    myLocationStyle.interval(Long.MAX_VALUE);
+                    aMap.setMyLocationStyle(myLocationStyle);
+                }
+            }
+        });
+
+        goon.setOnClickListener(new View.OnClickListener() {
+            //运动继续
+            @Override
+            public void onClick(View v) {
+                ifStart = true;
+                if (mRunnable == null){
+                    mRunnable = new MyRunnable();
+                    mHandler.postDelayed(mRunnable, 0);
+                    myLocationStyle.interval(1000);
+                    aMap.setMyLocationStyle(myLocationStyle);
+                    ifStartPoint = true;
+                }
+            }
+        });
+
+        finish.setOnClickListener(new View.OnClickListener() {
+            //运动完成
+            @Override
+            public void onClick(View v) {
+                endTime = System.currentTimeMillis();
+                Log.d("SAVE_TEST",String.valueOf(new Date(startTime)));
+                Log.d("SAVE_TEST",String.valueOf(new Date(endTime)));
+                if(false && (distance<0.1||latLngList.size()<3)){
+                    //TODO:时间太短的结束可能还要完善一下
+                    ToastUtils.show("运动时间或距离太短啦");
+                    //Log.d("SAVE_TEST",String.valueOf(ToastUtils.isInit()));
+                    finish();
+                } else{
+                    ToastUtils.show("保存运动记录");
+                    ifStart = false;
+                    if (null != mRunnable) {
+                        mHandler.removeCallbacks(mRunnable);
+                        mRunnable = null;
+                        myLocationStyle.interval(Long.MAX_VALUE);
+                        aMap.setMyLocationStyle(myLocationStyle);
+                    }
+                    save();
+                }
+            }
+        });
+
+
+
+
+
+        if(mRunnable==null)mRunnable=new MyRunnable();
+        mHandler.postDelayed(mRunnable, 0);
 
 
 
@@ -83,7 +192,10 @@ public class RecordingActivity extends Activity {
                 PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
-        setContentView(R.layout.activity_recording);//设置对应的XML布局文件
+        //setContentView(R.layout.activity_recording);//设置对应的XML布局文件
+
+
+
 
         // 打开权限，否则我的手机无法定位 --q1w2e3r4
         AMapLocationClient.updatePrivacyShow(this.getApplicationContext(),true,true);
@@ -97,7 +209,26 @@ public class RecordingActivity extends Activity {
         aMap.moveCamera(cameraUpdate);
 
 
-        MyLocationStyle myLocationStyle;
+        startLocation();
+    }
+
+    public String formatseconds() {
+        Log.d("TIME_TEST",String.valueOf(seconds));
+        String hh = seconds / 3600 > 9 ? seconds / 3600 + "" : "0" + seconds
+                / 3600;
+        String mm = (seconds % 3600) / 60 > 9 ? (seconds % 3600) / 60 + ""
+                : "0" + (seconds % 3600) / 60;
+        String ss = (seconds % 3600) % 60 > 9 ? (seconds % 3600) % 60 + ""
+                : "0" + (seconds % 3600) % 60;
+
+        seconds++;
+
+        return hh + ":" + mm + ":" + ss;
+    }
+
+    public void startLocation(){
+        Handler handler = new Handler(Looper.getMainLooper());
+
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW);
         //myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
@@ -109,23 +240,28 @@ public class RecordingActivity extends Activity {
         aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
+
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
 
                 Log.d("LOC_TEST",String.valueOf(latitude)+" "+String.valueOf(longitude));
-                latLngList.add(new LatLng(latitude,longitude));
+
+                //trick, 避免定位不到直插非洲的大黑线
+                if(latitude!=0&& longitude!=0)latLngList.add(new LatLng(latitude,longitude));
+
                 PolylineOptions options = new PolylineOptions();
                 //Log.d("LOC_TEST", latLngList.toString());
-                if(latLngList.size()>=2){
+                if(latLngList.size()>=3&&!ifStartPoint){
                     options.add(new LatLng(latLngList.get(latLngList.size()-2).latitude,
                             latLngList.get(latLngList.size()-2).longitude));
                     //当前的经纬度
                     options.add(new LatLng(latitude, longitude));
                     speed =  AMapUtils.calculateLineDistance(
                             new LatLng(latLngList.get(latLngList.size()-2).latitude,
-                            latLngList.get(latLngList.size()-2).longitude),
+                                    latLngList.get(latLngList.size()-2).longitude),
                             new LatLng(latitude, longitude));
-                    distance += speed;
+                    distance += speed/1000;
+                    speed = speed*3600/1000;
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -143,21 +279,25 @@ public class RecordingActivity extends Activity {
                     Log.d("LOC_TEST",latLngList.toString());
                 }
                 //Polyline polyline =aMap.addPolyline(options.
-                           //addAll(latLngList).width(10).color(Color.argb(255, 36, 164, 255)));
+                //addAll(latLngList).width(10).color(Color.argb(255, 36, 164, 255)));
                 aMap.addPolyline(options);
+
+                if(ifStartPoint)ifStartPoint = false;
             }
         });
-
-
-
-
-
-
-
-
     }
 
+    public void save(){
+        Intent intent = getIntent();
+        String sport_type = intent.getStringExtra("sport_type");
 
+        Record record = new Record(Record.RecordType.getValue(sport_type),new Date(startTime),new Date(endTime),distance,seconds,latLngList);
+        dataService.updateRecord(record);
+        
+
+        Intent intent2 = new Intent(this, ResultActivity.class);
+        startActivity(intent2);
+    }
 
 
 }

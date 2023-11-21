@@ -23,6 +23,11 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".ResultActivity"
+            android:exported="false"
+            android:label="@string/title_activity_result"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -41,10 +46,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".HistoryActivity"
+            android:exported="true">
+        </activity>
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="094f396af462c5df8ba75d81fbee0912"></meta-data>
-
+            android:value="20ab218af4d1cea77b431b723aba0b89"></meta-data>
         <service android:name="com.amap.api.location.APSService" />
     </application>
 

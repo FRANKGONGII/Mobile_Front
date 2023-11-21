@@ -12,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.HistoryActivity;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.RecordingActivity;
@@ -43,6 +45,7 @@ public class SportFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setButtonGO(view);
         setButtonChoose(view);
+        set_nav1(view);
     }
 
     //
@@ -92,7 +95,7 @@ public class SportFragment extends Fragment {
                                 }
                                 Intent intent = new Intent(getActivity(), RecordingActivity.class);
 
-                                intent.putExtra("mydata", "来自main");
+                                intent.putExtra("sport_type", sport_type);
                                 startActivity(intent);
                             }
                         });
@@ -109,6 +112,19 @@ public class SportFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showSingleAlertDialog(view);
+            }
+        });
+    }
+
+    //为累计跑步控件设置跳转，跳转到历史记录界面
+    public void set_nav1(@NonNull View view){
+        View nav = view.findViewById(R.id.sum_distance_linear);
+        nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), HistoryActivity.class);
+
+                startActivity(intent);
             }
         });
     }
@@ -136,6 +152,8 @@ public class SportFragment extends Fragment {
                 if(choose[0]!=-1)sport_type = items[choose[0]];
                 Button button = view.findViewById(R.id.ButtonChooseType);
                 button.setText(sport_type);
+                Button button2 = view.findViewById(R.id.ButtonGo);
+                button2.setText(sport_type+"\n"+"GO");
                 alertDialog2.dismiss();
             }
         });
