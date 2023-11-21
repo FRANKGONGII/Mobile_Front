@@ -57,6 +57,7 @@ public class Record {
         this.duration = duration;
         this.latLngList = latLngList;
         this.id = ++id_counter;
+        Log.d("ID_TEST",""+id);
     }
 
     public Record(RecordType recordType, Date startTime, Date endTime, double dist, int duration){
@@ -67,6 +68,7 @@ public class Record {
         this.duration = duration;
         this.latLngList = null;
         this.id = ++id_counter;
+        Log.d("ID_TEST",""+id);
     }
 
     public Date getStartTime(){ return startTime; }
