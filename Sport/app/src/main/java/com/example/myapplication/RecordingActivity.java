@@ -258,7 +258,7 @@ public class RecordingActivity extends Activity {
                                     latLngList.get(latLngList.size()-2).longitude),
                             new LatLng(latitude, longitude));
                     distance += speed/1000;
-                    float tmp1 = speed;
+
                     speed = speed*3600/1000;
 
                     new Thread(new Runnable() {

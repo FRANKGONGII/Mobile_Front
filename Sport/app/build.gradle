@@ -58,6 +58,7 @@ dependencies {
     // 吐司框架：https://github.com/getActivity/ToastUtils
     implementation 'com.github.getActivity:ToastUtils:10.5'
 
+    implementation 'com.github.open-android:JieCaoVideoPlayer:0.1.0'
 
 
 }
