@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.amap.api.maps2d.model.LatLng;
 import com.example.myapplication.bean.Record;
 import com.example.myapplication.data.DataService;
+import com.example.myapplication.data.DataServiceFactory;
 import com.example.myapplication.data.LocalData;
 import com.hjq.toast.ToastUtils;
 
@@ -23,7 +24,7 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sportresult);
         Log.d("ID_TEST","jump");
         ToastUtils.init(this.getApplication());
-        dataService = new LocalData();
+        dataService = DataServiceFactory.getInstance();
 
 
         Intent intent = getIntent();

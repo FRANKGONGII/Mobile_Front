@@ -11,6 +11,4 @@ public interface DataService {
 
     public void updateRecord(Record record);
 
-    public void init();
-
 }

@@ -1,5 +1,6 @@
 package com.example.myapplication.data;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.example.myapplication.bean.Record;
@@ -11,15 +12,15 @@ import java.util.Date;
 import java.util.List;
 
 public class LocalData implements DataService {
-    private static ArrayList<Record> records = null;
+    private ArrayList<Record> records = null;
 
-    static{
+    public LocalData(){
         generateRecords();
     }
 
     public List<Record> getAllRecords(){
         Log.d("SAVE_TEST",""+records.size());
-        Collections.sort(records, new Comparator<Record>(){
+        records.sort(new Comparator<Record>() {
             @Override
             public int compare(Record r1, Record r2) {
                 return r2.getStartTime().compareTo(r1.getStartTime());
@@ -46,12 +47,7 @@ public class LocalData implements DataService {
         Log.d("SAVE_TEST",""+records.size());
     }
 
-    @Override
-    public void init(){
-        generateRecords();
-    }
-
-    private static void generateRecords(){
+    private void generateRecords(){
         records = new ArrayList<>();
         long now = System.currentTimeMillis();
         Record a = new Record(Record.RecordType.RUNNING,new Date(now-1000000),new Date(now-9000000),2.4,1000);

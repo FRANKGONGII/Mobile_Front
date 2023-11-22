@@ -42,6 +42,7 @@ import com.amap.api.maps2d.model.Polyline;
 import com.amap.api.maps2d.model.PolylineOptions;
 import com.example.myapplication.R;
 import com.example.myapplication.data.DataService;
+import com.example.myapplication.data.DataServiceFactory;
 import com.example.myapplication.data.LocalData;
 import com.hjq.toast.ToastUtils;
 
@@ -121,7 +122,7 @@ public class RecordingActivity extends Activity {
         startTime = System.currentTimeMillis();
         ToastUtils.init(this.getApplication());
 
-        dataService = new LocalData();
+        dataService = DataServiceFactory.getInstance();
 
 
         stop.setOnClickListener(new View.OnClickListener() {

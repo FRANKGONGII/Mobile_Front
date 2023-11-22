@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.adapter.RecordAdapter;
 import com.example.myapplication.bean.Record;
 import com.example.myapplication.data.DataService;
+import com.example.myapplication.data.DataServiceFactory;
 import com.example.myapplication.data.LocalData;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class HistoryActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        dataService = new LocalData();
+        dataService = DataServiceFactory.getInstance();
         recordList = dataService.getAllRecords();
 
         RecyclerView recyclerView = findViewById(R.id.runningHistoryList);
