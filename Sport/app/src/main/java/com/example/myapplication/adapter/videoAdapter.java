@@ -25,6 +25,8 @@ public class videoAdapter extends BaseAdapter {
     Context mContext;
     int mPager = -1;
 
+    VideoConstant videoConstant = new VideoConstant();
+
     public videoAdapter(Context context) {
         this.mContext = context;
     }
@@ -53,8 +55,8 @@ public class videoAdapter extends BaseAdapter {
 
     public void search(String query){
         List<Integer> res = new ArrayList();
-        for(int i = 0;i<VideoConstant.mVideoTitles[0].length;i++){
-            String str = VideoConstant.mVideoTitles[0][i];
+        for(int i = 0;i<videoConstant.mVideoTitles[0].length;i++){
+            String str = videoConstant.mVideoTitles[0][i];
             if(query.equals(str)){
                 res.add(i);
             }
@@ -84,18 +86,18 @@ public class videoAdapter extends BaseAdapter {
 //        }
         if (mPager == -1) {
             holder.mJCVideoPlayerStandard.setUp(
-                    VideoConstant.mVideoUrls[0][position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                    VideoConstant.mVideoTitles[0][position]);
+                    videoConstant.mVideoUrls[0][position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                    videoConstant.mVideoTitles[0][position]);
             Log.e("QUERY_TEST", "setUp" + position);
             Picasso.with(convertView.getContext())
-                    .load(VideoConstant.mVideoThumbs[0][position])
+                    .load(videoConstant.mVideoThumbs[0][position])
                     .into(holder.mJCVideoPlayerStandard.thumbImageView);
         } else {
             holder.mJCVideoPlayerStandard.setUp(
-                    VideoConstant.mVideoUrls[mPager][position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                    VideoConstant.mVideoTitles[mPager][position]);
+                    videoConstant.mVideoUrls[mPager][position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                    videoConstant.mVideoTitles[mPager][position]);
             Picasso.with(convertView.getContext())
-                    .load(VideoConstant.mVideoThumbs[mPager][position])
+                    .load(videoConstant.mVideoThumbs[mPager][position])
                     .into(holder.mJCVideoPlayerStandard.thumbImageView);
         }
         return convertView;
