@@ -90,4 +90,6 @@ public class Record implements Serializable {
     public int getId(){
         return id;
     }
+
+    public List<LatLng> getLatLngList(){return latLngList;}
 }
