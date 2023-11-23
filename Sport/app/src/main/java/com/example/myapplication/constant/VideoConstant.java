@@ -24,12 +24,14 @@ public class VideoConstant {
 
     //标题
     public static String[][] mVideoTitles = {{
-            "武汉 -- 测试视频1",
-            "武汉 -- 测试视频2",
-            "武汉 -- 测试视频3",
-            "武汉 -- 测试视频4",
-            "武汉 -- 测试视频5"
+            "test5",
+            "test2",
+            "test2",
+            "test4",
+            "test6"
     },
     };
+
+
 
 }
