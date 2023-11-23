@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.amap.api.maps2d.model.LatLng;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Locale;
 import java.util.Map;
 
 
-public class Record {
+public class Record implements Serializable {
     public enum RecordType {
         RUNNING,RIDING,WALKING,FITNESS;
         private static final HashMap<RecordType,String> mp = new HashMap<RecordType,String>(){{
@@ -85,4 +86,10 @@ public class Record {
         int s = duration % 60;
         return String.format(Locale.getDefault(), "%02d:%02d:%02d",h,min,s);
     }
+
+    public int getId(){
+        return id;
+    }
+
+    public List<LatLng> getLatLngList(){return latLngList;}
 }

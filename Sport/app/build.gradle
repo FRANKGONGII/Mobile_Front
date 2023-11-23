@@ -63,6 +63,7 @@ dependencies {
     // 吐司框架：https://github.com/getActivity/ToastUtils
     implementation 'com.github.getActivity:ToastUtils:10.5'
 
+    implementation 'com.github.open-android:JieCaoVideoPlayer:0.1.0'
     //下拉刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.3'
     //特殊header

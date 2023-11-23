@@ -1,39 +1,50 @@
 package com.example.myapplication.data;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.example.myapplication.bean.Record;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 public class LocalData implements DataService {
-    private static ArrayList<Record> records = null;
+    private ArrayList<Record> records = null;
+
+    public LocalData(){
+        generateRecords();
+    }
+
     public List<Record> getAllRecords(){
-        if(records == null){
-            Log.d("SAVE_TEST","?");
-            generateRecords();
-        }
         Log.d("SAVE_TEST",""+records.size());
+        records.sort(new Comparator<Record>() {
+            @Override
+            public int compare(Record r1, Record r2) {
+                return r2.getStartTime().compareTo(r1.getStartTime());
+            }
+        });
         return records;
     }
 
+
     @Override
-    public Record getRecord(int index){
-        if(getAllRecords().size() <= index){
-            System.out.println("index out of bound in arr(records)");
-            throw new RuntimeException();
+    public Record getRecord(int id){
+        for(Record record: getAllRecords()){
+            if(record.getId() == id){
+                return record;
+            }
         }
 
-        return getAllRecords().get(index);
+        Log.e("ID_TEST","NOT_FOUND");
+        return null;
     }
 
 
     @Override
     public void updateRecord(Record record){
-        if(records == null) generateRecords();
-        Log.d("SAVE_TEST",record.toString());
         records.add(record);
         Log.d("SAVE_TEST",""+records.size());
     }
@@ -46,11 +57,6 @@ public class LocalData implements DataService {
         Record c = new Record(Record.RecordType.RIDING,new Date(now-100000000),new Date(now-99998700),5.0,1300);
         records.add(a);
         records.add(b);
-        records.add(c);
-        records.add(b);
-        records.add(a);
-        records.add(c);
-        records.add(a);
         records.add(c);
     }
 }
