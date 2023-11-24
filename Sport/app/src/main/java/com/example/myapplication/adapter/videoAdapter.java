@@ -56,8 +56,10 @@ public class videoAdapter extends BaseAdapter {
     public void search(String query){
         List<Integer> res = new ArrayList();
         for(int i = 0;i<videoConstant.mVideoTitles[0].length;i++){
-            String str = videoConstant.mVideoTitles[0][i];
-            if(query.equals(str)){
+            String title = videoConstant.mVideoTitles[0][i];
+            String type = videoConstant.mVideoTypes[0][i];
+            String tags = videoConstant.mVideoTags[0][i];
+            if(query.equals(title)||query.equals(type)||query.equals(tags)){
                 res.add(i);
             }
         }
@@ -84,6 +86,34 @@ public class videoAdapter extends BaseAdapter {
 //            TextView tx = convertView.findViewById(R.id.video_type);
 //            tx.setText("haha");
 //        }
+        TextView txType = convertView.findViewById(R.id.video_tag1);
+        txType.setText(videoConstant.getmVideoTypes()[0][position]);
+
+        TextView txTag = convertView.findViewById(R.id.video_tag2);
+        txTag.setText(videoConstant.getmVideoTags()[0][position]);
+
+        txType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchKey = (String) txType.getText();
+                Log.d("CLICK_TEST","searchKey: "+searchKey);
+                search(searchKey);
+            }
+        });
+
+        txTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchKey = (String) txTag.getText();
+                Log.d("CLICK_TEST","searchKey: "+searchKey);
+                search(searchKey);
+            }
+        });
+
+
+
+
+
         if (mPager == -1) {
             holder.mJCVideoPlayerStandard.setUp(
                     videoConstant.mVideoUrls[0][position], JCVideoPlayer.SCREEN_LAYOUT_LIST,

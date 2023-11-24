@@ -14,12 +14,20 @@ public class VideoConstant {
 
     //标题
     public String[][] mVideoTitles = videoService.getVideoTitles();
+    //视频type
+    public String[][] mVideoTypes = videoService.getVideoTypes();
+    //视频tag
+    public String[][] mVideoTags = videoService.getVideoTags();
 
     public String[][] getmVideoUrls(){return mVideoUrls;}
 
     public String[][] getmVideoThumbs(){return mVideoThumbs;}
 
     public String[][] getmVideoTitles(){return mVideoTitles;}
+
+    public String[][] getmVideoTypes(){return mVideoTypes;}
+
+    public String[][] getmVideoTags(){return mVideoTags;}
 
 
 
