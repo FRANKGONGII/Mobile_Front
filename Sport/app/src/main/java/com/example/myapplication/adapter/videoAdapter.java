@@ -59,7 +59,10 @@ public class videoAdapter extends BaseAdapter {
             String title = videoConstant.mVideoTitles[0][i];
             String type = videoConstant.mVideoTypes[0][i];
             String tags = videoConstant.mVideoTags[0][i];
-            if(query.equals(title)||query.equals(type)||query.equals(tags)){
+
+            //TODO:这里强行实现了类似模糊识别的功能，双向判断子串
+            if(query.contains(title)||query.contains(type)||query.contains(tags)
+            ||title.contains(query)||type.contains(query)||tags.contains(query)){
                 res.add(i);
             }
         }
