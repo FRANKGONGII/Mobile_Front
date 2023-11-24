@@ -14,12 +14,12 @@ import java.util.Map;
 
 public class Record implements Serializable {
     public enum RecordType {
-        RUNNING,RIDING,WALKING,FITNESS;
+        RUNNING,RIDING,WALKING,SWIMMING;
         private static final HashMap<RecordType,String> mp = new HashMap<RecordType,String>(){{
             put(RUNNING,"跑步");
             put(RIDING,"骑行");
             put(WALKING,"健走");
-            put(FITNESS,"健身");
+            put(SWIMMING,"游泳");
         }};
 
         public static RecordType getValue(String type) {
