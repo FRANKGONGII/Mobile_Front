@@ -29,15 +29,17 @@ public class LocalData implements DataService {
         return records;
     }
 
+
     @Override
     public Record getRecord(int id){
-        int index = id-1; // id从1开始计数，需要-1
-        if(index >= getAllRecords().size()){
-            System.out.println("index out of bound in arr(records)");
-            throw new RuntimeException();
+        for(Record record: getAllRecords()){
+            if(record.getId() == id){
+                return record;
+            }
         }
 
-        return getAllRecords().get(index);
+        Log.e("ID_TEST","NOT_FOUND");
+        return null;
     }
 
 
