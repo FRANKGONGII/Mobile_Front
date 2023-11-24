@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,10 +27,14 @@ import com.hjq.toast.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ResultActivity extends AppCompatActivity {
     private DataService dataService = null;
     private AMap aMap;
+    TextView tvDistance;
+    TextView tvDuration;
+    TextView tvSpeed;
+    TextView tvDistribution;
+    TextView tvCalorie;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sportresult);
@@ -53,8 +58,17 @@ public class ResultActivity extends AppCompatActivity {
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mapView.getMap();
 
+        tvDistance = findViewById(R.id.tvDistance);
+        tvDuration = findViewById(R.id.tvDuration);
+        tvSpeed = findViewById(R.id.tvSpeed);
+        tvDistribution = findViewById(R.id.tvDistribution);
+        tvCalorie = findViewById(R.id.tvCalorie);
 
-
+        tvDistance.setText(record.getDistance());
+        tvDuration.setText(record.getDuration());
+        tvSpeed.setText(record.getSpeed1());
+        tvDistribution.setText(record.getSpeed2());
+        tvCalorie.setText(record.getCalorie());
 
         CameraPosition cameraPosition = new CameraPosition(list.get(0), 64, 0, 0);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);

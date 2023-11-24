@@ -80,12 +80,27 @@ public class Record implements Serializable {
 
     public String getType(){ return recordType.getStr(); }
 
+    // km per hour
+    public String getSpeed1(){ return String.format("%.2f", distance * 3600 / duration); }
+
+    // minutes per km
+    public String getSpeed2(){
+        int s = (int) (duration / distance);
+        return String.format("%02d'%02d''", s/60,s%60);
+    }
+
+    public String getCalorie(){
+        int WEIGHT = 60;
+        return String.format("%.1f",1.036*distance*WEIGHT);
+    }
+
     public String parse_duration(int duration){
-        int h = duration / 1440;
-        int min = duration % 1440 / 60;
+        int h = duration / 3600;
+        int min = duration % 3600 / 60;
         int s = duration % 60;
         return String.format(Locale.getDefault(), "%02d:%02d:%02d",h,min,s);
     }
+
 
     public int getId(){
         return id;
