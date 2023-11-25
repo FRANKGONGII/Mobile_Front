@@ -16,4 +16,6 @@ public interface DataService {
 
     public List<Record> queryRecordByType(Record.RecordType type);
 
+    public List<Record> queryRecordByBoth(Record.RecordType type,Date startTime, Date endTime);
+
 }

@@ -10,7 +10,7 @@
         android:id="@+id/title_history"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="跑步历史"
+        android:text="运动历史"
         android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/type_layout"
@@ -55,6 +55,7 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
+                    android:id="@+id/record_type_layout1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/frame2"
@@ -71,6 +72,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/record_type_layout2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/frame2"
@@ -87,6 +89,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/record_type_layout3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/frame2"
@@ -103,6 +106,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/record_type_layout4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/frame2"
@@ -119,6 +123,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/record_type_layout5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/frame2"

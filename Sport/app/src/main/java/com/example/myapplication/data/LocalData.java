@@ -72,6 +72,28 @@ public class LocalData implements DataService {
         return ret;
     }
 
+    @Override
+    public List<Record> queryRecordByBoth(Record.RecordType type, Date startTime, Date endTime) {
+        if(type == null && startTime == null){
+            return getAllRecords();
+        }
+        else if(type == null){
+            return queryRecordByTime(startTime,endTime);
+        }
+        else if(startTime == null){
+            return queryRecordByType(type);
+        }
+        else{
+            List<Record> ret = new ArrayList<>();
+            for(Record record: getAllRecords()){
+                if(record.getType().equals(type.getStr()) && startTime.compareTo(record.getStartTime()) < 0 && record.getEndTime().compareTo(endTime) < 0){
+                    ret.add(record);
+                }
+            }
+            return ret;
+        }
+    }
+
     private void generateRecords(){
         records = new ArrayList<>();
         long now = System.currentTimeMillis();
