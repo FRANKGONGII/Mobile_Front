@@ -24,7 +24,8 @@ import com.hjq.toast.ToastUtils;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
-public class CourseFragment extends Fragment {
+public class CourseFragment extends Fragment  {
+
     private ListView mListView;
 
     private SearchView mSearchView;
@@ -45,7 +46,11 @@ public class CourseFragment extends Fragment {
         mSearchView.setSubmitButtonEnabled(true);
         mSearchView.setQueryHint("查找");
         //ToastUtils.init(getActivity().getApplication());
+        int adapterItemLen = mAdapter.mVideoIndexs.length;
 
+        for(int i = 0;i<adapterItemLen;i++){
+            mAdapter.getItem(i);
+        }
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             // 当点击搜索按钮时触发该方法

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -20,8 +21,8 @@ import java.util.List;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
-public class videoAdapter extends BaseAdapter {
-    int[] mVideoIndexs = {0,1,2,3,4};
+public class videoAdapter extends BaseAdapter{
+    public int[] mVideoIndexs = {0,1,2,3,4};
     Context mContext;
     int mPager = -1;
 
@@ -35,6 +36,9 @@ public class videoAdapter extends BaseAdapter {
         this.mContext = context;
         this.mPager = pager;
     }
+
+
+    //自定义接口，用于回调按钮点击事件到Activity
 
     @Override
     public int getCount() {
@@ -59,6 +63,7 @@ public class videoAdapter extends BaseAdapter {
             String title = videoConstant.mVideoTitles[0][i];
             String type = videoConstant.mVideoTypes[0][i];
             String tags = videoConstant.mVideoTags[0][i];
+            Log.d("SEARCH_TEST",title+" "+type+" "+tags+" "+i);
 
             //TODO:这里强行实现了类似模糊识别的功能，双向判断子串
             if(query.contains(title)||query.contains(type)||query.contains(tags)
@@ -74,6 +79,7 @@ public class videoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        //Log.d("SEARCH_TEST",position+" "+mVideoIndexs[position]);
         position = mVideoIndexs[position];
         ViewHolder holder;
         if (null == convertView) {
@@ -95,23 +101,25 @@ public class videoAdapter extends BaseAdapter {
         TextView txTag = convertView.findViewById(R.id.video_tag2);
         txTag.setText(videoConstant.getmVideoTags()[0][position]);
 
-        txType.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String searchKey = (String) txType.getText();
-                Log.d("CLICK_TEST","searchKey: "+searchKey);
-                search(searchKey);
-            }
-        });
-
-        txTag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String searchKey = (String) txTag.getText();
-                Log.d("CLICK_TEST","searchKey: "+searchKey);
-                search(searchKey);
-            }
-        });
+//        txType.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String searchKey = (String) txType.getText();
+//                Log.d("CLICK_TEST","searchKey: "+searchKey);
+//                search(searchKey);
+//
+//            }
+//        });
+//
+//        txTag.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String searchKey = (String) txTag.getText();
+//                Log.d("CLICK_TEST","searchKey: "+searchKey);
+//                search(searchKey);
+//
+//            }
+//        });
 
 
 
