@@ -20,11 +20,39 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.videoAdapter;
+import com.example.myapplication.adapter.videoAdapter.InnerItemOnclickListener;
 import com.hjq.toast.ToastUtils;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
-public class CourseFragment extends Fragment  {
+public class CourseFragment extends Fragment  implements InnerItemOnclickListener {
+    @Override
+    public void itemClick(View v) {
+        int position;
+        position = (Integer) v.getTag();
+
+        int id = v.getId();
+        if(id==R.id.video_button1){
+            Log.d("CLICK_TEST","click tag1");
+            String query = mAdapter.getTypesByIndex(position);
+            mAdapter.search(query);
+            mListView.setAdapter(mAdapter);
+        }else if(id==R.id.video_button2){
+            Log.d("CLICK_TEST","click tag2");
+            String query = mAdapter.getTagsByIndex(position);
+            mAdapter.search(query);
+            mListView.setAdapter(mAdapter);
+        }else{
+            Log.d("ERROR_IN_COUSE_FRAGMENT","undefined button id");
+        }
+        Log.d("CLICK_TEST","click: "+position+" id: "+v.getId());
+
+    }
+
+
+
+
+
 
     private ListView mListView;
 
@@ -40,7 +68,11 @@ public class CourseFragment extends Fragment  {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mListView = (ListView) view.findViewById(R.id.list_view);
         mAdapter = new videoAdapter(getContext());
+        mAdapter.setOnInnerItemOnClickListener(this);
         mListView.setAdapter(mAdapter);
+        //mListView.setOnItemClickListener(this);
+
+
         //mSensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
         mSearchView = (SearchView) view.findViewById(R.id.searchView);
         mSearchView.setSubmitButtonEnabled(true);
