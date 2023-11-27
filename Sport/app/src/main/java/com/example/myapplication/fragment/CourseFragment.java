@@ -19,13 +19,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.VideoChooseAdapter;
 import com.example.myapplication.adapter.videoAdapter;
-import com.example.myapplication.adapter.videoAdapter.InnerItemOnclickListener;
+
 import com.hjq.toast.ToastUtils;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
-public class CourseFragment extends Fragment  implements InnerItemOnclickListener {
+public class CourseFragment extends Fragment  implements videoAdapter.InnerItemOnclickListener,
+        VideoChooseAdapter.ChooseItemOnclickListener {
     @Override
     public void itemClick(View v) {
         int position;
@@ -43,9 +45,24 @@ public class CourseFragment extends Fragment  implements InnerItemOnclickListene
             mAdapter.search(query);
             mListView.setAdapter(mAdapter);
         }else{
-            Log.d("ERROR_IN_COUSE_FRAGMENT","undefined button id");
+            Log.d("ClICK_TEST","undefined button id");
         }
         Log.d("CLICK_TEST","click: "+position+" id: "+v.getId());
+    }
+
+    @Override
+    public void chooseItemClick(View v) {
+        int position;
+        position = (Integer) v.getTag();
+
+        int id = v.getId();
+        Log.d("CLICK_TEST",position+" "+id);
+        if(id==R.id.video_choose){
+            Log.d("CLICK_TEST","click side list");
+            String query = mChooseAdapter.getTypesByIndex(position);
+            mAdapter.search(query);
+            mListView.setAdapter(mAdapter);
+        }
 
     }
 
@@ -54,11 +71,15 @@ public class CourseFragment extends Fragment  implements InnerItemOnclickListene
 
 
 
+
+
     private ListView mListView;
+    private ListView mListChooseView;
 
     private SearchView mSearchView;
     private videoAdapter mAdapter;
-    private SensorEventListener mSensorEventListener;
+    private VideoChooseAdapter mChooseAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,10 +88,18 @@ public class CourseFragment extends Fragment  implements InnerItemOnclickListene
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mListView = (ListView) view.findViewById(R.id.list_view);
+        mListChooseView = (ListView) view.findViewById(R.id.list_choose);
+
+
+
         mAdapter = new videoAdapter(getContext());
         mAdapter.setOnInnerItemOnClickListener(this);
         mListView.setAdapter(mAdapter);
         //mListView.setOnItemClickListener(this);
+
+        mChooseAdapter = new VideoChooseAdapter(getContext());
+        mChooseAdapter.setOnInnerItemOnClickListener(this);
+        mListChooseView.setAdapter(mChooseAdapter);
 
 
         //mSensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
@@ -78,11 +107,11 @@ public class CourseFragment extends Fragment  implements InnerItemOnclickListene
         mSearchView.setSubmitButtonEnabled(true);
         mSearchView.setQueryHint("查找");
         //ToastUtils.init(getActivity().getApplication());
-        int adapterItemLen = mAdapter.mVideoIndexs.length;
-
-        for(int i = 0;i<adapterItemLen;i++){
-            mAdapter.getItem(i);
-        }
+//        int adapterItemLen = mAdapter.mVideoIndexs.length;
+//
+//        for(int i = 0;i<adapterItemLen;i++){
+//            mAdapter.getItem(i);
+//        }
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             // 当点击搜索按钮时触发该方法
@@ -116,4 +145,7 @@ public class CourseFragment extends Fragment  implements InnerItemOnclickListene
 
 
     }
+
+
+
 }

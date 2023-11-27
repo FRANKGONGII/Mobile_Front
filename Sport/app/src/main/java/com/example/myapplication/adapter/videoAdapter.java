@@ -129,15 +129,16 @@ public class videoAdapter extends BaseAdapter implements OnClickListener{
             holder = new ViewHolder();
             LayoutInflater mLayoutInflater = LayoutInflater.from(mContext);
             convertView = mLayoutInflater.inflate(R.layout.item_videoview, null);
-            holder.bt1 = (Button) convertView.findViewById(R.id.video_button1);
-            holder.bt2 = (Button) convertView.findViewById(R.id.video_button2);
-            holder.bt1.setText(videoConstant.getmVideoTypes()[0][position]);
-            holder.bt2.setText(videoConstant.getmVideoTags()[0][position]);
+
             //TODO:增加其他两个类型按钮的处理
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        holder.bt1 = (Button) convertView.findViewById(R.id.video_button1);
+        holder.bt2 = (Button) convertView.findViewById(R.id.video_button2);
+        holder.bt1.setText(videoConstant.getmVideoTypes()[0][position]);
+        holder.bt2.setText(videoConstant.getmVideoTags()[0][position]);
         holder.mJCVideoPlayerStandard = (JCVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
 
         holder.bt1.setOnClickListener(this);

@@ -33,25 +33,25 @@
             android:textColor="@color/text_color_white"
             android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/video_button3"
-            android:layout_width="70sp"
-            android:layout_height="40sp"
-            android:layout_marginLeft="10sp"
-            android:background="@drawable/button_rectangle"
-            android:text="骑行"
-            android:textColor="@color/text_color_white"
-            android:textSize="15sp" />
+<!--        <Button-->
+<!--            android:id="@+id/video_button3"-->
+<!--            android:layout_width="70sp"-->
+<!--            android:layout_height="40sp"-->
+<!--            android:layout_marginLeft="10sp"-->
+<!--            android:background="@drawable/button_rectangle"-->
+<!--            android:text="骑行"-->
+<!--            android:textColor="@color/text_color_white"-->
+<!--            android:textSize="15sp" />-->
 
-        <Button
-            android:id="@+id/video_button4"
-            android:layout_width="70sp"
-            android:layout_height="40sp"
-            android:layout_marginLeft="10sp"
-            android:background="@drawable/button_rectangle"
-            android:text="骑行"
-            android:textColor="@color/text_color_white"
-            android:textSize="15sp" />
+<!--        <Button-->
+<!--            android:id="@+id/video_button4"-->
+<!--            android:layout_width="70sp"-->
+<!--            android:layout_height="40sp"-->
+<!--            android:layout_marginLeft="10sp"-->
+<!--            android:background="@drawable/button_rectangle"-->
+<!--            android:text="骑行"-->
+<!--            android:textColor="@color/text_color_white"-->
+<!--            android:textSize="15sp" />-->
 
 
     </LinearLayout>
