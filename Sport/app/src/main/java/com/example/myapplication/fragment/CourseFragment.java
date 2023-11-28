@@ -2,6 +2,7 @@ package com.example.myapplication.fragment;
 
 import static android.content.Context.SENSOR_SERVICE;
 
+import android.graphics.Color;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -50,6 +52,10 @@ public class CourseFragment extends Fragment  implements videoAdapter.InnerItemO
         Log.d("CLICK_TEST","click: "+position+" id: "+v.getId());
     }
 
+    View lastChoose = null;
+
+
+
     @Override
     public void chooseItemClick(View v) {
         int position;
@@ -58,10 +64,23 @@ public class CourseFragment extends Fragment  implements videoAdapter.InnerItemO
         int id = v.getId();
         Log.d("CLICK_TEST",position+" "+id);
         if(id==R.id.video_choose){
-            Log.d("CLICK_TEST","click side list");
+
+
+            //Log.d("CLICK_TEST","click side list"+" "+mPosition);
             String query = mChooseAdapter.getTypesByIndex(position);
             mAdapter.search(query);
             mListView.setAdapter(mAdapter);
+            Button bt1 = v.findViewById(R.id.video_choose);
+            bt1.setBackgroundColor(Color.parseColor("#CCCCCC"));
+
+            if(lastChoose!=null){
+                Button btLast = lastChoose.findViewById(R.id.video_choose);
+                btLast.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            }
+            lastChoose = v;
+
+
+
         }
 
     }

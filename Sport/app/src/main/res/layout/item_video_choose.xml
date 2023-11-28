@@ -10,7 +10,6 @@
         android:text="选项"
         android:textColor="@color/blue_2"
         android:background="@drawable/button_white"
-
         android:textSize="20sp"/>
 
 
