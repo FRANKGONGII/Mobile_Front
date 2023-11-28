@@ -33,7 +33,15 @@
             android:textColor="@color/text_color_white"
             android:textSize="15sp" />
 
-<!--        <Button-->
+        <Button
+            android:id="@+id/video_button3"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_marginLeft="10sp"
+            android:background="@drawable/baseline_favorite_border_24" />
+
+
+        <!--        <Button-->
 <!--            android:id="@+id/video_button3"-->
 <!--            android:layout_width="70sp"-->
 <!--            android:layout_height="40sp"-->

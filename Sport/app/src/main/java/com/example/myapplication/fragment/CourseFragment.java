@@ -46,6 +46,17 @@ public class CourseFragment extends Fragment  implements videoAdapter.InnerItemO
             String query = mAdapter.getTagsByIndex(position);
             mAdapter.search(query);
             mListView.setAdapter(mAdapter);
+        }else if(id==R.id.video_button3){
+            if(mAdapter.favourite[position]){
+                mAdapter.favourite[position] = false;
+                Button bt3 = v.findViewById(id);
+                bt3.setBackgroundResource(R.drawable.baseline_favorite_border_24);
+            }else{
+                mAdapter.favourite[position] = true;
+                Button bt3 = v.findViewById(id);
+                bt3.setBackgroundResource(R.drawable.baseline_favorite_24);
+            }
+
         }else{
             Log.d("ClICK_TEST","undefined button id");
         }

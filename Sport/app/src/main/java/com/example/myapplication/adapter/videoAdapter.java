@@ -120,6 +120,8 @@ public class videoAdapter extends BaseAdapter implements OnClickListener{
         }
     }
 
+    public  boolean[] favourite = new boolean[mVideoIndexs.length];
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //Log.d("SEARCH_TEST",position+" "+mVideoIndexs[position]);
@@ -137,14 +139,25 @@ public class videoAdapter extends BaseAdapter implements OnClickListener{
         }
         holder.bt1 = (Button) convertView.findViewById(R.id.video_button1);
         holder.bt2 = (Button) convertView.findViewById(R.id.video_button2);
+        holder.bt3 = (Button) convertView.findViewById(R.id.video_button3);
+
         holder.bt1.setText(videoConstant.getmVideoTypes()[0][position]);
         holder.bt2.setText(videoConstant.getmVideoTags()[0][position]);
         holder.mJCVideoPlayerStandard = (JCVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
 
         holder.bt1.setOnClickListener(this);
         holder.bt2.setOnClickListener(this);
+        holder.bt3.setOnClickListener(this);
+
         holder.bt1.setTag(position);
         holder.bt2.setTag(position);
+        holder.bt3.setTag(position);
+
+        if(favourite[position]){
+            holder.bt3.setBackgroundResource(R.drawable.baseline_favorite_24);
+        }else{
+            holder.bt3.setBackgroundResource(R.drawable.baseline_favorite_border_24);
+        }
 
 
         if (mPager == -1) {
@@ -168,7 +181,7 @@ public class videoAdapter extends BaseAdapter implements OnClickListener{
 
     class ViewHolder {
         JCVideoPlayerStandard mJCVideoPlayerStandard;
-        Button bt1, bt2;
+        Button bt1, bt2, bt3;
     }
 
 }
