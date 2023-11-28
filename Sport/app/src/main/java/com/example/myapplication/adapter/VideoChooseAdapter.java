@@ -64,7 +64,7 @@ public class VideoChooseAdapter extends BaseAdapter implements View.OnClickListe
         return types[position];
     }
 
-
+    public  int choose = -1;
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -85,6 +85,12 @@ public class VideoChooseAdapter extends BaseAdapter implements View.OnClickListe
         holder.bt1.setText(types[position]);
         holder.bt1.setOnClickListener(this);
         holder.bt1.setTag(position);
+
+        if(position==choose){
+            holder.bt1.setBackgroundColor(Color.parseColor("#CCCCCC"));
+        }else{
+            holder.bt1.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
 
 
 
