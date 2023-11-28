@@ -20,7 +20,7 @@ public class VideoChooseAdapter extends BaseAdapter implements View.OnClickListe
 
     private String[] types = {"test","test2","test3","test4","test5",
             "running","se","pri","type9","type10",
-            "type11","type12","type13","type14","type15"};
+            "type11"};
 
     private ChooseItemOnclickListener mListener;
 
