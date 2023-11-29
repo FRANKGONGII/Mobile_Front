@@ -80,6 +80,10 @@ public class Record implements Serializable {
 
     public String getType(){ return recordType.getStr(); }
 
+    public String toString(){
+        return getId()+" "+duration+" "+getDistance()+" "+getType();
+    }
+
     public String parse_duration(int duration){
         int h = duration / 1440;
         int min = duration % 1440 / 60;
