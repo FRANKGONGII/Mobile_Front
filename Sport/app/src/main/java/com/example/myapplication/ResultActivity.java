@@ -56,34 +56,34 @@ public class ResultActivity extends AppCompatActivity {
 
 
 
-        CameraPosition cameraPosition = new CameraPosition(list.get(0), 64, 0, 0);
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-        aMap.moveCamera(cameraUpdate);
-
-        for(int i = 3;i<list.size();i++){
-            LatLng l1 = list.get(i-1);
-            LatLng l2 = list.get(i);
-            double speed = AMapUtils.calculateLineDistance(l1,l2);
-            speed = speed*3600/1000;
-
-            PolylineOptions options = new PolylineOptions();
-            options.add(l1);
-            options.add(l2);
-
-            if(speed>6) {
-                aMap.addPolyline(options.width(10).color(Color.argb(255, 204, 0, 51)));
-            } else if(speed<=6&&speed>=4){
-                aMap.addPolyline(options.width(10).color(Color.argb(255, 255, 255, 0)));
-            }else{
-                aMap.addPolyline(options.width(10).color(Color.argb(255, 36, 164, 255)));
-            }
-        }
-
-
-        Marker marker1 = aMap.addMarker(new MarkerOptions().
-                position(list.get(2)).title("北京").snippet("DefaultMarker"));
-        Marker marker2 = aMap.addMarker(new MarkerOptions().
-                position(list.get(list.size()-1)).title("北京").snippet("DefaultMarker"));
+//        CameraPosition cameraPosition = new CameraPosition(list.get(0), 64, 0, 0);
+//        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+//        aMap.moveCamera(cameraUpdate);
+//
+//        for(int i = 3;i<list.size();i++){
+//            LatLng l1 = list.get(i-1);
+//            LatLng l2 = list.get(i);
+//            double speed = AMapUtils.calculateLineDistance(l1,l2);
+//            speed = speed*3600/1000;
+//
+//            PolylineOptions options = new PolylineOptions();
+//            options.add(l1);
+//            options.add(l2);
+//
+//            if(speed>6) {
+//                aMap.addPolyline(options.width(10).color(Color.argb(255, 204, 0, 51)));
+//            } else if(speed<=6&&speed>=4){
+//                aMap.addPolyline(options.width(10).color(Color.argb(255, 255, 255, 0)));
+//            }else{
+//                aMap.addPolyline(options.width(10).color(Color.argb(255, 36, 164, 255)));
+//            }
+//        }
+//
+//
+//        Marker marker1 = aMap.addMarker(new MarkerOptions().
+//                position(list.get(2)).title("北京").snippet("DefaultMarker"));
+//        Marker marker2 = aMap.addMarker(new MarkerOptions().
+//                position(list.get(list.size()-1)).title("北京").snippet("DefaultMarker"));
 
 
 

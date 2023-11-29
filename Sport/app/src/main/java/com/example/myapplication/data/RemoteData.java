@@ -26,7 +26,7 @@ public class RemoteData implements DataService {
     private String url = LinkConstant.url;
 
     @Override
-    public List<Record> getAllRecords() {
+    public List<Record> getAllRecords(){
         String serviceRecord = "/v1/record";
         List<Record> ret = new ArrayList<>();
 
@@ -37,7 +37,7 @@ public class RemoteData implements DataService {
                 .build();
 
         // 同步 Get 请求
-        new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 Response response = null;
@@ -62,11 +62,24 @@ public class RemoteData implements DataService {
                 Record[] tmp = gson.fromJson(result,Record[].class);
                 Log.d("URL_TEST",tmp.length+" "+tmp[1].toString());
 
-                ret.addAll(Arrays.asList(tmp));
+                for(Record record : tmp){
+                    ret.add(record);
+                }
+                Log.d("URL_TEST","???" + ret.toString());
             }
-        }).start();
+        });
 
-        return ret;
+        thread.start();
+        try{
+            thread.join();
+
+            Log.d("URL_TEST","!!!" + ret.toString());
+            return ret;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -80,7 +93,7 @@ public class RemoteData implements DataService {
                 .get()                    // 使用Get方法
                 .build();
 
-        new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 Response response = null;
@@ -105,9 +118,19 @@ public class RemoteData implements DataService {
                 record[0] = gson.fromJson(result,Record.class);
 
             }
-        }).start();
+        });
 
-        return record[0];
+        thread.start();
+        try{
+            thread.join();
+            Log.i("URL_TEST", "result11 : " + record[0]);
+            return record[0];
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Log.i("URL_TEST", "result???");
+            return null;
+        }
     }
 
     @Override
