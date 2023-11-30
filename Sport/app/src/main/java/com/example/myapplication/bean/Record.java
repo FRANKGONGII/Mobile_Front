@@ -50,6 +50,10 @@ public class Record implements Serializable {
 
     public List<LatLng> latLngList;
 
+    public List<Double> latitudeList;
+
+    public List<Double> longitudeList;
+
     public Record(RecordType recordType, Date startTime, Date endTime, double dist, int duration, List<LatLng> latLngList){
         this.recordType = recordType;
         this.startTime = startTime;
@@ -81,7 +85,7 @@ public class Record implements Serializable {
     public String getType(){ return recordType.getStr(); }
 
     public String toString(){
-        return getId()+" "+duration+" "+getDistance()+" "+getType();
+        return getId()+" "+duration+" "+getDistance()+" "+getType()+" "+getStartTime()+" "+getEndTime()+" "+getLatLngList();
     }
 
     public String parse_duration(int duration){

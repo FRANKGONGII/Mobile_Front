@@ -2,10 +2,15 @@ package com.example.myapplication.data;
 
 import android.util.Log;
 
+import com.amap.api.maps2d.model.LatLng;
 import com.example.myapplication.bean.Record;
 import com.example.myapplication.constant.LinkConstant;
 import com.google.gson.Gson;
 
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,6 +71,9 @@ public class RemoteData implements DataService {
             }
         }).start();
 
+
+
+
         return ret;
     }
 
@@ -107,11 +115,22 @@ public class RemoteData implements DataService {
             }
         }).start();
 
+
+
+        //尝试构建坐标List
+        for(int i = 0;i<record[0].latitudeList.size();i++){
+            LatLng latLng = new LatLng(record[0].latitudeList.get(i),record[0].longitudeList.get(i));
+            record[0].latLngList.add(latLng);
+        }
+
         return record[0];
     }
 
     @Override
-    public void updateRecord(Record record) {
+    public void updateRecord(Record record) throws JSONException {
+
+
+
         OkHttpClient client=new OkHttpClient();
 
         String serviceSave = "/v1/record/save";
@@ -119,19 +138,54 @@ public class RemoteData implements DataService {
         String id = String.valueOf(record.id);
         String duration = record.getDuration();
         String distance = record.getDistance();
-        String type = record.getType();
+        String recordType = record.getType();
         String startTime = String.valueOf(record.getStartTime());
+        String endTime = String.valueOf(record.getEndTime());
 
         //构建表单参数
-        FormBody.Builder requestBuild=new FormBody.Builder();
-        //添加请求体
-        RequestBody requestBody=requestBuild
-                .add("id",id)
-                .add("duration",duration)
-                .add("distance",distance)
-                .add("type",type)
-                .add("startTime",startTime)
-                .build();
+//        FormBody.Builder requestBuild=new FormBody.Builder();
+//        //添加请求体
+//        RequestBody requestBody=requestBuild
+//                .add("id",id)
+//                .add("duration",duration)
+//                .add("distance",distance)
+//                .add("type",type)
+//                .add("startTime",startTime)
+//                .build();
+
+
+
+
+
+
+
+        // 创建json对象
+        JSONObject jsonObject = new JSONObject();
+        // 1个数组参数
+        JSONArray jsonArrayLa = new JSONArray();
+        JSONArray jsonArrayLo = new JSONArray();
+        for (LatLng latLng : record.getLatLngList()) {
+            jsonArrayLa.put(latLng.latitude);
+            jsonArrayLo.put(latLng.longitude);
+        }
+        jsonObject.put("latitudeList", jsonArrayLa);
+        jsonObject.put("longitudeList", jsonArrayLo);
+        jsonObject.put("id", id);
+        jsonObject.put("duration", duration);
+        jsonObject.put("distance", distance);
+        jsonObject.put("recordType", recordType);
+        jsonObject.put("startTime", startTime);
+        jsonObject.put("endTime",endTime);
+        //jsonObject.put("latLngList",null);
+
+        String data = jsonObject.toString();
+
+        // 构造请求体
+        RequestBody requestBody = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), data);
+
+        // 3个字符串参数
+
+
 
         Request request=new Request.Builder()
                 .url(url+serviceSave)

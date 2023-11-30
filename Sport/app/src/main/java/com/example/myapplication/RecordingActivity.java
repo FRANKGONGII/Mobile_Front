@@ -52,6 +52,7 @@ import java.util.Date;
 import java.util.List;
 import com.example.myapplication.bean.Record;
 
+import org.json.JSONException;
 
 
 public class RecordingActivity extends Activity {
@@ -175,7 +176,13 @@ public class RecordingActivity extends Activity {
                         myLocationStyle.interval(Long.MAX_VALUE);
                         aMap.setMyLocationStyle(myLocationStyle);
                     }
-                    save();
+
+                    try {
+                        save();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
                 }
             }
         });
@@ -303,7 +310,7 @@ public class RecordingActivity extends Activity {
         });
     }
 
-    public void save(){
+    public void save() throws JSONException {
         Intent intent = getIntent();
         String sport_type = intent.getStringExtra("sport_type");
 
