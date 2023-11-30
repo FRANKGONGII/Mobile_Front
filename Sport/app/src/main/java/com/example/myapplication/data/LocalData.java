@@ -46,6 +46,7 @@ public class LocalData implements DataService {
     @Override
     public void updateRecord(Record record){
         records.add(record);
+        Log.d("SAVE_TEST",""+record.toString());
         Log.d("SAVE_TEST",""+records.size());
     }
 

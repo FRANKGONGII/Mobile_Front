@@ -5,11 +5,14 @@ import android.util.Log;
 import com.amap.api.maps2d.model.LatLng;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 
 public class Record implements Serializable {
@@ -74,6 +77,12 @@ public class Record implements Serializable {
         this.id = ++id_counter;
     }
 
+    public String getStartTimeByStr(){
+        Date d = getStartTime();
+        DateFormat format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss");
+        format.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
+        return format.format(d);
+    }
     public Date getStartTime(){ return startTime; }
 
     public Date getEndTime(){ return endTime; }
@@ -85,7 +94,7 @@ public class Record implements Serializable {
     public String getType(){ return recordType.getStr(); }
 
     public String toString(){
-        return getId()+" "+duration+" "+getDistance()+" "+getType()+" "+getStartTime()+" "+getEndTime()+" "+getLatLngList();
+        return getId()+" "+duration+" "+getDistance()+" "+getType()+" "+getStartTimeByStr()+" "+getEndTime()+" "+getLatLngList();
     }
 
     public String parse_duration(int duration){
