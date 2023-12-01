@@ -387,6 +387,28 @@ public class RemoteData implements DataService {
         return null;
     }
 
+    private String getBodyParams(Map<String, String> bodyParams) {
+        //1.添加请求参数
+        //遍历map中所有参数到builder
+        if (bodyParams != null && bodyParams.size() > 0) {
+            StringBuffer stringBuffer = new StringBuffer("?");
+            for (String key : bodyParams.keySet()) {
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null并且不是""，就拼接起来
+                    stringBuffer.append("&");
+                    stringBuffer.append(key);
+                    stringBuffer.append("=");
+                    stringBuffer.append(bodyParams.get(key));
+                }
+            }
+
+            return stringBuffer.toString();
+        } else {
+            return "";
+        }
+    }
+
+
     @Override
     public List<Record> queryRecordByBoth(Record.RecordType type, Date startTime, Date endTime)  {
         List<Record> ret = new ArrayList<>();
@@ -397,11 +419,9 @@ public class RemoteData implements DataService {
         params.put("endDate", String.valueOf(endTime));
         params.put("recordType", String.valueOf(type));
 
-        Headers headers = setHeaderParams(params);
         Request request=new Request.Builder()
-                .url(url+serviceQueryInfo)
+                .url(url+serviceQueryInfo+getBodyParams(params))
                 .get()
-                .headers(headers)
                 .build();
         Thread thread = new Thread(new Runnable() {
             @Override
