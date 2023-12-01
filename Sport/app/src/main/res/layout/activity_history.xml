@@ -8,12 +8,143 @@
     <!-- 添加标题 -->
     <TextView
         android:id="@+id/title_history"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="跑步历史"
+        android:text="运动历史"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/runningHistoryList"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/type_layout"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click me"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/type_layout"
+        app:layout_constraintStart_toEndOf="@+id/title_history"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/type_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/runningHistoryList"
+        app:layout_constraintTop_toBottomOf="@+id/title_history"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt1"
+            android:layout_width="120sp"
+            android:layout_height="wrap_content"
+            android:text="按类型划分:"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="parent"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/record_type_layout1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/frame2"
+                    android:layout_marginHorizontal="10dp">
+
+                    <TextView
+                        android:id="@+id/record_type1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10sp"
+                        android:text="Community"
+                        android:textColor="@color/text_color_white"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/record_type_layout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/frame2"
+                    android:layout_marginHorizontal="10dp">
+
+                    <TextView
+                        android:id="@+id/record_type2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10sp"
+                        android:text="Community"
+                        android:textColor="@color/text_color_white"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/record_type_layout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/frame2"
+                    android:layout_marginHorizontal="10dp">
+
+                    <TextView
+                        android:id="@+id/record_type3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10sp"
+                        android:text="Community"
+                        android:textColor="@color/text_color_white"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/record_type_layout4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/frame2"
+                    android:layout_marginHorizontal="10dp">
+
+                    <TextView
+                        android:id="@+id/record_type4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10sp"
+                        android:text="Community"
+                        android:textColor="@color/text_color_white"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/record_type_layout5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/frame2"
+                    android:layout_marginHorizontal="10dp">
+
+                    <TextView
+                        android:id="@+id/record_type5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10sp"
+                        android:text="Community"
+                        android:textColor="@color/text_color_white"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+
+    </LinearLayout>
+
+
     <!-- 添加跑步历史列表 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/runningHistoryList"
@@ -22,7 +153,7 @@
         android:layout_marginTop="10dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_history"
+        app:layout_constraintTop_toBottomOf="@+id/type_layout"
         tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

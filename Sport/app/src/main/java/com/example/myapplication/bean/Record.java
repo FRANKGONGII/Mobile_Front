@@ -21,12 +21,12 @@ import java.util.TimeZone;
 
 public class Record implements Serializable {
     public enum RecordType {
-        RUNNING,RIDING,WALKING,FITNESS;
+        RUNNING,RIDING,WALKING,SWIMMING;
         private static final HashMap<RecordType,String> mp = new HashMap<RecordType,String>(){{
             put(RUNNING,"跑步");
             put(RIDING,"骑行");
             put(WALKING,"健走");
-            put(FITNESS,"健身");
+            put(SWIMMING,"游泳");
         }};
 
         public static RecordType getValue(String type) {
@@ -98,15 +98,29 @@ public class Record implements Serializable {
     public String getType(){ return recordType.getStr(); }
 
     public String toString(){
-        return getId()+" "+duration+" "+getDistance()+" "+getType()+" "+getStartTimeByStr()+" "+getEndTime()+" "+getLatLngList();
+        return "" + getId()+" "+duration+" "+getDistance()+" "+getType()+" "+getStartTimeByStr()+" "+getEndTime()+" "+getLatLngList();
+    }
+    // km per hour
+    public String getSpeed1(){ return String.format("%.2f", distance * 3600 / duration); }
+
+    // minutes per km
+    public String getSpeed2(){
+        int s = (int) (duration / distance);
+        return String.format("%02d'%02d''", s/60,s%60);
+    }
+
+    public String getCalorie(){
+        int WEIGHT = 60;
+        return String.format("%.1f",1.036*distance*WEIGHT);
     }
 
     public String parse_duration(int duration){
-        int h = duration / 1440;
-        int min = duration % 1440 / 60;
+        int h = duration / 3600;
+        int min = duration % 3600 / 60;
         int s = duration % 60;
         return String.format(Locale.getDefault(), "%02d:%02d:%02d",h,min,s);
     }
+
 
     public int getId(){
         return id;
