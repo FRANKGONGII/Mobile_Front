@@ -45,7 +45,7 @@ public class Record implements Serializable {
         }
     }
 
-    private static int id_counter = 0;
+    private static int id_counter = 3;
 
     public int id;
     RecordType recordType;
