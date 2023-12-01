@@ -78,9 +78,12 @@ public class RemoteData implements DataService {
         try{
             thread.join();
 
-            Log.d("URL_TEST","!!!" + ret.toString());
+
             for(Record r:ret){
                 r.setLatLngList();
+            }
+            for(Record r:ret){
+                Log.d("URL_TEST","finals" + r.toString());
             }
             return ret;
         }
