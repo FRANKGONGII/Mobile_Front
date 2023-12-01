@@ -28,9 +28,12 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class RemoteData implements DataService {
-
     //后端启动的地址
     private String url = LinkConstant.url;
+
+    public RemoteData(){
+        Record.id_counter = getAllRecords().size();
+    }
 
     @Override
     public List<Record> getAllRecords(){

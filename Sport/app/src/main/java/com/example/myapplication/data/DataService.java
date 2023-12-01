@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface DataService {
+
     public List<Record> getAllRecords();
 
     public Record getRecord(int index);

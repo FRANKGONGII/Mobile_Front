@@ -45,7 +45,7 @@ public class Record implements Serializable {
         }
     }
 
-    private static int id_counter = 3;
+    public static int id_counter = 3;
 
     public int id;
     RecordType recordType;
@@ -109,7 +109,7 @@ public class Record implements Serializable {
     public RecordType getRecordType(){ return recordType; }
 
     public String toString(){
-        return getId()+" "+duration+" "+getDistance();
+        return getId()+" "+duration+" "+getDistance() + " " +recordType;
     }
     // km per hour
     public String getSpeed1(){ return String.format("%.2f", distance * 3600 / duration); }

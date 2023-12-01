@@ -15,7 +15,9 @@ public class LocalData implements DataService {
     private ArrayList<Record> records = null;
 
     public LocalData(){
+        Log.d("ID_TEST","i'm created???");
         generateRecords();
+        Record.id_counter = getAllRecords().size();
     }
 
     public List<Record> getAllRecords(){
