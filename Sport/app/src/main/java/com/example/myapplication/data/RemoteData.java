@@ -1,5 +1,6 @@
 package com.example.myapplication.data;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.amap.api.maps2d.model.LatLng;
@@ -17,11 +18,14 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -182,12 +186,6 @@ public class RemoteData implements DataService {
 //                .add("startTime",startTime)
 //                .build();
 
-
-
-
-
-
-
         // 创建json对象
         JSONObject jsonObject = new JSONObject();
         // 1个数组参数
@@ -238,18 +236,221 @@ public class RemoteData implements DataService {
         });
     }
 
+    private Headers setHeaderParams(Map<String, String> headerParams) {
+        Headers headers = null;
+        Headers.Builder headersbuilder = new Headers.Builder();
+        if (headerParams != null && headerParams.size() > 0) {
+            for (String key : headerParams.keySet()) {
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(headerParams.get(key))) {
+                    //如果参数不是null并且不是""，就拼接起来
+                    headersbuilder.add(key, headerParams.get(key));
+                }
+            }
+        }
+
+        headers = headersbuilder.build();
+        return headers;
+    }
+
+
     @Override
-    public List<Record> queryRecordByTime(Date startTime, Date endTime) {
+    //TODO:还没搞完
+    public List<Record> queryRecordByTime(Date startTime, Date endTime){
+        List<Record> ret = new ArrayList<>();
+        OkHttpClient client=new OkHttpClient();
+        String serviceQueryInfo = "info";
+        Map<String, String>params = new HashMap<>();
+        params.put("startDate", String.valueOf(startTime));
+        params.put("endDate", String.valueOf(endTime));
+
+        Headers headers = setHeaderParams(params);
+        Request request=new Request.Builder()
+                .url(url+serviceQueryInfo)
+                .get()
+                .headers(headers)
+                .build();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Response response = null;
+                try {
+                    response = client.newCall(request).execute();
+                    //Log.d("URL_TEST","status:"+response.isSuccessful());
+                } catch (IOException e) {
+                    Log.d("URL_TEST",e.getMessage());
+                    //e.printStackTrace();
+                }
+
+                String result = null;
+                try {
+                    result = response.body().string();
+                } catch (IOException e) {
+                    Log.i("URL_TEST","fail"+response.isSuccessful());
+                    e.printStackTrace();
+                }
+                Log.i("URL_TEST", "result : " + result);
+
+                Gson gson = new Gson();
+                Record[] tmp = gson.fromJson(result,Record[].class);
+                Log.d("URL_TEST",tmp.length+" "+tmp[1].toString());
+
+                for(Record record : tmp){
+                    ret.add(record);
+                }
+                Log.d("URL_TEST","???" + ret.toString());
+            }
+        });
+
+        thread.start();
+        try{
+            thread.join();
+
+
+            for(Record r:ret){
+                r.setLatLngList();
+            }
+            for(Record r:ret){
+                Log.d("URL_TEST","finals" + r.toString());
+            }
+            return ret;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
-    public List<Record> queryRecordByType(Record.RecordType type) {
+    public List<Record> queryRecordByType(Record.RecordType type){
+        List<Record> ret = new ArrayList<>();
+        OkHttpClient client=new OkHttpClient();
+        String serviceQueryInfo = "info";
+        Map<String, String>params = new HashMap<>();
+        params.put("startDate",null);
+        params.put("endDate",null);
+        params.put("recordType", String.valueOf(type));
+
+        Headers headers = setHeaderParams(params);
+        Request request=new Request.Builder()
+                .url(url+serviceQueryInfo)
+                .get()
+                .headers(headers)
+                .build();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Response response = null;
+                try {
+                    response = client.newCall(request).execute();
+                    //Log.d("URL_TEST","status:"+response.isSuccessful());
+                } catch (IOException e) {
+                    Log.d("URL_TEST",e.getMessage());
+                    //e.printStackTrace();
+                }
+
+                String result = null;
+                try {
+                    result = response.body().string();
+                } catch (IOException e) {
+                    Log.i("URL_TEST","fail"+response.isSuccessful());
+                    e.printStackTrace();
+                }
+                Log.i("URL_TEST", "result : " + result);
+
+                Gson gson = new Gson();
+                Record[] tmp = gson.fromJson(result,Record[].class);
+                Log.d("URL_TEST",tmp.length+" "+tmp[1].toString());
+
+                for(Record record : tmp){
+                    ret.add(record);
+                }
+                Log.d("URL_TEST","???" + ret.toString());
+            }
+        });
+
+        thread.start();
+        try{
+            thread.join();
+
+
+            for(Record r:ret){
+                r.setLatLngList();
+            }
+            for(Record r:ret){
+                Log.d("URL_TEST","finals" + r.toString());
+            }
+            return ret;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
-    public List<Record> queryRecordByBoth(Record.RecordType type, Date startTime, Date endTime) {
+    public List<Record> queryRecordByBoth(Record.RecordType type, Date startTime, Date endTime)  {
+        List<Record> ret = new ArrayList<>();
+        OkHttpClient client=new OkHttpClient();
+        String serviceQueryInfo = "info";
+        Map<String, String>params = new HashMap<>();
+        params.put("startDate", String.valueOf(startTime));
+        params.put("endDate", String.valueOf(endTime));
+        params.put("recordType", String.valueOf(type));
+
+        Headers headers = setHeaderParams(params);
+        Request request=new Request.Builder()
+                .url(url+serviceQueryInfo)
+                .get()
+                .headers(headers)
+                .build();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Response response = null;
+                try {
+                    response = client.newCall(request).execute();
+                    //Log.d("URL_TEST","status:"+response.isSuccessful());
+                } catch (IOException e) {
+                    Log.d("URL_TEST",e.getMessage());
+                    //e.printStackTrace();
+                }
+
+                String result = null;
+                try {
+                    result = response.body().string();
+                } catch (IOException e) {
+                    Log.i("URL_TEST","fail"+response.isSuccessful());
+                    e.printStackTrace();
+                }
+                Log.i("URL_TEST", "result : " + result);
+
+                Gson gson = new Gson();
+                Record[] tmp = gson.fromJson(result,Record[].class);
+                Log.d("URL_TEST",tmp.length+" "+tmp[1].toString());
+
+                for(Record record : tmp){
+                    ret.add(record);
+                }
+                Log.d("URL_TEST","???" + ret.toString());
+            }
+        });
+
+        thread.start();
+        try{
+            thread.join();
+
+
+            for(Record r:ret){
+                r.setLatLngList();
+            }
+            for(Record r:ret){
+                Log.d("URL_TEST","finals" + r.toString());
+            }
+            return ret;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         return null;
     }
 }

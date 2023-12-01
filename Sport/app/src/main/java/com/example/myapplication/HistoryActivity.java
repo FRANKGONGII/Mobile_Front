@@ -16,6 +16,8 @@ import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
 import com.example.myapplication.data.LocalData;
 
+import org.json.JSONException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -93,7 +95,7 @@ public class HistoryActivity extends AppCompatActivity{
         }
     }
 
-    private void update_list(){
+    private void update_list() {
         Date startTime = get_this_month();
         Date endTime = get_next_month(startTime);
 
