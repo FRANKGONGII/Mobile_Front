@@ -67,7 +67,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Record record_bean = recordList.get(position);
-        holder.recordTime.setText(record_bean.getStartTime().toString());
+        holder.recordTime.setText(record_bean.getStartTimeByStr());
         holder.duration.setText(record_bean.getDuration());
         holder.distance.setText(record_bean.getDistance());
         holder.record_type.setText(record_bean.getType());
