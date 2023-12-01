@@ -391,7 +391,8 @@ public class RemoteData implements DataService {
         //1.添加请求参数
         //遍历map中所有参数到builder
         if (bodyParams != null && bodyParams.size() > 0) {
-            StringBuffer stringBuffer = new StringBuffer("?");
+            StringBuffer temp = new StringBuffer("?");
+            StringBuffer stringBuffer = new StringBuffer();
             for (String key : bodyParams.keySet()) {
                 if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
                     //如果参数不是null并且不是""，就拼接起来
@@ -402,7 +403,9 @@ public class RemoteData implements DataService {
                 }
             }
 
-            return stringBuffer.toString();
+            temp.append(stringBuffer.toString().substring(1));
+
+            return temp.toString();
         } else {
             return "";
         }
@@ -413,12 +416,13 @@ public class RemoteData implements DataService {
     public List<Record> queryRecordByBoth(Record.RecordType type, Date startTime, Date endTime)  {
         List<Record> ret = new ArrayList<>();
         OkHttpClient client=new OkHttpClient();
-        String serviceQueryInfo = "info";
+        String serviceQueryInfo = "/v1/record/info";
         Map<String, String>params = new HashMap<>();
         params.put("startDate", String.valueOf(startTime));
         params.put("endDate", String.valueOf(endTime));
         params.put("recordType", String.valueOf(type));
 
+        Log.d("URL_TEST",url+serviceQueryInfo+getBodyParams(params));
         Request request=new Request.Builder()
                 .url(url+serviceQueryInfo+getBodyParams(params))
                 .get()
@@ -446,7 +450,7 @@ public class RemoteData implements DataService {
 
                 Gson gson = new Gson();
                 Record[] tmp = gson.fromJson(result,Record[].class);
-                Log.d("URL_TEST",tmp.length+" "+tmp[1].toString());
+                Log.d("URL_TEST",tmp.length+" "+tmp[0].toString());
 
                 for(Record record : tmp){
                     ret.add(record);
