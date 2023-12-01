@@ -137,7 +137,7 @@ public class RemoteData implements DataService {
             thread.join();
             //尝试构建坐标List
             record[0].setLatLngList();
-            Log.i("URL_TEST", "result11 : " + record[0].toString());
+            Log.i("URL_TEST", "final result : " + record[0].toString());
             return record[0];
         }
         catch (Exception e){
