@@ -26,7 +26,7 @@ public class Record implements Serializable {
             put(RUNNING,"跑步");
             put(RIDING,"骑行");
             put(WALKING,"健走");
-            put(FITNESS,"健身");
+            put(FITNESS,"游泳");
         }};
 
         public static RecordType getValue(String type) {
@@ -45,7 +45,7 @@ public class Record implements Serializable {
         }
     }
 
-    private static int id_counter = 0;
+    private static int id_counter = 3;
 
     public int id;
     RecordType recordType;
@@ -83,7 +83,14 @@ public class Record implements Serializable {
 
     public String getStartTimeByStr(){
         Date d = getStartTime();
-        DateFormat format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss");
+        DateFormat format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+        format.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
+        return format.format(d);
+    }
+
+    public String getEndTimeByStr(){
+        Date d = getEndTime();
+        DateFormat format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
         format.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
         return format.format(d);
     }
@@ -95,10 +102,14 @@ public class Record implements Serializable {
 
     public String getDuration(){ return parse_duration(duration); }
 
+    public int getIntDuration(){return duration;}
+
     public String getType(){ return recordType.getStr(); }
 
+    public RecordType getRecordType(){ return recordType; }
+
     public String toString(){
-        return getId()+" "+duration+" "+getDistance()+" "+getType()+" "+getStartTimeByStr()+" "+getEndTime()+" "+getLatLngList();
+        return getId()+" "+duration+" "+getDistance();
     }
 
     public String parse_duration(int duration){

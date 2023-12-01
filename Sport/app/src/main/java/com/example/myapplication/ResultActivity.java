@@ -40,11 +40,13 @@ public class ResultActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int id = intent.getIntExtra("passId",-1);
-        Log.d("ID_TEST",""+id);
+        Log.d("ID_TEST","need id:"+id);
         if(id==-1) {
             ToastUtils.show("获取运动数据错误");
         }
+
         Record record = dataService.getRecord(id);
+        //Log.d("ID_TEST","after find"+record);
         List<LatLng> list = record.getLatLngList();
         //Log.d("ID_TEST", list.get(0).latitude+" "+list.get(0).longitude);
         Log.d("ID_TEST",String.valueOf(record.getId()));

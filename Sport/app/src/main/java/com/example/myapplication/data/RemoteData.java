@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -137,12 +138,12 @@ public class RemoteData implements DataService {
             thread.join();
             //尝试构建坐标List
             record[0].setLatLngList();
-            Log.i("URL_TEST", "final result : " + record[0].toString());
+            //Log.i("URL_TEST", "final result : " + record[0].toString());
             return record[0];
         }
         catch (Exception e){
             e.printStackTrace();
-            Log.i("URL_TEST", "result???");
+            Log.i("URL_TEST", "result wrong"+e);
             return null;
         }
 
@@ -157,12 +158,14 @@ public class RemoteData implements DataService {
 
         String serviceSave = "/v1/record/save";
 
-        String id = String.valueOf(record.getId());
-        String duration = record.getDuration();
+        int id = record.getId();
+        Log.d("URL_TEST","id:"+id);
+        int duration = record.getIntDuration();
         String distance = record.getDistance();
-        String recordType = record.getType();
-        String startTime = String.valueOf(record.getStartTime());
-        String endTime = String.valueOf(record.getEndTime());
+        Record.RecordType recordType = record.getRecordType();
+        String startTime = record.getStartTimeByStr();
+        String endTime = record.getEndTimeByStr();
+        //Log.d("URL_TEST",endTime+" "+startTime);
 
         //构建表单参数
 //        FormBody.Builder requestBuild=new FormBody.Builder();
@@ -198,7 +201,7 @@ public class RemoteData implements DataService {
         jsonObject.put("recordType", recordType);
         jsonObject.put("startTime", startTime);
         jsonObject.put("endTime",endTime);
-        //jsonObject.put("latLngList",null);
+        jsonObject.put("latLngList",null);
 
         String data = jsonObject.toString();
 
