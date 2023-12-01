@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -232,5 +233,20 @@ public class RemoteData implements DataService {
                 }
             }
         });
+    }
+
+    @Override
+    public List<Record> queryRecordByTime(Date startTime, Date endTime) {
+        return null;
+    }
+
+    @Override
+    public List<Record> queryRecordByType(Record.RecordType type) {
+        return null;
+    }
+
+    @Override
+    public List<Record> queryRecordByBoth(Record.RecordType type, Date startTime, Date endTime) {
+        return null;
     }
 }

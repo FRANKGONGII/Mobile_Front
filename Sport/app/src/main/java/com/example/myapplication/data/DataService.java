@@ -4,6 +4,7 @@ import com.example.myapplication.bean.Record;
 
 import org.json.JSONException;
 
+import java.util.Date;
 import java.util.List;
 
 public interface DataService {
@@ -12,5 +13,11 @@ public interface DataService {
     public Record getRecord(int index);
 
     public void updateRecord(Record record) throws JSONException;
+
+    public List<Record> queryRecordByTime(Date startTime, Date endTime);
+
+    public List<Record> queryRecordByType(Record.RecordType type);
+
+    public List<Record> queryRecordByBoth(Record.RecordType type,Date startTime, Date endTime);
 
 }

@@ -50,14 +50,61 @@ public class LocalData implements DataService {
         Log.d("SAVE_TEST",""+records.size());
     }
 
+    @Override
+    public List<Record> queryRecordByTime(Date startTime, Date endTime) {
+        List<Record> ret = new ArrayList<>();
+        for(Record record: getAllRecords()){
+            if(startTime.compareTo(record.getStartTime()) < 0 && record.getEndTime().compareTo(endTime) < 0){
+                ret.add(record);
+            }
+        }
+        Log.d("Data_test",""+ret.size());
+        return ret;
+    }
+
+    @Override
+    public List<Record> queryRecordByType(Record.RecordType type) {
+        List<Record> ret = new ArrayList<>();
+        for(Record record: getAllRecords()){
+            if(record.getType().equals(type.getStr())){
+                ret.add(record);
+            }
+        }
+        return ret;
+    }
+
+    @Override
+    public List<Record> queryRecordByBoth(Record.RecordType type, Date startTime, Date endTime) {
+        if(type == null && startTime == null){
+            return getAllRecords();
+        }
+        else if(type == null){
+            return queryRecordByTime(startTime,endTime);
+        }
+        else if(startTime == null){
+            return queryRecordByType(type);
+        }
+        else{
+            List<Record> ret = new ArrayList<>();
+            for(Record record: getAllRecords()){
+                if(record.getType().equals(type.getStr()) && startTime.compareTo(record.getStartTime()) < 0 && record.getEndTime().compareTo(endTime) < 0){
+                    ret.add(record);
+                }
+            }
+            return ret;
+        }
+    }
+
     private void generateRecords(){
         records = new ArrayList<>();
         long now = System.currentTimeMillis();
         Record a = new Record(Record.RecordType.RUNNING,new Date(now-1000000),new Date(now-9000000),2.4,1000);
         Record b = new Record(Record.RecordType.RUNNING,new Date(now-30000000),new Date(now-29999200),2.0,800);
-        Record c = new Record(Record.RecordType.RIDING,new Date(now-100000000),new Date(now-99998700),5.0,1300);
+        Record c = new Record(Record.RecordType.SWIMMING,new Date(now-100000000),new Date(now-99000000),0.6,600);
+        Record d = new Record(Record.RecordType.RIDING,new Date(now-10000000000L),new Date(now-9999998700L),5.0,1300);
         records.add(a);
         records.add(b);
         records.add(c);
+        records.add(d);
     }
 }
