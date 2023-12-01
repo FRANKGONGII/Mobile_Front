@@ -79,6 +79,9 @@ public class RemoteData implements DataService {
             thread.join();
 
             Log.d("URL_TEST","!!!" + ret.toString());
+            for(Record r:ret){
+                r.setLatLngList();
+            }
             return ret;
         }
         catch (Exception e){
@@ -126,16 +129,12 @@ public class RemoteData implements DataService {
             }
         });
 
-
         thread.start();
         try{
             thread.join();
             //尝试构建坐标List
-            for(int i = 0;i<record[0].latitudeList.size();i++){
-                LatLng latLng = new LatLng(record[0].latitudeList.get(i),record[0].longitudeList.get(i));
-                record[0].latLngList.add(latLng);
-            }
-            Log.i("URL_TEST", "result11 : " + record[0]);
+            record[0].setLatLngList();
+            Log.i("URL_TEST", "result11 : " + record[0].toString());
             return record[0];
         }
         catch (Exception e){
@@ -155,7 +154,7 @@ public class RemoteData implements DataService {
 
         String serviceSave = "/v1/record/save";
 
-        String id = String.valueOf(record.id);
+        String id = String.valueOf(record.getId());
         String duration = record.getDuration();
         String distance = record.getDistance();
         String recordType = record.getType();

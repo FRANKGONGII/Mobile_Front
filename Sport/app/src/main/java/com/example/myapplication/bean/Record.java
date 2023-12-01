@@ -5,6 +5,7 @@ import android.util.Log;
 import com.amap.api.maps2d.model.LatLng;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -100,4 +101,22 @@ public class Record implements Serializable {
     }
 
     public List<LatLng> getLatLngList(){return latLngList;}
+
+    public void setLatLngList(){
+        if(this.longitudeList!=null&&this.latitudeList!=null){
+            this.latLngList = new ArrayList<>();
+            for(int i = 0;i<longitudeList.size();i++){
+                this.latLngList.add(new LatLng(latitudeList.get(i),longitudeList.get(i)));
+            }
+        }
+    }
+
+    public void setLatLngList(List<Double> la,List<Double>lo){
+        this.latitudeList = la;
+        this.longitudeList = lo;
+        this.setLatLngList();
+
+    }
+
+
 }
