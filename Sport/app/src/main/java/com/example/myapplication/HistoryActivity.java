@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,12 +29,13 @@ public class HistoryActivity extends AppCompatActivity{
     private final int[] record_type_layout_ids = {R.id.record_type_layout2,R.id.record_type_layout3,R.id.record_type_layout4,R.id.record_type_layout5};
 
     private final int[] time_layout_ids = {R.id.time_layout2,R.id.time_layout3,R.id.time_layout4,R.id.time_layout5};
+    private final int[] month_list = {12,11,10,9};
     private final Record.RecordType[] recordTypes = {Record.RecordType.RUNNING, Record.RecordType.RIDING, Record.RecordType.WALKING, Record.RecordType.SWIMMING};
     private DataService dataService;
 
-    private Record.RecordType type = null;
+    private Record.RecordType chosen_type = null;
 
-    private int month = -1;
+    private int chosen_month = -1;
 
 
     @Override
@@ -71,6 +71,7 @@ public class HistoryActivity extends AppCompatActivity{
         });
 
         init_type();
+        init_time();
     }
 
     private void init_type(){
@@ -78,7 +79,7 @@ public class HistoryActivity extends AppCompatActivity{
         temp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                type = null;
+                chosen_type = null;
                 update_list();
             }
         });
@@ -89,7 +90,30 @@ public class HistoryActivity extends AppCompatActivity{
             temp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view){
-                    type = record_type;
+                    chosen_type = record_type;
+                    update_list();
+                }
+            });
+        }
+    }
+
+    private void init_time(){
+        View temp = findViewById(R.id.time_layout1);
+        temp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                chosen_month = -1;
+                update_list();
+            }
+        });
+
+        for(int i=0;i<4;i++){
+            int month = month_list[i];
+            temp = findViewById(time_layout_ids[i]);
+            temp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view){
+                    chosen_month = month;
                     update_list();
                 }
             });
@@ -100,17 +124,17 @@ public class HistoryActivity extends AppCompatActivity{
         Date startTime = get_this_month();
         Date endTime = get_next_month(startTime);
 
-        recordList = dataService.queryRecordByBoth(type,startTime,endTime);
+        recordList = dataService.queryRecordByBoth(chosen_type,startTime,endTime);
         adapter = new RecordAdapter(recordList);
         recyclerView.setAdapter(adapter);
     }
 
     private Date get_this_month() {
-        if(month == -1) return null;
+        if(chosen_month == -1) return null;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try{
-            Date dt = sdf.parse(String.format("2023-%02d-01",month));
+            Date dt = sdf.parse(String.format("2023-%02d-01", chosen_month));
             Log.d("Date_test",dt.toString());
             return dt;
         }

@@ -102,8 +102,8 @@ public class LocalData implements DataService {
         long now = System.currentTimeMillis();
         Record a = new Record(Record.RecordType.RUNNING,new Date(now-1000000),new Date(now-9000000),2.4,1000);
         Record b = new Record(Record.RecordType.RUNNING,new Date(now-30000000),new Date(now-29999200),2.0,800);
-        Record c = new Record(Record.RecordType.SWIMMING,new Date(now-100000000),new Date(now-99000000),0.6,600);
-        Record d = new Record(Record.RecordType.RIDING,new Date(now-10000000000L),new Date(now-9999998700L),5.0,1300);
+        Record c = new Record(Record.RecordType.SWIMMING,new Date(now-1000000000),new Date(now-999000000),0.6,600);
+        Record d = new Record(Record.RecordType.RIDING,new Date(now-5000000000L),new Date(now-4999998700L),5.0,1300);
         records.add(a);
         records.add(b);
         records.add(c);
