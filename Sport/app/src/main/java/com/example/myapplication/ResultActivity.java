@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -9,22 +8,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.AMapUtils;
-import com.amap.api.maps2d.CameraUpdate;
-import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
-import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
-import com.amap.api.maps2d.model.Marker;
-import com.amap.api.maps2d.model.MarkerOptions;
-import com.amap.api.maps2d.model.PolylineOptions;
 import com.example.myapplication.bean.Record;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
-import com.example.myapplication.data.LocalData;
 import com.hjq.toast.ToastUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ResultActivity extends AppCompatActivity {
@@ -66,8 +56,8 @@ public class ResultActivity extends AppCompatActivity {
         tvDistribution = findViewById(R.id.tvDistribution);
         tvCalorie = findViewById(R.id.tvCalorie);
 
-        tvDistance.setText(record.getDistance());
-        tvDuration.setText(record.getDuration());
+        tvDistance.setText(record.getDistanceByStr());
+        tvDuration.setText(record.getDurationByStr());
         tvSpeed.setText(record.getSpeed1());
         tvDistribution.setText(record.getSpeed2());
         tvCalorie.setText(record.getCalorie());

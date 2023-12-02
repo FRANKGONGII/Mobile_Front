@@ -28,8 +28,6 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
 
         TextView record_type;
 
-        int record_id;
-
         public ViewHolder(View view) {
             super(view);
             recordView = view;
@@ -53,10 +51,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         viewHolder.recordView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int id = viewHolder.record_id;
-
                 Intent intent = new Intent(view.getContext(), ResultActivity.class);
-                intent.putExtra("passId",id);
                 view.getContext().startActivity(intent);
             }
         });
@@ -67,11 +62,10 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Record record_bean = recordList.get(position);
-        holder.recordTime.setText(record_bean.getStartTimeByStr());
-        holder.duration.setText(record_bean.getDuration());
-        holder.distance.setText(record_bean.getDistance());
-        holder.record_type.setText(record_bean.getType());
-        holder.record_id = record_bean.getId();
+        holder.recordTime.setText(record_bean.getRecordTime());
+        holder.duration.setText(record_bean.getDurationByStr());
+        holder.distance.setText(record_bean.getDistanceByStr());
+        holder.record_type.setText(record_bean.getRecordTypeByStr());
     }
 
     @Override

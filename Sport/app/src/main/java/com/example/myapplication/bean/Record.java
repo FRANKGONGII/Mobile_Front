@@ -81,6 +81,13 @@ public class Record implements Serializable {
         this.id = ++id_counter;
     }
 
+    public String getRecordTime(){
+        // 仅用于HistoryActivity中，获取用于展示的时间
+        Date d = getStartTime();
+        DateFormat format=new SimpleDateFormat("EEE, MMM dd HH:mm");
+        format.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
+        return format.format(d);
+    }
     public String getStartTimeByStr(){
         Date d = getStartTime();
         DateFormat format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
@@ -98,18 +105,18 @@ public class Record implements Serializable {
 
     public Date getEndTime(){ return endTime; }
 
-    public String getDistance(){ return String.format("%.2f", distance); }
+    public String getDistanceByStr(){ return String.format("%.2f", distance); }
 
-    public String getDuration(){ return parse_duration(duration); }
+    public String getDurationByStr(){ return parse_duration(duration); }
 
-    public int getIntDuration(){return duration;}
+    public int getDuration(){ return duration; }
 
-    public String getType(){ return recordType.getStr(); }
+    public String getRecordTypeByStr(){ return recordType.getStr(); }
 
     public RecordType getRecordType(){ return recordType; }
 
     public String toString(){
-        return getId()+" "+duration+" "+getDistance() + " " +recordType;
+        return getId()+" "+duration+" "+ getDistanceByStr() + " " +recordType;
     }
     // km per hour
     public String getSpeed1(){ return String.format("%.2f", distance * 3600 / duration); }

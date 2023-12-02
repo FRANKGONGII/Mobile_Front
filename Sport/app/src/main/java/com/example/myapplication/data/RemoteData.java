@@ -16,15 +16,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -168,8 +165,8 @@ public class RemoteData implements DataService {
 
         int id = record.getId();
         Log.d("URL_TEST","id:"+id);
-        int duration = record.getIntDuration();
-        String distance = record.getDistance();
+        int duration = record.getDuration();
+        String distance = record.getDistanceByStr();
         Record.RecordType recordType = record.getRecordType();
         String startTime = record.getStartTimeByStr();
         String endTime = record.getEndTimeByStr();

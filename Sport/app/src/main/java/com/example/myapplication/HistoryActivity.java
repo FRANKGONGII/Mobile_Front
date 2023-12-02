@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class HistoryActivity extends AppCompatActivity{
     private RecordAdapter adapter;
@@ -133,6 +134,7 @@ public class HistoryActivity extends AppCompatActivity{
         if(chosen_month == -1) return null;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
         try{
             Date dt = sdf.parse(String.format("2023-%02d-01", chosen_month));
             Log.d("Date_test",dt.toString());

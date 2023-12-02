@@ -1,12 +1,10 @@
 package com.example.myapplication.data;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.example.myapplication.bean.Record;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -15,13 +13,11 @@ public class LocalData implements DataService {
     private ArrayList<Record> records = null;
 
     public LocalData(){
-        Log.d("ID_TEST","i'm created???");
         generateRecords();
         Record.id_counter = getAllRecords().size();
     }
 
     public List<Record> getAllRecords(){
-        Log.d("SAVE_TEST",""+records.size());
         records.sort(new Comparator<Record>() {
             @Override
             public int compare(Record r1, Record r2) {
@@ -40,7 +36,7 @@ public class LocalData implements DataService {
             }
         }
 
-        Log.e("ID_TEST","NOT_FOUND");
+        Log.e("Record","NOT_FOUND");
         return null;
     }
 
@@ -48,8 +44,6 @@ public class LocalData implements DataService {
     @Override
     public void updateRecord(Record record){
         records.add(record);
-        Log.d("SAVE_TEST",""+record.toString());
-        Log.d("SAVE_TEST",""+records.size());
     }
 
     @Override
@@ -60,7 +54,6 @@ public class LocalData implements DataService {
                 ret.add(record);
             }
         }
-        Log.d("Data_test",""+ret.size());
         return ret;
     }
 
@@ -68,7 +61,7 @@ public class LocalData implements DataService {
     public List<Record> queryRecordByType(Record.RecordType type) {
         List<Record> ret = new ArrayList<>();
         for(Record record: getAllRecords()){
-            if(record.getType().equals(type.getStr())){
+            if(record.getRecordTypeByStr().equals(type.getStr())){
                 ret.add(record);
             }
         }
@@ -89,7 +82,7 @@ public class LocalData implements DataService {
         else{
             List<Record> ret = new ArrayList<>();
             for(Record record: getAllRecords()){
-                if(record.getType().equals(type.getStr()) && startTime.compareTo(record.getStartTime()) < 0 && record.getEndTime().compareTo(endTime) < 0){
+                if(record.getRecordTypeByStr().equals(type.getStr()) && startTime.compareTo(record.getStartTime()) < 0 && record.getEndTime().compareTo(endTime) < 0){
                     ret.add(record);
                 }
             }
