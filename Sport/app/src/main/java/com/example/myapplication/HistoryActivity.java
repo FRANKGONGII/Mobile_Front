@@ -14,9 +14,6 @@ import com.example.myapplication.adapter.RecordAdapter;
 import com.example.myapplication.bean.Record;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
-import com.example.myapplication.data.LocalData;
-
-import org.json.JSONException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +27,9 @@ public class HistoryActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private List<Record> recordList;
 
-    private final int[] record_type_ids = {R.id.record_type2,R.id.record_type3,R.id.record_type4,R.id.record_type5};
+    private final int[] record_type_layout_ids = {R.id.record_type_layout2,R.id.record_type_layout3,R.id.record_type_layout4,R.id.record_type_layout5};
+
+    private final int[] time_layout_ids = {R.id.time_layout2,R.id.time_layout3,R.id.time_layout4,R.id.time_layout5};
     private final Record.RecordType[] recordTypes = {Record.RecordType.RUNNING, Record.RecordType.RIDING, Record.RecordType.WALKING, Record.RecordType.SWIMMING};
     private DataService dataService;
 
@@ -71,8 +70,11 @@ public class HistoryActivity extends AppCompatActivity{
             }
         });
 
-        TextView temp = findViewById(R.id.record_type1);
-        temp.setText("全部");
+        init_type();
+    }
+
+    private void init_type(){
+        View temp = findViewById(R.id.record_type1);
         temp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
@@ -83,8 +85,7 @@ public class HistoryActivity extends AppCompatActivity{
 
         for(int i=0;i<4;i++){
             Record.RecordType record_type = recordTypes[i];
-            temp = findViewById(record_type_ids[i]);
-            temp.setText(record_type.getStr());
+            temp = findViewById(record_type_layout_ids[i]);
             temp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view){
