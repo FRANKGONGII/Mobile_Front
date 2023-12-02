@@ -1,11 +1,13 @@
 package com.example.myapplication;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,16 +29,19 @@ public class HistoryActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private List<Record> recordList;
 
-    private final int[] record_type_layout_ids = {R.id.record_type_layout2,R.id.record_type_layout3,R.id.record_type_layout4,R.id.record_type_layout5};
+    private final int[] record_type_layout_ids = {R.id.record_type_layout1,R.id.record_type_layout2,R.id.record_type_layout3,R.id.record_type_layout4,R.id.record_type_layout5};
 
-    private final int[] time_layout_ids = {R.id.time_layout2,R.id.time_layout3,R.id.time_layout4,R.id.time_layout5};
-    private final int[] month_list = {12,11,10,9};
-    private final Record.RecordType[] recordTypes = {Record.RecordType.RUNNING, Record.RecordType.RIDING, Record.RecordType.WALKING, Record.RecordType.SWIMMING};
+    private final int[] time_layout_ids = {R.id.time_layout1,R.id.time_layout2,R.id.time_layout3,R.id.time_layout4,R.id.time_layout5};
+    private final int[] month_list = {-1,12,11,10,9};
+    private final Record.RecordType[] recordTypes = {null,Record.RecordType.RUNNING, Record.RecordType.RIDING, Record.RecordType.WALKING, Record.RecordType.SWIMMING};
     private DataService dataService;
 
     private Record.RecordType chosen_type = null;
 
     private int chosen_month = -1;
+
+    private int record_type_layout_idx = 0;
+    private int month_layout_idx = 0;
 
 
     @Override
@@ -76,49 +81,79 @@ public class HistoryActivity extends AppCompatActivity{
     }
 
     private void init_type(){
-        View temp = findViewById(R.id.record_type1);
+        View temp = findViewById(record_type_layout_ids[0]);
         temp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 chosen_type = null;
+                update_type(0);
                 update_list();
             }
         });
 
-        for(int i=0;i<4;i++){
+        for(int i=1;i<=4;i++){
             Record.RecordType record_type = recordTypes[i];
             temp = findViewById(record_type_layout_ids[i]);
+            int finalI = i;
             temp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view){
                     chosen_type = record_type;
+                    update_type(finalI);
                     update_list();
                 }
             });
         }
     }
 
+    private void update_type(int idx){
+        View old_view = findViewById(record_type_layout_ids[record_type_layout_idx]);
+        Drawable gray = AppCompatResources.getDrawable(old_view.getContext(),R.drawable.frame_gray);
+        old_view.setBackground(gray);
+
+        View new_view = findViewById(record_type_layout_ids[idx]);
+        Drawable blue = AppCompatResources.getDrawable(new_view.getContext(),R.drawable.frame2);
+        new_view.setBackground(blue);
+
+        record_type_layout_idx = idx;
+    }
+
     private void init_time(){
-        View temp = findViewById(R.id.time_layout1);
+        View temp = findViewById(time_layout_ids[0]);
         temp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 chosen_month = -1;
+                update_time(0);
                 update_list();
             }
         });
 
-        for(int i=0;i<4;i++){
+        for(int i=1;i<=4;i++){
             int month = month_list[i];
             temp = findViewById(time_layout_ids[i]);
+            int finalI = i;
             temp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view){
                     chosen_month = month;
+                    update_time(finalI);
                     update_list();
                 }
             });
         }
+    }
+
+    private void update_time(int idx){
+        View old_view = findViewById(time_layout_ids[month_layout_idx]);
+        Drawable gray = AppCompatResources.getDrawable(old_view.getContext(),R.drawable.frame_gray);
+        old_view.setBackground(gray);
+
+        View new_view = findViewById(time_layout_ids[idx]);
+        Drawable blue = AppCompatResources.getDrawable(new_view.getContext(),R.drawable.frame2);
+        new_view.setBackground(blue);
+
+        month_layout_idx = idx;
     }
 
     private void update_list() {
