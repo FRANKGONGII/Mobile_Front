@@ -418,8 +418,8 @@ public class RemoteData implements DataService {
         OkHttpClient client=new OkHttpClient();
         String serviceQueryInfo = "/v1/record/info";
         Map<String, String>params = new HashMap<>();
-        params.put("startDate", getFormatTime(startTime,"yyyy-MMM-dd"));
-        params.put("endDate", getFormatTime(endTime,"yyyy-MMM-dd"));
+        params.put("startDate", getFormatTime(startTime,"yyyy-MM-dd"));
+        params.put("endDate", getFormatTime(endTime,"yyyy-MM-dd"));
         params.put("recordType", String.valueOf(type));
 
         Log.d("URL_TEST",url+serviceQueryInfo+getBodyParams(params));
@@ -450,7 +450,7 @@ public class RemoteData implements DataService {
 
                 Gson gson = new Gson();
                 Record[] tmp = gson.fromJson(result,Record[].class);
-                Log.d("URL_TEST",tmp.length+" "+tmp[0].toString());
+                if(tmp.length != 0) Log.d("URL_TEST",tmp.length+" "+tmp[0].toString());
 
                 for(Record record : tmp){
                     ret.add(record);
@@ -479,6 +479,7 @@ public class RemoteData implements DataService {
     }
 
     public String getFormatTime(Date date,String formatStr){
+        if(date == null) return "null";
         DateFormat format=new SimpleDateFormat(formatStr);
         format.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
         return format.format(date);

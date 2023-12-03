@@ -186,6 +186,7 @@ public class HistoryActivity extends AppCompatActivity{
         if(now == null) return null;
 
         Calendar rightNow = Calendar.getInstance();
+        rightNow.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
         rightNow.setTime(now);
         rightNow.add(Calendar.MONTH, 1);
         return rightNow.getTime();
