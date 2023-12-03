@@ -11,10 +11,4 @@
         android:text="Community"
         android:textColor="#000"
         android:textSize="24sp" />
-
-    <Button
-        android:id="@+id/test_backend"
-        android:layout_width="100sp"
-        android:layout_height="100sp"
-        android:background="@drawable/button_rectangle"/>
 </LinearLayout>
