@@ -91,6 +91,8 @@ dependencies {
 
     //日历
     implementation 'com.haibin:calendarview:3.7.1'
+
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
 
 

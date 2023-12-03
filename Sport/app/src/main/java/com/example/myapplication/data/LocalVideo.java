@@ -30,6 +30,28 @@ public class LocalVideo implements VideoService {
     },
     };
 
+    public static String[][] mVideoTypes = {{
+            "running",
+            "running",
+            "swimming",
+            "hiking",
+            "cycling"
+    },
+    };
+
+    public static String[][] mVideoTags = {{
+            "senior",
+            "senior",
+            "primary",
+            "primary",
+            "senior"
+    },
+    };
+
+
+
+
+
     @Override
     public String[][] getVideoUrls() {
         return mVideoUrls;
@@ -44,4 +66,10 @@ public class LocalVideo implements VideoService {
     public String[][] getVideoTitles() {
         return mVideoTitles;
     }
+
+    public String[][] getVideoTypes(){return mVideoTypes;}
+
+    public String[][] getVideoTags(){return mVideoTags;}
+
+
 }

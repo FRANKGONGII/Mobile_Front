@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,16 +21,18 @@ import com.amap.api.maps2d.model.PolylineOptions;
 import com.example.myapplication.bean.Record;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
-import com.example.myapplication.data.LocalData;
 import com.hjq.toast.ToastUtils;
 
-import java.util.ArrayList;
 import java.util.List;
-
 
 public class ResultActivity extends AppCompatActivity {
     private DataService dataService = null;
     private AMap aMap;
+    TextView tvDistance;
+    TextView tvDuration;
+    TextView tvSpeed;
+    TextView tvDistribution;
+    TextView tvCalorie;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sportresult);
@@ -40,11 +43,13 @@ public class ResultActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int id = intent.getIntExtra("passId",-1);
-        Log.d("ID_TEST",""+id);
+        Log.d("ID_TEST","need id:"+id);
         if(id==-1) {
             ToastUtils.show("获取运动数据错误");
         }
+
         Record record = dataService.getRecord(id);
+        //Log.d("ID_TEST","after find"+record);
         List<LatLng> list = record.getLatLngList();
         //Log.d("ID_TEST", list.get(0).latitude+" "+list.get(0).longitude);
         Log.d("ID_TEST",String.valueOf(record.getId()));
@@ -53,8 +58,17 @@ public class ResultActivity extends AppCompatActivity {
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mapView.getMap();
 
+        tvDistance = findViewById(R.id.tvDistance);
+        tvDuration = findViewById(R.id.tvDuration);
+        tvSpeed = findViewById(R.id.tvSpeed);
+        tvDistribution = findViewById(R.id.tvDistribution);
+        tvCalorie = findViewById(R.id.tvCalorie);
 
-
+        tvDistance.setText(record.getDistanceByStr());
+        tvDuration.setText(record.getDurationByStr());
+        tvSpeed.setText(record.getSpeed1());
+        tvDistribution.setText(record.getSpeed2());
+        tvCalorie.setText(record.getCalorie());
 
         CameraPosition cameraPosition = new CameraPosition(list.get(0), 64, 0, 0);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);

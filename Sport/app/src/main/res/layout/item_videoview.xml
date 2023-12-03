@@ -8,64 +8,72 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="37sp"
+        android:layout_height="40sp"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="125sp"
-            android:layout_height="35sp"
-            android:background="@drawable/frame2"
-            android:layout_marginLeft="10dp">
 
-            <TextView
-                android:id="@+id/video_type"
-                android:layout_width="125sp"
-                android:layout_height="30sp"
-                android:layout_marginLeft="15sp"
-                android:text="Community"
-                android:textColor="@color/text_color_white"
-                android:textSize="20sp" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/video_button1"
+            android:layout_width="70sp"
+            android:layout_height="40sp"
+            android:layout_marginLeft="10sp"
+            android:background="@drawable/button_rectangle"
+            android:text="初级"
+            android:textColor="@color/text_color_white"
+            android:textSize="15sp" />
 
-        <LinearLayout
-            android:layout_width="75sp"
-            android:layout_height="35sp"
-            android:background="@drawable/frame2"
-            android:layout_marginLeft="10dp">
+        <Button
+            android:id="@+id/video_button2"
+            android:layout_width="70sp"
+            android:layout_height="40sp"
+            android:layout_marginLeft="10sp"
+            android:background="@drawable/button_rectangle"
+            android:text="骑行"
+            android:textColor="@color/text_color_white"
+            android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/video_tag1"
-                android:layout_width="150sp"
-                android:layout_height="30sp"
-                android:layout_marginLeft="15dp"
-                android:text="初级"
-                android:textColor="@color/text_color_white"
-                android:textSize="20sp" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/video_button3"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_marginLeft="10sp"
+            android:background="@drawable/baseline_favorite_border_24" />
 
-        <LinearLayout
-            android:layout_width="75dp"
-            android:layout_height="35sp"
-            android:background="@drawable/frame2"
-            android:layout_marginLeft="10dp">
 
-            <TextView
-                android:id="@+id/video_tag2"
-                android:layout_width="250sp"
-                android:layout_height="30sp"
-                android:layout_marginLeft="15dp"
-                android:text="跑步"
-                android:textColor="@color/text_color_white"
-                android:textSize="20sp" />
-        </LinearLayout>
+        <!--        <Button-->
+<!--            android:id="@+id/video_button3"-->
+<!--            android:layout_width="70sp"-->
+<!--            android:layout_height="40sp"-->
+<!--            android:layout_marginLeft="10sp"-->
+<!--            android:background="@drawable/button_rectangle"-->
+<!--            android:text="骑行"-->
+<!--            android:textColor="@color/text_color_white"-->
+<!--            android:textSize="15sp" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/video_button4"-->
+<!--            android:layout_width="70sp"-->
+<!--            android:layout_height="40sp"-->
+<!--            android:layout_marginLeft="10sp"-->
+<!--            android:background="@drawable/button_rectangle"-->
+<!--            android:text="骑行"-->
+<!--            android:textColor="@color/text_color_white"-->
+<!--            android:textSize="15sp" />-->
+
 
     </LinearLayout>
 
-    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-        android:id="@+id/videoplayer"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="10dp"/>
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="200dp">-->
+        <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+            android:id="@+id/videoplayer"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="10dp" />
+<!--    </com.google.android.material.card.MaterialCardView>-->
+
+
 
 </LinearLayout>
