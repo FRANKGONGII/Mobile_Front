@@ -93,7 +93,7 @@ public class ChatActivity extends AppCompatActivity{
         ChatTask chatTask = new ChatTask(pyChatObject, progressDialog, chatBeanList, adapter);
 
         chatTask.execute(roles, prompts, roleList, promptList);
-        String res = chatBeanList.get(chatBeanList.size()-1).getMessage();
+//        String res = chatBeanList.get(chatBeanList.size()-1).getMessage();
 
 //        if(res.equals("Internet Error")){
 //            promptList.remove(promptList.size()-1);

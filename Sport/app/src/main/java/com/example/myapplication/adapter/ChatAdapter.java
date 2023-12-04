@@ -43,10 +43,10 @@ public class ChatAdapter extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         ChatBean message = chatList.get(i);
         if(message.getType()==0){
-            convertView = inflater.inflate(R.layout.left_chat_item, null);
+            convertView = inflater.inflate(R.layout.right_chat_item, null);
         }
         else{
-            convertView = inflater.inflate(R.layout.right_chat_item, null);
+            convertView = inflater.inflate(R.layout.left_chat_item, null);
         }
 
         TextView textView = convertView.findViewById(R.id.tv_chat_content);
