@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -15,6 +16,7 @@ import com.chaquo.python.PyObject;
 import com.chaquo.python.android.AndroidPlatform;
 import com.example.myapplication.adapter.ChatAdapter;
 import com.example.myapplication.bean.ChatBean;
+import com.example.myapplication.task.ChatTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,7 @@ public class ChatActivity extends AppCompatActivity{
     private List<ChatBean> chatBeanList; //实际显示的对话内容列表，与prompt相区别
     private Button btn;
     private EditText textBox;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -44,7 +47,7 @@ public class ChatActivity extends AppCompatActivity{
         pyChatObject = python.getModule("AIConversation");
 
         promptList = new ArrayList<>();
-        promptList.add("你是一个运动智能问答机器人，你需要与用户对话，并以尽量专业的内容机器人。被问到你的身份是，请称自己为‘智能运动助手’");
+        promptList.add("你是一个运动智能问答机器人，你需要与用户对话，并以尽量专业的内容进行回答。被问到你的身份时，请称自己为‘智能运动助手’");
         roleList = new ArrayList<>();
         roleList.add("system");
         chatBeanList = new ArrayList<>();
@@ -52,14 +55,9 @@ public class ChatActivity extends AppCompatActivity{
         chatBeanList.add(initChat);
         adapter = new ChatAdapter(chatBeanList, this);
 
+        progressDialog = new ProgressDialog(ChatActivity.this);
+
         initView();
-
-
-//        String roles = "assistant#user";
-//        String prompts = "Hello, I'm ChatGLM3-6B, can I help you?#please tell me about yourself";
-//        PyObject res = pyObject.callAttr("conversation",roles, prompts);
-//        Log.println(Log.VERBOSE, "python_test", "This is the return from python: " +
-//                res.toString());
     }
 
     private void initView(){
@@ -67,17 +65,6 @@ public class ChatActivity extends AppCompatActivity{
         listView.setAdapter(adapter);
         textBox = findViewById(R.id.et_send_msg);
         btn = findViewById(R.id.btn_send);
-
-//        textBox.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-//                if (keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() ==
-//                        KeyEvent.ACTION_DOWN) {
-//                    sendMessage();//点击Enter键也可以发送信息
-//                }
-//                return false;
-//            }
-//        });
     }
 
     //onClick 对应的函数必须要public
@@ -102,15 +89,20 @@ public class ChatActivity extends AppCompatActivity{
         }
         String prompts = promptsBuilder.toString();
         String roles = rolesBuilder.toString();
+        //用于执行与LLM交流的线程，注意每个AsyncTask只能执行一次，所以一定要new
+        ChatTask chatTask = new ChatTask(pyChatObject, progressDialog, chatBeanList, adapter);
 
-        String res = pyChatObject.callAttr("conversation",roles, prompts).toString().trim();
-        ChatBean response = new ChatBean(1, res);
+        chatTask.execute(roles, prompts, roleList, promptList);
+        String res = chatBeanList.get(chatBeanList.size()-1).getMessage();
 
-        promptList.add(res);
-        roleList.add("assistant");
-        chatBeanList.add(response);
-
-        adapter.notifyDataSetChanged(); //更新view
+//        if(res.equals("Internet Error")){
+//            promptList.remove(promptList.size()-1);
+//            roleList.remove(roleList.size()-1);
+//        }
+//        else{
+//            promptList.add(res);
+//            roleList.add("assistant");
+//        }
     }
 
 }

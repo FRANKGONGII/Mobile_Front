@@ -16,12 +16,19 @@ def conversation(role_msg, prompt_msg):
         message.append(pair)
 
     print(message)
-    reply = openai.ChatCompletion.create(
-        model="ChatGLM3-6B",
-        messages=message,
-        stream=False,
-    )
-    return reply.choices[0].message.content
+
+
+    try:
+        reply = openai.ChatCompletion.create(
+            model="ChatGLM3-6B",
+            messages=message,
+            stream=False,
+        )
+        return reply.choices[0].message.content
+    except:
+        return "Internet Error"
+
+
 
 
 if __name__ == "__main__":
