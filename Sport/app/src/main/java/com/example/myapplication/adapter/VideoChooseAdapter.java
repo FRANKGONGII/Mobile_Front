@@ -81,7 +81,7 @@ public class VideoChooseAdapter extends BaseAdapter implements View.OnClickListe
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.bt1 = (Button) convertView.findViewById(R.id.video_choose);
+        holder.bt1 = (TextView) convertView.findViewById(R.id.video_choose);
         holder.bt1.setText(types[position]);
         holder.bt1.setOnClickListener(this);
         holder.bt1.setTag(position);
@@ -98,7 +98,7 @@ public class VideoChooseAdapter extends BaseAdapter implements View.OnClickListe
     }
 
     class ViewHolder {
-        Button bt1;
+        TextView bt1;
     }
 
 }
