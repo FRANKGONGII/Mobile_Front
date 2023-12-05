@@ -10,8 +10,11 @@
 <!--    <style name="Theme.MyApplication" parent="Theme.MaterialComponents.Light.NoActionBar" />-->
 
     <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/blue_5</item>
+        <item name="colorPrimaryDark">@color/blue_3</item>
+    </style>
+
+    <style name="WhiteTheme" parent="Theme.AppCompat.Light.NoActionBar">
     </style>
 
     <style name="SysWinTspTheme" parent="Theme.MyApplication">

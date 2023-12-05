@@ -86,9 +86,11 @@ public class CourseFragment extends Fragment  implements videoAdapter.InnerItemO
             if(lastChoose!=null){
                 Button btLast = lastChoose.findViewById(R.id.video_choose);
                 btLast.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                //btLast.setBackgroundResource(R.drawable.frame);
             }
             Button bt1 = v.findViewById(R.id.video_choose);
             bt1.setBackgroundColor(Color.parseColor("#CCCCCC"));
+            //bt1.setBackgroundResource(R.drawable.frame_gray);
 
             lastChoose = v;
 

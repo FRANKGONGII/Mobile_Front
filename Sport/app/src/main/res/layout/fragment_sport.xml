@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@mipmap/background"
     android:elevation="25dp"
+    android:theme="@style/NoActionBarTheme"
     >
 
 
