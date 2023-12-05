@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -43,7 +44,7 @@ import com.amap.api.maps2d.model.PolylineOptions;
 import com.example.myapplication.R;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
-import com.example.myapplication.data.LocalData;
+import com.example.myapplication.ui.customView.LongClickProgressView;
 import com.hjq.toast.ToastUtils;
 
 
@@ -117,7 +118,7 @@ public class RecordingActivity extends Activity {
         speedVal = findViewById(R.id.speed);
         distanceVal = findViewById(R.id.distance);
         passtime = findViewById(R.id.cm_passtime);
-        finish = findViewById(R.id.tv1);
+//        finish = findViewById(R.id.tv1);
         stop = findViewById(R.id.tv2);
         goon = findViewById(R.id.tv3);
         startTime = System.currentTimeMillis();
@@ -125,6 +126,45 @@ public class RecordingActivity extends Activity {
 
         dataService = DataServiceFactory.getInstance();
 
+
+        LongClickProgressView lcpv = findViewById(R.id.tv0);
+        lcpv.setRingColor(Color.parseColor("#FF0000"));
+        lcpv.setCenterColor(Color.parseColor("#FF0000"));
+        lcpv.setOnLongClickStateListener(new LongClickProgressView.OnLongClickStateListener() {
+            @Override
+            public void onFinish() throws JSONException {
+                Toast.makeText(RecordingActivity.this, "Finish!", Toast.LENGTH_SHORT).show();
+                endTime = System.currentTimeMillis();
+                Log.d("SAVE_TEST",String.valueOf(new Date(startTime)));
+                Log.d("SAVE_TEST",String.valueOf(new Date(endTime)));
+                if(false && (distance<0.1||latLngList.size()<3)){
+                    //TODO:时间太短的结束可能还要完善一下
+                    ToastUtils.show("运动时间或距离太短啦");
+                    //Log.d("SAVE_TEST",String.valueOf(ToastUtils.isInit()));
+                    finish();
+                } else{
+                    ToastUtils.show("保存运动记录");
+                    ifStart = false;
+                    if (null != mRunnable) {
+                        mHandler.removeCallbacks(mRunnable);
+                        mRunnable = null;
+                        myLocationStyle.interval(Long.MAX_VALUE);
+                        aMap.setMyLocationStyle(myLocationStyle);
+                    }
+                    save();
+                }
+            }
+
+            @Override
+            public void onProgress(float progress) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
 
         stop.setOnClickListener(new View.OnClickListener() {
             //运动暂停
@@ -155,40 +195,37 @@ public class RecordingActivity extends Activity {
             }
         });
 
-        finish.setOnClickListener(new View.OnClickListener() {
-            //运动完成
-            @Override
-            public void onClick(View v) {
-                endTime = System.currentTimeMillis();
-                Log.d("SAVE_TEST",String.valueOf(new Date(startTime)));
-                Log.d("SAVE_TEST",String.valueOf(new Date(endTime)));
-                if(false && (distance<0.1||latLngList.size()<3)){
-                    //TODO:时间太短的结束可能还要完善一下
-                    ToastUtils.show("运动时间或距离太短啦");
-                    //Log.d("SAVE_TEST",String.valueOf(ToastUtils.isInit()));
-                    finish();
-                } else{
-                    ToastUtils.show("保存运动记录");
-                    ifStart = false;
-                    if (null != mRunnable) {
-                        mHandler.removeCallbacks(mRunnable);
-                        mRunnable = null;
-                        myLocationStyle.interval(Long.MAX_VALUE);
-                        aMap.setMyLocationStyle(myLocationStyle);
-                    }
-
-                    try {
-                        save();
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                }
-            }
-        });
-
-
-
+//        finish.setOnClickListener(new View.OnClickListener() {
+//            //运动完成
+//            @Override
+//            public void onClick(View v) {
+//                endTime = System.currentTimeMillis();
+//                Log.d("SAVE_TEST",String.valueOf(new Date(startTime)));
+//                Log.d("SAVE_TEST",String.valueOf(new Date(endTime)));
+//                if(false && (distance<0.1||latLngList.size()<3)){
+//                    //TODO:时间太短的结束可能还要完善一下
+//                    ToastUtils.show("运动时间或距离太短啦");
+//                    //Log.d("SAVE_TEST",String.valueOf(ToastUtils.isInit()));
+//                    finish();
+//                } else{
+//                    ToastUtils.show("保存运动记录");
+//                    ifStart = false;
+//                    if (null != mRunnable) {
+//                        mHandler.removeCallbacks(mRunnable);
+//                        mRunnable = null;
+//                        myLocationStyle.interval(Long.MAX_VALUE);
+//                        aMap.setMyLocationStyle(myLocationStyle);
+//                    }
+//
+//                    try {
+//                        save();
+//                    } catch (JSONException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//
+//                }
+//            }
+//        });
 
 
         if(mRunnable==null)mRunnable=new MyRunnable();
