@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/avatar_coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditUserInfoActivity">
+
+    <FrameLayout
+        android:id="@+id/avatar_bottom_sheet"
+        style="@style/Widget.Material3.BottomSheet.Modal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Drag handle for accessibility -->
+<!--        <com.google.android.material.bottomsheet.BottomSheetDragHandleView-->
+<!--            android:id="@+id/drag_handle"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:clickable="true"
+                    android:text="从相册选择"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:dividerInsetStart="16dp"
+                    app:dividerInsetEnd="16dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:clickable="true"
+                    android:text="拍照"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:dividerInsetStart="16dp"
+                    app:dividerInsetEnd="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:clickable="true"
+                    android:text="随机"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+
+
+            </LinearLayout>
+
+
+    </FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
