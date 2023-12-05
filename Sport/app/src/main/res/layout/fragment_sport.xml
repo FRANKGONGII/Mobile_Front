@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@mipmap/background"
     android:elevation="25dp"
+    android:theme="@style/NoActionBarTheme"
     >
 
 
@@ -162,7 +163,7 @@
         android:text="@string/button_go"
         android:textColor="@color/white"
         android:textIsSelectable="false"
-        android:textSize="40sp"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
