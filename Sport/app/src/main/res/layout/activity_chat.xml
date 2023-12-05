@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@drawable/bottom_bg">
-            <Button
+            <android.widget.Button
                 android:id="@+id/btn_send"
                 android:layout_width="60dp"
                 android:layout_height="40dp"
