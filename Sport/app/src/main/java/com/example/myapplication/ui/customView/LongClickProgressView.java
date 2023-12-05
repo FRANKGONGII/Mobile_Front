@@ -20,6 +20,8 @@ import com.example.myapplication.R;
 
 import android.os.Handler;
 
+import org.json.JSONException;
+
 public class LongClickProgressView extends View {
 
 
@@ -379,7 +381,7 @@ public class LongClickProgressView extends View {
      * 长按完成和取消的接口
      */
     public interface OnLongClickStateListener {
-        void onFinish();
+        void onFinish() throws JSONException;
         void onProgress(float progress);
         void onCancel();
     }
