@@ -159,12 +159,12 @@ public class HomeFragment extends Fragment {
         Record runningRecord = new Record(Record.RecordType.RUNNING, sdf.parse("2021-10-01 08:00:00"), sdf.parse("2021-10-01 08:30:00"), 5.2, 1800);
         Record ridingRecord = new Record(Record.RecordType.RIDING, sdf.parse("2021-10-02 10:00:00"), sdf.parse("2021-10-02 11:30:00"), 12.7, 5400);
         Record walkingRecord = new Record(Record.RecordType.WALKING, sdf.parse("2021-10-03 15:30:00"), sdf.parse("2021-10-03 16:00:00"), 3.1, 1800);
-        Record fitnessRecord = new Record(Record.RecordType.FITNESS, sdf.parse("2021-10-04 18:00:00"), sdf.parse("2021-10-04 19:30:00"), 0, 5400);
+        Record swimmingRecord = new Record(Record.RecordType.SWIMMING, sdf.parse("2021-10-04 18:00:00"), sdf.parse("2021-10-04 19:30:00"), 0, 5400);
         List<Record> recordList = new ArrayList<>();
         recordList.add(runningRecord);
         recordList.add(ridingRecord);
         recordList.add(walkingRecord);
-        recordList.add(fitnessRecord);
+        recordList.add(swimmingRecord);
 
 
 
