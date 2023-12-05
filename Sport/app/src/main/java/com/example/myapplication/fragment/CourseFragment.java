@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -84,11 +85,11 @@ public class CourseFragment extends Fragment  implements videoAdapter.InnerItemO
 
 
             if(lastChoose!=null){
-                Button btLast = lastChoose.findViewById(R.id.video_choose);
+                TextView btLast = lastChoose.findViewById(R.id.video_choose);
                 btLast.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 //btLast.setBackgroundResource(R.drawable.frame);
             }
-            Button bt1 = v.findViewById(R.id.video_choose);
+            TextView bt1 = v.findViewById(R.id.video_choose);
             bt1.setBackgroundColor(Color.parseColor("#CCCCCC"));
             //bt1.setBackgroundResource(R.drawable.frame_gray);
 

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@mipmap/background"
     android:elevation="25dp"
-    android:theme="@style/NoActionBarTheme"
     >
 
 
@@ -147,13 +146,14 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
+    <android.widget.Button
         android:id="@+id/ButtonGo"
         android:layout_width="170dp"
         android:layout_height="170dp"
         android:layout_marginTop="372dp"
-        android:background="@drawable/button_circle"
         android:ellipsize="end"
+        android:background="@drawable/button_circle"
+
 
         android:maxHeight="0dp"
         android:maxLines="2"
@@ -170,7 +170,7 @@
         tools:ignore="MissingConstraints" />
 
     <!--        注意，这里选择的按钮要找个图片-->
-    <Button
+    <android.widget.Button
         android:id="@+id/ButtonChooseType"
         android:layout_width="75dp"
         android:layout_height="50dp"

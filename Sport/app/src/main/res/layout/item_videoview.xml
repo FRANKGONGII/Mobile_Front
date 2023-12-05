@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <Button
+        <android.widget.Button
             android:id="@+id/video_button1"
             android:layout_width="70sp"
             android:layout_height="40sp"
@@ -24,7 +24,7 @@
             android:textColor="@color/text_color_white"
             android:textSize="15sp" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/video_button2"
             android:layout_width="70sp"
             android:layout_height="40sp"
@@ -34,7 +34,7 @@
             android:textColor="@color/text_color_white"
             android:textSize="15sp" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/video_button3"
             android:layout_width="40sp"
             android:layout_height="40sp"

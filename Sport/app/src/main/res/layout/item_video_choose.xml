@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     android:theme="@style/WhiteTheme">
 
-    <Button
+    <TextView
         android:id="@+id/video_choose"
         android:layout_width="95sp"
         android:layout_height="60sp"
+    android:gravity="center"
         android:text="选项"
         android:textColor="@color/blue_2"
         android:textSize="20sp"/>
