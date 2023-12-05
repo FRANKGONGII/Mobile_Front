@@ -69,9 +69,9 @@ public class SportCardAdapter extends BaseAdapter {
         }
 
         Record record = recordList.get(position);
-        holder.activity_type.setText(record.getType());
-        holder.distance.setText(record.getDistance());
-        holder.duration.setText(record.getDuration());
+        holder.activity_type.setText(record.getRecordTypeByStr());
+        holder.distance.setText(record.getDistanceByStr());
+        holder.duration.setText(record.getDurationByStr());
 
 
         return convertView;

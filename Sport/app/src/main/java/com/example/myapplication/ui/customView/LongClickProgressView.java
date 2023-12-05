@@ -193,7 +193,11 @@ public class LongClickProgressView extends View {
                     //当环形进度条达到100，取消循环，进度置零，调用接口的完成回调
                     mProgress = 0;
                     if (mOnLongClickStateListener != null){
-                        mOnLongClickStateListener.onFinish();
+                        try {
+                            mOnLongClickStateListener.onFinish();
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
             }
