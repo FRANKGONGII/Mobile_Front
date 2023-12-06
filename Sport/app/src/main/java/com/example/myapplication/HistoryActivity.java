@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,16 +65,18 @@ public class HistoryActivity extends AppCompatActivity{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                try {
-                    recordList = dataService.queryRecordByTime(sdf.parse("2023-11-01 00:00:00"),sdf.parse("2023-12-01 00:00:00"));
-                    recordList = dataService.queryRecordByType(Record.RecordType.RUNNING);
-                    adapter = new RecordAdapter(recordList);
-                    recyclerView.setAdapter(adapter);
-                    Log.d("Data_test","!"+recordList.size());
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
+                Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                startActivity(intent);
+//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                try {
+//                    recordList = dataService.queryRecordByTime(sdf.parse("2023-11-01 00:00:00"),sdf.parse("2023-12-01 00:00:00"));
+//                    recordList = dataService.queryRecordByType(Record.RecordType.RUNNING);
+//                    adapter = new RecordAdapter(recordList);
+//                    recyclerView.setAdapter(adapter);
+//                    Log.d("Data_test","!"+recordList.size());
+//                } catch (ParseException e) {
+//                    throw new RuntimeException(e);
+//                }
             }
         });
 
