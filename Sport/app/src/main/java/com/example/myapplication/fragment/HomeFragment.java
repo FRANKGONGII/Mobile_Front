@@ -79,8 +79,10 @@ public class HomeFragment extends Fragment {
 
         //用toolbar取代actionBar
         activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayShowTitleEnabled(true);
+        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+//        toolbar.setLogo(R.drawable.user_bkg_test);
+//        toolbar.setNavigationIcon(R.drawable.user_bkg_test);
 
         // AppBar向上滑动渐变透明，同时toolbar逐渐显现
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {

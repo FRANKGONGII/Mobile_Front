@@ -120,7 +120,7 @@
                     android:background="@color/blue_5"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     android:fitsSystemWindows="false"
-                    app:title=" "
+                    app:title=""
                     app:showTitle="false"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_collapseMode="pin" />
@@ -182,6 +182,24 @@
                 android:scrollbars="none"
                 android:scrollingCache="false"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="其它数据"
+                android:textSize="@dimen/fifteen"
+                android:layout_marginStart="30dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardCornerRadius="4dp"
+                app:cardMaxElevation="20dp"
+                app:layout_anchorGravity="top|center"
+                app:strokeColor="@android:color/transparent">
+
+            </com.google.android.material.card.MaterialCardView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
