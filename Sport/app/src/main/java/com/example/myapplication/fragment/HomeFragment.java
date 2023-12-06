@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,8 @@ import com.example.myapplication.EditUserInfoActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.SportCardAdapter;
 import com.example.myapplication.bean.Record;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,6 +48,7 @@ public class HomeFragment extends Fragment {
     private View view;
     private Window window;
     private  DrawerLayout drawerLayout;
+    private AppBarLayout appBarLayout;
     private Toolbar toolbar;
     private ImageButton editUserInfoBtn;
 
@@ -62,6 +66,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(layout, container, false);
+        appBarLayout = view.findViewById(R.id.appBar);
         toolbar = view.findViewById(R.id.toolbar);
         editUserInfoBtn = view.findViewById((R.id.editUserInfoButton));
 
@@ -75,6 +80,24 @@ public class HomeFragment extends Fragment {
         //用toolbar取代actionBar
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+
+        // AppBar向上滑动渐变透明，同时toolbar逐渐显现
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                RelativeLayout relativeLayout = view.findViewById(R.id.head);
+
+                float alpha_toolbar = (float) Math.abs(verticalOffset) / appBarLayout.getTotalScrollRange();
+                float alpha = 1 - alpha_toolbar;
+
+                relativeLayout.setAlpha(alpha);
+                toolbar.setAlpha(alpha_toolbar);
+            }
+        });
+
+
+
 
         //开启隐藏菜单
 //        setOptMenu();

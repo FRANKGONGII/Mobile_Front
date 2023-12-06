@@ -325,7 +325,6 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     ImageButton femaleButton = view.findViewById(R.id.female);
 
 
-
                     if (gender.getText().equals("男")) {
                         maleButton.setBackgroundResource(R.color.blue_sky);
                         maleButton.setImageResource(R.drawable.baseline_male_white_24);

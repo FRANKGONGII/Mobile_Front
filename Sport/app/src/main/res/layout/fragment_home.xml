@@ -41,6 +41,7 @@
 <!--                    app:layout_collapseMode="parallax"-->
 <!--                    android:fitsSystemWindows="true" />-->
                 <RelativeLayout
+                    android:id="@+id/head"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/toolbar">
@@ -86,24 +87,24 @@
                         android:text="专业跑者"
                         android:textStyle="italic"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignStart="@id/userAvatar"
-                        android:layout_below="@id/userAvatar"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginStart="40dp"
-                        android:text="动态"
-                        android:textStyle="bold"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_alignStart="@id/userAvatar"-->
+<!--                        android:layout_below="@id/userAvatar"-->
+<!--                        android:layout_marginTop="15dp"-->
+<!--                        android:layout_marginStart="40dp"-->
+<!--                        android:text="动态"-->
+<!--                        android:textStyle="bold"/>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_below="@id/userAvatar"
-                        android:layout_marginTop="15dp"
-                        android:text="关注"
-                        android:textStyle="bold"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_centerHorizontal="true"-->
+<!--                        android:layout_below="@id/userAvatar"-->
+<!--                        android:layout_marginTop="15dp"-->
+<!--                        android:text="关注"-->
+<!--                        android:textStyle="bold"/>-->
 
 
 
@@ -116,9 +117,9 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?actionBarSize"
-                    android:background="@color/blue_3"
+                    android:background="@color/blue_5"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    android:fitsSystemWindows="true"
+                    android:fitsSystemWindows="false"
                     app:title=" "
                     app:showTitle="false"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
