@@ -7,8 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -20,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -234,6 +237,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //                        public void afterTextChanged(Editable s) {}
 //                    });
 
+                    editText.setText(nickname.getText());
                     // 布局
                     editText.setLayoutParams(layoutParams);
 
@@ -300,10 +304,110 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             // 设置点击事件
             itemView.setOnClickListener(new View.OnClickListener() {
+
+                String chosenGender = "";
+
                 @Override
                 public void onClick(View v) {
-                    // 处理点击事件
-                    // ...
+                    // 创建builder
+                    MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext);
+
+
+
+                    // 设置builder属性
+                    builder.setTitle("修改性别");
+
+
+                    View view = inflater.inflate(R.layout.dialog_choose_gender, null);
+
+                    ImageButton maleButton = view.findViewById(R.id.male);
+                    ImageButton unknownButton = view.findViewById(R.id.unknown);
+                    ImageButton femaleButton = view.findViewById(R.id.female);
+
+
+
+                    if (gender.getText().equals("男")) {
+                        maleButton.setBackgroundResource(R.color.blue_sky);
+                        maleButton.setImageResource(R.drawable.baseline_male_white_24);
+                    } else if (gender.getText().equals("女")) {
+                        unknownButton.setBackgroundResource(R.color.gray0);
+                        unknownButton.setImageResource(R.drawable.baseline_question_mark_white_24);
+                    } else if (gender.getText().equals("保密")) {
+                        femaleButton.setBackgroundResource(R.color.white);
+                        femaleButton.setImageResource(R.drawable.baseline_female_pink_24);
+                    }
+
+                    maleButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // 设置男性按钮选中状态的背景色和图片颜色
+                            maleButton.setBackgroundResource(R.color.blue_sky);
+                            maleButton.setImageResource(R.drawable.baseline_male_white_24);
+
+                            // 设置其他按钮非选中状态的背景色和图片颜色
+                            unknownButton.setBackgroundResource(R.color.white);
+                            unknownButton.setImageResource(R.drawable.baseline_question_mark_grey_24);
+
+                            femaleButton.setBackgroundResource(R.color.white);
+                            femaleButton.setImageResource(R.drawable.baseline_female_pink_24);
+
+                            chosenGender = "男";
+                        }
+                    });
+
+                    unknownButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            maleButton.setBackgroundResource(R.color.white);
+                            maleButton.setImageResource(R.drawable.baseline_male_blue_24);
+
+                            // 设置其他按钮非选中状态的背景色和图片颜色
+                            unknownButton.setBackgroundResource(R.color.gray0);
+                            unknownButton.setImageResource(R.drawable.baseline_question_mark_white_24);
+
+                            femaleButton.setBackgroundResource(R.color.white);
+                            femaleButton.setImageResource(R.drawable.baseline_female_pink_24);
+
+                            chosenGender = "保密";
+                        }
+                    });
+
+                    femaleButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            maleButton.setBackgroundResource(R.color.white);
+                            maleButton.setImageResource(R.drawable.baseline_male_blue_24);
+
+                            // 设置其他按钮非选中状态的背景色和图片颜色
+                            unknownButton.setBackgroundResource(R.color.white);
+                            unknownButton.setImageResource(R.drawable.baseline_question_mark_grey_24);
+
+                            femaleButton.setBackgroundResource(R.color.pink_sakura);
+                            femaleButton.setImageResource(R.drawable.baseline_female_white_24);
+
+                            chosenGender = "女";
+                        }
+                    });
+
+
+
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            updateData(chosenGender);
+                        }
+                    });
+
+
+                    builder.setView(view);
+                    builder.show();
                 }
             });
         }
@@ -312,6 +416,11 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // 设置数据
             title.setText(item.getType().getStr());
             gender.setText(item.getContent());
+        }
+
+        public void updateData(String content) {
+            gender.setText(content);
+            //
         }
     }
 
@@ -454,6 +563,9 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //                        public void afterTextChanged(Editable s) {}
 //                    });
 
+                    // 默认显示个签
+                    editText.setText(signature.getText());
+
                     // 布局
                     editText.setLayoutParams(layoutParams);
 
@@ -468,7 +580,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            updateData(editText.getText().toString());
                         }
                     });
 
@@ -503,6 +615,11 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // 设置数据
             title.setText(item.getType().getStr());
             signature.setText(item.getContent());
+        }
+
+        public void updateData(String content) {
+            signature.setText(content);
+            //
         }
     }
 }
