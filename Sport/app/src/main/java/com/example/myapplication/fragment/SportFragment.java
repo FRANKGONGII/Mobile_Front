@@ -75,7 +75,14 @@ public class SportFragment extends Fragment {
                                         button.setText("GO!");
                                         Intent intent = new Intent(getActivity(), RecordingActivity.class);
 
+                                        // 传递揭露动画所需参数
+                                        int[] location = new int[2];
+                                        view.getLocationInWindow(location);
+
                                         intent.putExtra("sport_type", sport_type);
+                                        intent.putExtra("CLICK_X", location[0] + view.getWidth()/2);
+                                        intent.putExtra("CLICK_Y", location[1] + view.getHeight()/2);
+
                                         startActivity(intent);
                                         return;
                                     }

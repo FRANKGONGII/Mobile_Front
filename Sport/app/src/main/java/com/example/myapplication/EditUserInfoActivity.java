@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,8 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.adapter.UserInfoAdapter;
 import com.example.myapplication.fragment.ModalBottomSheet;
 import com.example.myapplication.user.UserInfoItem;
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.divider.MaterialDivider;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -85,6 +88,18 @@ public class EditUserInfoActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         onUserInfoInit();
+
+
+        // FAB
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
+
     }
 
     public void onUserInfoInit() {

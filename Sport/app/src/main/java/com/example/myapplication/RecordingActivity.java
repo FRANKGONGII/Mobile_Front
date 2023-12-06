@@ -5,19 +5,25 @@ package com.example.myapplication;
 import static android.app.PendingIntent.getActivity;
 import static java.lang.Thread.sleep;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.ViewTreeObserver;
+import android.view.animation.LinearInterpolator;
 import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,7 +62,7 @@ import com.example.myapplication.bean.Record;
 import org.json.JSONException;
 
 
-public class RecordingActivity extends Activity {
+public class RecordingActivity extends BaseActivity {
 
     public double latitude;
     public double longitude;
@@ -91,6 +97,79 @@ public class RecordingActivity extends Activity {
 
     private long startTime = 0;
     private long endTime = 0;
+
+
+    /////////////////////////////
+
+    private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayout;
+    private Animator mAnimReveal;
+    private Animator mAnimRevealR;
+
+    public static final String CLICK_X = "CLICK_X";
+    public static final String CLICK_Y = "CLICK_Y";
+
+
+    private void circularReveal(Intent intent) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP ||
+                (intent == null && (intent == null || !intent.hasExtra(CLICK_X) || intent.getBooleanExtra(CLICK_X, false)))) {
+            return;
+        }
+
+        Rect rect = intent.getSourceBounds();
+        View v = getWindow().getDecorView();
+        v.setVisibility(View.INVISIBLE);
+
+
+        onGlobalLayout = new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (mAnimReveal != null) {
+                    mAnimReveal.removeAllListeners();
+                    mAnimReveal.cancel();
+                }
+
+                mAnimReveal = ViewAnimationUtils.createCircularReveal(v,
+                        rect != null ? rect.centerX() : intent.getIntExtra(CLICK_X, 0),
+                        rect != null ? rect.centerY() : intent.getIntExtra(CLICK_Y, 0),
+                        0f,
+                        v.getHeight());
+
+                mAnimReveal.setDuration(400);
+                mAnimReveal.setInterpolator(new LinearInterpolator());
+                mAnimReveal.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        if (onGlobalLayout != null) {
+                            v.getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayout);
+                        }
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                });
+                mAnimReveal.start();
+            }
+        };
+
+        v.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayout);
+    }
+
+    /////////////////////////////
+
+
+
 
 
     public void Update(){
