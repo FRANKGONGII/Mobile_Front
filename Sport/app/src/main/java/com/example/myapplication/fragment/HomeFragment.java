@@ -25,13 +25,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.EditUserInfoActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.SportCardAdapter;
+import com.example.myapplication.adapter.SportDataAdapter;
 import com.example.myapplication.bean.Record;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.divider.MaterialDividerItemDecoration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,10 +52,11 @@ public class HomeFragment extends Fragment {
     private AppCompatActivity activity;
     private View view;
     private Window window;
-    private  DrawerLayout drawerLayout;
+    private DrawerLayout drawerLayout;
     private AppBarLayout appBarLayout;
     private Toolbar toolbar;
     private ImageButton editUserInfoBtn;
+
 
 
 
@@ -194,21 +200,33 @@ public class HomeFragment extends Fragment {
 
 
 
+
         //利用RecyclerView加载
-//        SportDataAdapter adapter = new SportDataAdapter(recordList);
-//        RecyclerView recyclerView = view.findViewById(R.id.sportsDataRecycler);
-//        recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
-//        recyclerView.setAdapter(adapter);
+        SportDataAdapter adapter = new SportDataAdapter(recordList);
+        RecyclerView recyclerView = view.findViewById(R.id.sportCardRecyclerView);
+
+        int columnCount = 2; // 每行的列数
+        int itemCount = adapter.getItemCount(); // item 的数量
+        int rowCount = (int) Math.ceil((double) itemCount / columnCount); // 计算行数
+        GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2, RecyclerView.VERTICAL, false) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
         //利用GridView加载
-        GridView sportCardGridView = view.findViewById(R.id.sportCardGridView);
-        SportCardAdapter cardAdapter = new SportCardAdapter(this.getContext(), recordList);
-        sportCardGridView.setAdapter(cardAdapter);
-
-
-        sportCardGridView.setVerticalScrollBarEnabled(false);
-        sportCardGridView.setHorizontalScrollBarEnabled(false);
-        sportCardGridView.setScrollContainer(false);
+//        GridView sportCardGridView = view.findViewById(R.id.sportCardGridView);
+//        SportCardAdapter cardAdapter = new SportCardAdapter(this.getContext(), recordList);
+//        sportCardGridView.setAdapter(cardAdapter);
+//
+//
+//        sportCardGridView.setVerticalScrollBarEnabled(false);
+//        sportCardGridView.setHorizontalScrollBarEnabled(false);
+//        sportCardGridView.setScrollContainer(false);
         //动态设置gridView高度
 //        int itemCount = cardAdapter.getCount();
 //        int itemHeight = cardAdapter.getView(0, null, mGridView).getMeasuredHeight();
