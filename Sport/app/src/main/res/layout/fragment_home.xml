@@ -195,6 +195,7 @@
                 android:layout_gravity="center_horizontal"
                 android:theme="@style/Theme.MaterialComponents.Light"
                 app:cardCornerRadius="4dp"
+                app:cardElevation="20dp"
                 app:cardMaxElevation="20dp"
                 app:layout_anchorGravity="top|center"
                 app:strokeColor="@android:color/transparent">
