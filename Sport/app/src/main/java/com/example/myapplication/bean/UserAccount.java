@@ -2,12 +2,6 @@ package com.example.myapplication.bean;
 
 import java.io.Serializable;
 
-/**
- * 描述: 账号密码
- * 作者: james
- * 日期: 2019/2/25 19:59
- * 类名: UserAccount
- */
 public class UserAccount{
 
     private int id;

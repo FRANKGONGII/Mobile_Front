@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.utils.Utils;
+
 public class RegistActivity extends AppCompatActivity {
 
     EditText etAccount;
@@ -34,7 +36,7 @@ public class RegistActivity extends AppCompatActivity {
     private InputMethodManager imm;
 
     public View.OnClickListener onClickListener;
-    private String code = "-1";
+    private String code = "123";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +75,14 @@ public class RegistActivity extends AppCompatActivity {
                 }
                 else if(id == R.id.chronometer){
                     String phone = etAccount.getText().toString();
-//                        if (TextUtils.isEmpty(phone)) {
-//                            ToastUtils.showShort("请输入11位手机号码");
-//                            return;
-//                        }
-//                        if (!Utils.isMobile(phone)) {
-//                            ToastUtils.showShort("请输入正确的手机号码");
-//                            return;
-//                        }
+                        if (TextUtils.isEmpty(phone)) {
+                            showInfo("请输入11位手机号码");
+                            return;
+                        }
+                        if (!Utils.isMobile(phone)) {
+                            showInfo("请输入正确的手机号码");
+                            return;
+                        }
 
                     // 先隐藏输入法
                     hideSoftKeyBoard();
@@ -89,26 +91,26 @@ public class RegistActivity extends AppCompatActivity {
                 }
                 else if(id == R.id.bt_regist){
                     hideSoftKeyBoard();
-//                        if (TextUtils.isEmpty(etAccount.getText())) {
-//                            ToastUtils.showShort("请输入11位手机号码!");
-//                        } else if (!Utils.isMobile(etAccount.getText().toString())) {
-//                            ToastUtils.showShort("请输入正确的手机号码!");
-//                        } else if (TextUtils.isEmpty(etCode.getText().toString())) {
-//                            ToastUtils.showShort("验证码不可以为空!");
-//                        } else if (!TextUtils.equals(etCode.getText(), code)) {
-//                            ToastUtils.showShort("请输入正确的验证码!");
-//                        } else if (TextUtils.isEmpty(etPsd.getText().toString())) {
-//                            ToastUtils.showShort("密码不可以为空!");
-//                        } else if (etPsd.getText().length() < 6) {
-//                            ToastUtils.showShort("请输入大于六位数的密码!");
-//                        } else if (TextUtils.isEmpty(etCheckPsd.getText().toString())) {
-//                            ToastUtils.showShort("校验密码不可以为空!");
-//                        } else if (!TextUtils.equals(etPsd.getText(), etCheckPsd.getText())) {
-//                            ToastUtils.showShort("两次密码输入不一致，请检验!");
-//                        } else {
-//                            btRegist.setEnabled(false);
-//                            regist();
-//                        }
+                        if (TextUtils.isEmpty(etAccount.getText())) {
+                            showInfo("请输入11位手机号码!");
+                        } else if (!Utils.isMobile(etAccount.getText().toString())) {
+                            showInfo("请输入正确的手机号码!");
+                        } else if (TextUtils.isEmpty(etCode.getText().toString())) {
+                            showInfo("验证码不可以为空!");
+                        } else if (!TextUtils.equals(etCode.getText(), code)) {
+                            showInfo("请输入正确的验证码!");
+                        } else if (TextUtils.isEmpty(etPsd.getText().toString())) {
+                            showInfo("密码不可以为空!");
+                        } else if (etPsd.getText().length() < 6) {
+                            showInfo("请输入大于六位数的密码!");
+                        } else if (TextUtils.isEmpty(etCheckPsd.getText().toString())) {
+                            showInfo("校验密码不可以为空!");
+                        } else if (!TextUtils.equals(etPsd.getText(), etCheckPsd.getText())) {
+                            showInfo("两次密码输入不一致，请检验!");
+                        } else {
+                            btRegist.setEnabled(false);
+                            regist();
+                        }
                 }
                 else{
 
@@ -117,6 +119,11 @@ public class RegistActivity extends AppCompatActivity {
         };
     }
 
+    private void regist(){
+        // TODO
+        showInfo("注册成功");
+        finish();
+    }
     public void hideSoftKeyBoard() {
         View localView = getCurrentFocus();
         if (this.imm == null) {
@@ -125,6 +132,10 @@ public class RegistActivity extends AppCompatActivity {
         if ((localView != null) && (this.imm != null)) {
             this.imm.hideSoftInputFromWindow(localView.getWindowToken(), 2);
         }
+    }
+
+    public void showInfo(String text){
+        Toast.makeText(RegistActivity.this, text, Toast.LENGTH_SHORT).show();
     }
 
 }
