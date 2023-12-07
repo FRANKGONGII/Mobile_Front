@@ -1,15 +1,21 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,6 +28,10 @@ public class LoginActivity extends AppCompatActivity {
     ImageButton qqLogin;
 
     ImageButton btPsd;
+
+    EditText etUsername;
+
+    EditText etPsd;
     private InputMethodManager imm;
 
     private boolean hide_psd = true;
@@ -60,10 +70,16 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else if(id == R.id.btPsd){
                     if(hide_psd){
-
+                        Bitmap hide = BitmapFactory.decodeResource(view.getContext().getResources(),R.mipmap.icon_psd_s);
+                        btPsd.setImageBitmap(hide);
+                        etPsd.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                        hide_psd = false;
                     }
                     else{
-
+                        Bitmap not_hide = BitmapFactory.decodeResource(view.getContext().getResources(),R.mipmap.icon_psd_h);
+                        btPsd.setImageBitmap(not_hide);
+                        etPsd.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        hide_psd = true;
                     }
                     // pass
                 }
@@ -110,6 +126,8 @@ public class LoginActivity extends AppCompatActivity {
         wcLogin = findViewById(R.id.wcLogin);
         qqLogin = findViewById(R.id.qqLogin);
         btPsd = findViewById(R.id.btPsd);
+        etPsd = findViewById(R.id.et_psd);
+        etUsername = findViewById(R.id.et_username);
 
         findViewById(R.id.container).setOnClickListener(onClickListener);
         btLogin.setOnClickListener(onClickListener);
