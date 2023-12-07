@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -87,7 +88,7 @@ public class RegistActivity extends AppCompatActivity {
                     // 先隐藏输入法
                     hideSoftKeyBoard();
 
-//                    yanZhengMa();
+                    yanZhengMa();
                 }
                 else if(id == R.id.bt_regist){
                     hideSoftKeyBoard();
@@ -136,6 +137,48 @@ public class RegistActivity extends AppCompatActivity {
 
     public void showInfo(String text){
         Toast.makeText(RegistActivity.this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    public void yanZhengMa() {
+//        showLoadingView();
+        new Handler().postDelayed(() -> {
+//            dismissLoadingView();
+            int numcode = (int) ((Math.random() * 9 + 1) * 100000);
+            code = numcode + "";
+            yzmStart();
+            showInfo("验证获取成功！");
+            etCode.setText(code);
+        }, 1500);
+    }
+
+    public void yzmStart() {
+        chronometer.setTag(SystemClock.elapsedRealtime() / 1000 + 60);
+        chronometer.setText("(60)重新获取");
+        chronometer.setEnabled(false);
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        Runnable updateUI = new Runnable() {
+            int count_down = 60;
+            @Override
+            public void run() {
+                // 更新 UI 的代码
+                chronometer.setText(String.format("重新获取(%ds)",count_down));
+                // 再次post，循环执行
+                count_down --;
+                if(count_down != 0){
+                    handler.postDelayed(this, 1000); // 每秒更新一次
+                }
+                else{
+                    chronometer.setText("重新获取");
+                    chronometer.setEnabled(true);
+                }
+            }
+        };
+
+        handler.post(updateUI);
+
+        this.getWindow()
+                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
 }
