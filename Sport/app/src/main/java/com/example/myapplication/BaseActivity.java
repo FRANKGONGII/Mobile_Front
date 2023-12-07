@@ -1,148 +1,84 @@
 package com.example.myapplication;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.FrameLayout;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import java.util.ArrayList;
 
 public abstract class BaseActivity extends AppCompatActivity {
-    private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayout;
-    private Animator mAnimReveal;
-    private Animator mAnimRevealR;
 
-    public static final String CLICK_X = "CLICK_X";
-    public static final String CLICK_Y = "CLICK_Y";
+    private View content;
+    private int mX;
+    private int mY;
+
+    public void animPost() {
+        Intent intent = getIntent();
+        content = findViewById(R.id.sport_content);
+        content.post(new Runnable() {
+            @Override
+            public void run() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mX = intent.getIntExtra("x", 0);
+                    mY = intent.getIntExtra("y", 0);
+                    Log.d("POS", String.valueOf(mX));
+                    Log.d("POS", String.valueOf(mY));
+                    Animator animator = createRevealAnimator(false, mX, mY);
+                    animator.start();
+                }
+            }
+        });
+    }
+
+    // 动画
+    @SuppressLint("ResourceAsColor")
+    private Animator createRevealAnimator(boolean reversed, int x, int y) {
+        float hypot = (float) Math.hypot(content.getHeight(), content.getWidth());
+        float startRadius = reversed ? hypot : 0;
+        float endRadius = reversed ? 0 : hypot;
+
+        Log.d("POS", String.valueOf(x));
+        Log.d("POS", String.valueOf(y));
+        Animator animator = ViewAnimationUtils.createCircularReveal(
+                content, x, y,
+                startRadius,
+                endRadius);
+        animator.setDuration(800);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//        if (reversed)
+//            animator.addListener(animatorListener);
+        content.setBackgroundColor(Color.BLUE);
+
+        return animator;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("WO", "before ");
-        circularReveal(getIntent());
-        Log.d("WO", "after");
+        animPost();
     }
-
-    private void circularReveal(Intent intent) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP ||
-                (intent == null && (intent == null || !intent.hasExtra(CLICK_X) || intent.getBooleanExtra(CLICK_X, false)))) {
-            return;
-        }
-
-        Log.d("WO", "jere");
-
-        Rect rect = intent.getSourceBounds();
-        View v = getWindow().getDecorView();
-        v.setVisibility(View.INVISIBLE);
-
-
-        onGlobalLayout = new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (mAnimReveal != null) {
-                    mAnimReveal.removeAllListeners();
-                    mAnimReveal.cancel();
-                }
-
-                mAnimReveal = ViewAnimationUtils.createCircularReveal(v,
-                        rect != null ? rect.centerX() : intent.getIntExtra(CLICK_X, 0),
-                        rect != null ? rect.centerY() : intent.getIntExtra(CLICK_Y, 0),
-                        0f,
-                        v.getHeight());
-
-                mAnimReveal.setDuration(400);
-                mAnimReveal.setInterpolator(new LinearInterpolator());
-                mAnimReveal.addListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animator) {
-                        Log.d("WO", "start");
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animator) {
-                        Log.d("WO", "end");
-                        if (onGlobalLayout != null) {
-                            v.getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayout);
-                        }
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animator) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animator) {
-
-                    }
-                });
-                Log.d("WO", "here");
-                mAnimReveal.start();
-            }
-        };
-
-        v.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayout);
-    }
-
-//    private void circularRevealReverse(Intent intent) {
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP ||
-//                (intent == null && (intent == null || !intent.hasExtra(CLICK_X) || intent.getBooleanExtra(CLICK_X, false)))) {
-//            super.onBackPressed();
-//            return;
-//        }
-//
-//        Rect rect = intent.getSourceBounds();
-//        View v = getWindow().getDecorView();
-//
-//        if (mAnimRevealR != null) {
-//            mAnimRevealR.removeAllListeners();
-//            mAnimRevealR.cancel();
-//        }
-//
-//        mAnimRevealR = ViewAnimationUtils.createCircularReveal(v,
-//                rect != null ? rect.centerX() : intent.getIntExtra(CLICK_X, 0),
-//                rect != null ? rect.centerY() : intent.getIntExtra(CLICK_Y, 0),
-//                v.getHeight(),
-//                0f);
-//
-//        mAnimRevealR.setDuration(400);
-//        mAnimRevealR.setInterpolator(new LinearInterpolator());
-//        mAnimRevealR.addListener(new Animator.AnimatorListener() {
-//            @Override
-//            public void onAnimationStart(Animator animator) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animator animator) {
-//                v.setVisibility(View.GONE);
-//                super.onBackPressed();
-//            }
-//
-//            @Override
-//            public void onAnimationCancel(Animator animator) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animator animator) {
-//
-//            }
-//        });
-//
-//        mAnimRevealR.start();
-//    }
-//
-//    @Override
-//    public void onBackPressed() {
-//        circularRevealReverse(getIntent());
-//    }
-
-    // Other code omitted as it is not relevant to the conversion
 }

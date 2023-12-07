@@ -8,6 +8,7 @@ import static java.lang.Thread.sleep;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -23,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -47,6 +49,7 @@ import com.amap.api.maps2d.model.LatLngBounds;
 import com.amap.api.maps2d.model.MyLocationStyle;
 import com.amap.api.maps2d.model.Polyline;
 import com.amap.api.maps2d.model.PolylineOptions;
+import com.amap.api.services.auto.ListData;
 import com.example.myapplication.R;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
@@ -62,7 +65,7 @@ import com.example.myapplication.bean.Record;
 import org.json.JSONException;
 
 
-public class RecordingActivity extends BaseActivity {
+public class RecordingActivity extends AppCompatActivity {
 
     public double latitude;
     public double longitude;
@@ -99,74 +102,51 @@ public class RecordingActivity extends BaseActivity {
     private long endTime = 0;
 
 
-    /////////////////////////////
 
-    private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayout;
-    private Animator mAnimReveal;
-    private Animator mAnimRevealR;
+    // 实现揭露动画效果
+    private View content;
+    private int mX;
+    private int mY;
 
-    public static final String CLICK_X = "CLICK_X";
-    public static final String CLICK_Y = "CLICK_Y";
-
-
-    private void circularReveal(Intent intent) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP ||
-                (intent == null && (intent == null || !intent.hasExtra(CLICK_X) || intent.getBooleanExtra(CLICK_X, false)))) {
-            return;
-        }
-
-        Rect rect = intent.getSourceBounds();
-        View v = getWindow().getDecorView();
-        v.setVisibility(View.INVISIBLE);
-
-
-        onGlobalLayout = new ViewTreeObserver.OnGlobalLayoutListener() {
+    public void animPost() {
+        Intent intent = getIntent();
+        content = findViewById(R.id.sport_content);
+        content.post(new Runnable() {
             @Override
-            public void onGlobalLayout() {
-                if (mAnimReveal != null) {
-                    mAnimReveal.removeAllListeners();
-                    mAnimReveal.cancel();
+            public void run() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mX = intent.getIntExtra("x", 0);
+                    mY = intent.getIntExtra("y", 0);
+                    Log.d("POS", String.valueOf(mX));
+                    Log.d("POS", String.valueOf(mY));
+                    Animator animator = createRevealAnimator(false, mX, mY);
+                    animator.start();
                 }
-
-                mAnimReveal = ViewAnimationUtils.createCircularReveal(v,
-                        rect != null ? rect.centerX() : intent.getIntExtra(CLICK_X, 0),
-                        rect != null ? rect.centerY() : intent.getIntExtra(CLICK_Y, 0),
-                        0f,
-                        v.getHeight());
-
-                mAnimReveal.setDuration(400);
-                mAnimReveal.setInterpolator(new LinearInterpolator());
-                mAnimReveal.addListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animator) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animator) {
-                        if (onGlobalLayout != null) {
-                            v.getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayout);
-                        }
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animator) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animator) {
-
-                    }
-                });
-                mAnimReveal.start();
             }
-        };
-
-        v.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayout);
+        });
     }
 
-    /////////////////////////////
+    // 动画
+    @SuppressLint("ResourceAsColor")
+    private Animator createRevealAnimator(boolean reversed, int x, int y) {
+        float hypot = (float) Math.hypot(content.getHeight(), content.getWidth());
+        float startRadius = reversed ? hypot : 0;
+        float endRadius = reversed ? 0 : hypot;
+
+        Log.d("POS", String.valueOf(x));
+        Log.d("POS", String.valueOf(y));
+        Animator animator = ViewAnimationUtils.createCircularReveal(
+                content, x, y,
+                startRadius,
+                endRadius);
+        animator.setDuration(800);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//        if (reversed)
+//            animator.addListener(animatorListener);
+        content.setBackgroundColor(Color.BLUE);
+
+        return animator;
+    }
 
 
 
@@ -194,6 +174,7 @@ public class RecordingActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recording);
+        animPost();
         speedVal = findViewById(R.id.speed);
         distanceVal = findViewById(R.id.distance);
         passtime = findViewById(R.id.cm_passtime);

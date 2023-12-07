@@ -36,5 +36,4 @@
         <!-- Customize text field of the text input mode. -->
 <!--        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>-->
     </style>
-
 </resources>

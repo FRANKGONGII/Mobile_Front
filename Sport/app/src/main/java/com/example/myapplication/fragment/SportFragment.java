@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.HistoryActivity;
@@ -74,14 +75,15 @@ public class SportFragment extends Fragment {
                                     else if(cntTime[0]==0){
                                         button.setText("GO!");
                                         Intent intent = new Intent(getActivity(), RecordingActivity.class);
-
-                                        // 传递揭露动画所需参数
-                                        int[] location = new int[2];
-                                        view.getLocationInWindow(location);
-
                                         intent.putExtra("sport_type", sport_type);
-                                        intent.putExtra("CLICK_X", location[0] + view.getWidth()/2);
-                                        intent.putExtra("CLICK_Y", location[1] + view.getHeight()/2);
+//
+                                        // 揭露动画
+                                        int posX = (int) (button.getX() + button.getWidth() / 2);
+                                        int posY = (int) (button.getY() + button.getHeight() / 2);
+                                        intent.putExtra("x", posX);
+                                        intent.putExtra("y", posY);
+//                                        Log.d("POS", String.valueOf(button.getX()));
+//                                        Log.d("POS", String.valueOf(button.getY()));
 
                                         startActivity(intent);
                                         return;
