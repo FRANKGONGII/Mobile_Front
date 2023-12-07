@@ -175,16 +175,6 @@ public class RemoteData implements DataService {
         String endTime = record.getEndTimeByStr();
         //Log.d("URL_TEST",endTime+" "+startTime);
 
-        //构建表单参数
-//        FormBody.Builder requestBuild=new FormBody.Builder();
-//        //添加请求体
-//        RequestBody requestBody=requestBuild
-//                .add("id",id)
-//                .add("duration",duration)
-//                .add("distance",distance)
-//                .add("type",type)
-//                .add("startTime",startTime)
-//                .build();
 
         // 创建json对象
         JSONObject jsonObject = new JSONObject();
@@ -254,7 +244,6 @@ public class RemoteData implements DataService {
 
 
     @Override
-    //TODO:还没搞完
     public List<Record> queryRecordByTime(Date startTime, Date endTime){
         List<Record> ret = new ArrayList<>();
         OkHttpClient client=new OkHttpClient();
@@ -371,8 +360,6 @@ public class RemoteData implements DataService {
         thread.start();
         try{
             thread.join();
-
-
             for(Record r:ret){
                 r.setLatLngList();
             }
