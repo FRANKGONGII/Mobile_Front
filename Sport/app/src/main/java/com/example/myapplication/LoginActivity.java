@@ -21,6 +21,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.data.LocalUser;
+import com.example.myapplication.data.UserService;
+import com.example.myapplication.data.UserServiceFactory;
+
 public class LoginActivity extends AppCompatActivity {
     Button btLogin;
     Button btReg;
@@ -38,9 +42,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public View.OnClickListener onClickListener;
+
+    public UserService userService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userService = UserServiceFactory.getInstance();
         setContentView(R.layout.activity_login);
         init_listener();
         init_view();
@@ -89,8 +96,18 @@ public class LoginActivity extends AppCompatActivity {
 
     public void verify(){
         btLogin.setEnabled(false);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        String user = String.valueOf(etUsername.getText());
+        String pwd = String.valueOf(etPsd.getText());
+        if(userService.LoginByPwd(user,pwd)){
+            Toast.makeText(this, "登陆成功", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(this, "账户或密码错误", Toast.LENGTH_SHORT).show();
+            btLogin.setEnabled(true);
+        }
+
 //        showLoadingView();
 //        new Handler().postDelayed(() -> {
 //            dismissLoadingView();

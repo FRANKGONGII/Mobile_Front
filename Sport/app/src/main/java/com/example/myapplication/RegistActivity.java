@@ -35,12 +35,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.myapplication.data.UserService;
+import com.example.myapplication.data.UserServiceFactory;
 import com.example.myapplication.utils.Utils;
 
 public class RegistActivity extends AppCompatActivity {
 
     EditText etAccount;
     EditText etCode;
+
+    EditText etUsername;
     Chronometer chronometer;
     EditText etPsd;
     EditText etCheckPsd;
@@ -53,10 +57,13 @@ public class RegistActivity extends AppCompatActivity {
     public View.OnClickListener onClickListener;
     private String code = "123";
 
+    UserService userService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regist);
+        userService = UserServiceFactory.getInstance();
         init_listener();
         init_view();
         other_init();
@@ -83,6 +90,7 @@ public class RegistActivity extends AppCompatActivity {
         etCheckPsd = findViewById(R.id.et_checkPsd);
         btRegist = findViewById(R.id.bt_regist);
         rlBadk = findViewById(R.id.rlBadk);
+        etUsername = findViewById(R.id.et_username);
 
         findViewById(R.id.container).setOnClickListener(onClickListener);
         rlBadk.setOnClickListener(onClickListener);
@@ -146,6 +154,10 @@ public class RegistActivity extends AppCompatActivity {
 
     private void regist() {
         // TODO
+        String userName = String.valueOf(etUsername.getText());
+        String phone = String.valueOf(etAccount.getText());
+        String pwd = String.valueOf(etPsd.getText());
+        userService.Register(userName,phone,pwd);
         showInfo("注册成功");
         finish();
     }
