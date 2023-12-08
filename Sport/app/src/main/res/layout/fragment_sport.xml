@@ -146,13 +146,14 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
+    <android.widget.Button
         android:id="@+id/ButtonGo"
         android:layout_width="170dp"
         android:layout_height="170dp"
         android:layout_marginTop="372dp"
-        android:background="@drawable/button_circle"
         android:ellipsize="end"
+        android:background="@drawable/button_circle"
+
 
         android:maxHeight="0dp"
         android:maxLines="2"
@@ -162,14 +163,14 @@
         android:text="@string/button_go"
         android:textColor="@color/white"
         android:textIsSelectable="false"
-        android:textSize="40sp"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <!--        注意，这里选择的按钮要找个图片-->
-    <Button
+    <android.widget.Button
         android:id="@+id/ButtonChooseType"
         android:layout_width="75dp"
         android:layout_height="50dp"

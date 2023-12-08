@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/NoActionBarTheme">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -13,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <Button
+        <android.widget.Button
             android:id="@+id/video_button1"
             android:layout_width="70sp"
             android:layout_height="40sp"
@@ -23,7 +24,7 @@
             android:textColor="@color/text_color_white"
             android:textSize="15sp" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/video_button2"
             android:layout_width="70sp"
             android:layout_height="40sp"
@@ -33,7 +34,7 @@
             android:textColor="@color/text_color_white"
             android:textSize="15sp" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/video_button3"
             android:layout_width="40sp"
             android:layout_height="40sp"

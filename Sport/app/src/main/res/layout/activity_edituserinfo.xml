@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:theme="@style/SysWinTspTheme"
+    android:background="#F5F5F5"
+    tools:context=".EditUserInfoActivity">
+
+    <!-- 顶部导航栏 -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/blue_5"
+        android:fitsSystemWindows="true"
+        app:title="账号资料"
+        app:titleTextColor="@color/white"
+        app:navigationIcon="@drawable/baseline_arrow_back_24">
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- 列表项 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/userInfoRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</RelativeLayout>

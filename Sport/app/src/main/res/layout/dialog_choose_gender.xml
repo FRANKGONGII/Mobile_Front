@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/choose_gender"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+
+        <ImageButton
+            android:id="@+id/male"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_toStartOf="@id/unknown"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/baseline_male_blue_24"
+            android:background="@color/white"/>
+
+        <ImageButton
+            android:id="@+id/unknown"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/baseline_question_mark_grey_24"
+            android:background="@color/white"/>
+
+        <ImageButton
+            android:id="@+id/female"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_toEndOf="@id/unknown"
+            android:layout_marginEnd="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/baseline_female_pink_24"
+            android:background="@color/white"/>
+
+
+
+
+
+
+</RelativeLayout>
