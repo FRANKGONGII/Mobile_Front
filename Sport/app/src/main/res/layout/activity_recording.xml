@@ -144,14 +144,26 @@
 
         </com.example.myapplication.ui.customView.LongClickProgressView>
 
-        <ImageView
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignStart="@id/tv0"-->
+<!--            android:layout_alignTop="@id/tv0"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginStart="24dp"-->
+<!--            android:src="@drawable/baseline_stop_24"/>-->
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@id/tv0"
             android:layout_alignTop="@id/tv0"
             android:layout_centerVertical="true"
-            android:layout_marginStart="24dp"
-            android:src="@drawable/baseline_stop_24"/>
+            android:layout_marginStart="25dp"
+            android:gravity="center"
+            android:text="完成"
+            android:textColor="@color/text_color_green"
+            android:textSize="18sp" />
 
 <!--        <TextView-->
 <!--            android:id="@+id/tv1"-->
