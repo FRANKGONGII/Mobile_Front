@@ -108,6 +108,9 @@ public class RecordingActivity extends AppCompatActivity {
     private int mX;
     private int mY;
 
+    //用于跳转
+
+
     public void animPost() {
         Intent intent = getIntent();
         content = findViewById(R.id.sport_content);
@@ -188,8 +191,9 @@ public class RecordingActivity extends AppCompatActivity {
 
 
         LongClickProgressView lcpv = findViewById(R.id.tv0);
-        lcpv.setRingColor(Color.parseColor("#FF0000"));
-        lcpv.setCenterColor(Color.parseColor("#FF0000"));
+        //
+        lcpv.setRingColor(Color.parseColor("#68477be5"));
+        lcpv.setCenterColor(Color.parseColor("#68FFFFFF"));
         lcpv.setOnLongClickStateListener(new LongClickProgressView.OnLongClickStateListener() {
             @Override
             public void onFinish() throws JSONException {
@@ -430,6 +434,7 @@ public class RecordingActivity extends AppCompatActivity {
 //        }
 //        intent2.putExtra("latitude",array1);
         intent2.putExtra("passId",record.getId());
+        intent2.putExtra("formActivity","record");
         startActivity(intent2);
     }
 
