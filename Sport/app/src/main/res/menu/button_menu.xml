@@ -15,8 +15,8 @@
         app:itemBackground="@color/white"/>
     <item
         android:id="@+id/community_fragment"
-        android:icon="@drawable/baseline_wifi_find_24"
-        android:title="发现"
+        android:icon="@drawable/baseline_chat_24"
+        android:title="助手"
         app:itemBackground="@color/white"/>
     <item
         android:id="@+id/course_fragment"
