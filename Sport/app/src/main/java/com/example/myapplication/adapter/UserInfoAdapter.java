@@ -45,6 +45,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -143,7 +145,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private class AvatarViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private CircleImageView avatar;
-
+        private ModalBottomSheet bottomSheet;
         public AvatarViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.userInfoType);
@@ -151,14 +153,17 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             // 设置点击事件
             itemView.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
-                    // 处理点击事件
-                    ModalBottomSheet bottomSheet = new ModalBottomSheet(R.layout.modal_bottom_sheet_avatar);
+                    // 弹出底部弹窗
+                    bottomSheet = new ModalBottomSheet(R.layout.modal_bottom_sheet_avatar);
                     bottomSheet.show(((AppCompatActivity) mContext).getSupportFragmentManager(), bottomSheet.getTag());
                 }
             });
+
         }
+
 
         public void bindData(UserInfoItem item) {
             // 设置数据

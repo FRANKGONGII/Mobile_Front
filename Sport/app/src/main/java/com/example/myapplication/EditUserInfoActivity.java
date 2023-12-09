@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,17 +52,6 @@ public class EditUserInfoActivity extends AppCompatActivity {
         divider = new MaterialDividerItemDecoration(this, LinearLayoutManager.VERTICAL);
         window = getWindow();
 
-//        if (avatarBottomSheetView == null) {
-//            Log.i("Sheet", "Not Found");
-//        } else {
-//            Log.i("Sheet", "Found");
-//        }
-
-//        ModalBottomSheet bottomSheet = new ModalBottomSheet();
-//        bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
-
-
-
         int toolbarColor = ((ColorDrawable)toolbar.getBackground()).getColor();
         window.setStatusBarColor(toolbarColor);
 
@@ -88,6 +79,8 @@ public class EditUserInfoActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         onUserInfoInit();
+
+
 
 
         // FAB
@@ -120,6 +113,6 @@ public class EditUserInfoActivity extends AppCompatActivity {
          userInfoAdapter = new UserInfoAdapter(itemArrayList, this, EditUserInfoActivity.this);
 
          recyclerView.setAdapter(userInfoAdapter);
-
     }
+
 }
