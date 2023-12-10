@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -72,6 +73,12 @@ public class ResultActivity extends AppCompatActivity {
 
 
         Record record = dataService.getRecord(id);
+        if(record == null){
+            // 正常不会到这里，除非你真的是故意找茬
+            Toast.makeText(this, "Record not exists (errorNo:404)", Toast.LENGTH_SHORT).show();
+            record = Record.getDefaultOne();
+        }
+
         //Log.d("ID_TEST","after find"+record);
         List<LatLng> list = record.getLatLngList();
         //Log.d("ID_TEST", list.get(0).latitude+" "+list.get(0).longitude);

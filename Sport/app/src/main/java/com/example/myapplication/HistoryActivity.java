@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -20,6 +21,7 @@ import com.example.myapplication.data.DataServiceFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -53,6 +55,10 @@ public class HistoryActivity extends AppCompatActivity{
 
         dataService = DataServiceFactory.getInstance();
         recordList = dataService.getAllRecords();
+        if(recordList == null){
+            Toast.makeText(this, "network error: 408", Toast.LENGTH_SHORT).show();
+            recordList = new ArrayList<>();
+        }
 
         recyclerView = findViewById(R.id.runningHistoryList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);//添加布局管理器
@@ -65,16 +71,16 @@ public class HistoryActivity extends AppCompatActivity{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                try {
-                    recordList = dataService.queryRecordByTime(sdf.parse("2023-11-01 00:00:00"),sdf.parse("2023-12-01 00:00:00"));
-                    recordList = dataService.queryRecordByType(Record.RecordType.RUNNING);
-                    adapter = new RecordAdapter(recordList);
-                    recyclerView.setAdapter(adapter);
-                    Log.d("Data_test","!"+recordList.size());
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
+//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                try {
+////                    recordList = dataService.queryRecordByTime(sdf.parse("2023-11-01 00:00:00"),sdf.parse("2023-12-01 00:00:00"));
+////                    recordList = dataService.queryRecordByType(Record.RecordType.RUNNING);
+////                    adapter = new RecordAdapter(recordList);
+////                    recyclerView.setAdapter(adapter);
+////                    Log.d("Data_test","!"+recordList.size());
+//                } catch (ParseException e) {
+//                    throw new RuntimeException(e);
+//                }
             }
         });
 
@@ -174,6 +180,11 @@ public class HistoryActivity extends AppCompatActivity{
         Date endTime = get_next_month(startTime);
 
         recordList = dataService.queryRecordByBoth(chosen_type,startTime,endTime);
+        if(recordList == null){
+            Toast.makeText(this, "network error: 408", Toast.LENGTH_SHORT).show();
+            recordList = new ArrayList<>();
+        }
+
         adapter = new RecordAdapter(recordList);
         recyclerView.setAdapter(adapter);
     }
