@@ -77,6 +77,8 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
+    public AvatarViewHolder avatarViewHolder;
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -86,7 +88,8 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (UserInfoItem.UserInfoType.values()[viewType]) {
             case AVATAR:
                 view = inflater.inflate(R.layout.item_userinfo_image, parent, false);
-                return new AvatarViewHolder(view);
+                avatarViewHolder = new AvatarViewHolder(view);
+                return avatarViewHolder;
             case NICKNAME:
                 view = inflater.inflate(R.layout.item_userinfo_text, parent, false);
                 return new NicknameViewHolder(view);
@@ -142,7 +145,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return itemList.size();
     }
 
-    private class AvatarViewHolder extends RecyclerView.ViewHolder {
+    public class AvatarViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private CircleImageView avatar;
         private ModalBottomSheet bottomSheet;
@@ -152,15 +155,15 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             avatar = itemView.findViewById(R.id.userInfoImg);
 
             // 设置点击事件
-            itemView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    // 弹出底部弹窗
-                    bottomSheet = new ModalBottomSheet(R.layout.modal_bottom_sheet_avatar);
-                    bottomSheet.show(((AppCompatActivity) mContext).getSupportFragmentManager(), bottomSheet.getTag());
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    // 弹出底部弹窗
+//                    bottomSheet = new ModalBottomSheet(R.layout.modal_bottom_sheet_avatar);
+//                    bottomSheet.show(((AppCompatActivity) mContext).getSupportFragmentManager(), bottomSheet.getTag());
+//                }
+//            });
 
         }
 

@@ -87,6 +87,7 @@ public class ModalBottomSheet extends BottomSheetDialogFragment {
             }
     );
 
+
     // 实在不想把逻辑写在这里...
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

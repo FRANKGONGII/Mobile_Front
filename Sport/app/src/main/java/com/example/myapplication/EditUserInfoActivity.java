@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterViewAnimator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,6 +81,8 @@ public class EditUserInfoActivity extends AppCompatActivity {
 
         onUserInfoInit();
 
+        onUserInfoEdit();
+
 
 
 
@@ -115,4 +118,20 @@ public class EditUserInfoActivity extends AppCompatActivity {
          recyclerView.setAdapter(userInfoAdapter);
     }
 
+    public void onUserInfoEdit() {
+        UserInfoAdapter.AvatarViewHolder avatarViewHolder = userInfoAdapter.avatarViewHolder;
+
+//        ModalBottomSheet bottomSheet;
+        avatarViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ModalBottomSheet bottomSheet = new ModalBottomSheet(R.layout.modal_bottom_sheet_avatar);
+                bottomSheet.show(EditUserInfoActivity.this.getSupportFragmentManager(), bottomSheet.getTag());
+            }
+        });
+    }
+
+    public void onUserInfoUpdate() {
+
+    }
 }
