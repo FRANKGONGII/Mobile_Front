@@ -42,8 +42,9 @@ public class LocalData implements DataService {
 
 
     @Override
-    public void updateRecord(Record record){
+    public boolean updateRecord(Record record){
         records.add(record);
+        return true;
     }
 
     @Override
