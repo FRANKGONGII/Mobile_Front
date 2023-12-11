@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/option_1"
+        android:icon="@drawable/baseline_window_24"
+        android:title="     全部" />
+    <item android:id="@+id/option_2"
+        android:icon="@drawable/baseline_directions_run_24"
+        android:title="     跑步" />
+    <item android:id="@+id/option_3"
+        android:icon="@drawable/baseline_directions_bike_24"
+        android:title="     骑行" />
+    <item android:id="@+id/option_4"
+        android:icon="@drawable/baseline_pool_24"
+        android:title="     游泳" />
+    <item android:id="@+id/option_5"
+        android:icon="@drawable/baseline_directions_walk_24"
+        android:title="     快走" />
+</menu>

@@ -24,6 +24,7 @@ import com.example.myapplication.HistoryActivity;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.RecordingActivity;
+import com.example.myapplication.TestActivity;
 
 public class SportFragment extends Fragment {
 
@@ -154,6 +155,7 @@ public class SportFragment extends Fragment {
     }
 
     //为累计跑步控件设置跳转，跳转到历史记录界面
+    //TODO:我修改了跳转的位置
     public void set_nav1(@NonNull View view){
         View nav = view.findViewById(R.id.sum_distance_linear);
         nav.setOnClickListener(new View.OnClickListener() {
@@ -169,7 +171,7 @@ public class SportFragment extends Fragment {
     public void showSingleAlertDialog(View view){
         final String[] items = {"跑步", "骑行", "游泳", "快走"};
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
-        alertBuilder.setTitle("这是单选框");
+        alertBuilder.setTitle("请选择运动");
 
         final int[] choose = {-1};
         alertBuilder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
