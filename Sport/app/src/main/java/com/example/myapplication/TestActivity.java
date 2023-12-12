@@ -19,7 +19,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 
 import androidx.annotation.MenuRes;
@@ -28,14 +30,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.ListPopupWindow;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.adapter.RecordAdapter;
+import com.example.myapplication.bean.Record;
+import com.example.myapplication.data.DataService;
+import com.example.myapplication.data.DataServiceFactory;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
 
-    private static final int ICON_MARGIN_DP = 0; // 用你希望的dp值替换8
+    private RecordAdapter adapter;
+
+    private RecyclerView recyclerView;
+    private List<Record> recordList;
+
+    private DataService dataService;
 
 
     @Override
@@ -45,17 +60,31 @@ public class TestActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_test);
 
+        dataService = DataServiceFactory.getInstance();
+        recordList = dataService.getAllRecords();
+        if(recordList == null){
+            Toast.makeText(this, "network error: 408", Toast.LENGTH_SHORT).show();
+            recordList = new ArrayList<>();
+        }
+
+        recyclerView = findViewById(R.id.history_list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);//添加布局管理器
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);  //设置为纵向水平滚动
+        recyclerView.setLayoutManager(layoutManager);//设置布局管理器
+        adapter = new RecordAdapter(recordList);
+        recyclerView.setAdapter(adapter);
+
         Button listPopupWindowButton = findViewById(R.id.history_popup_button);
-
-
-
-
         listPopupWindowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showMenu(v,R.menu.history_type_menu);
             }
         });
+
+        ImageButton sortByTime = findViewById(R.id.history_sort_by_time);
+
+
     }
 
     private Context requireContext() {

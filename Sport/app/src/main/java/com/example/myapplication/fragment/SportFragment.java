@@ -161,7 +161,7 @@ public class SportFragment extends Fragment {
         nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), HistoryActivity.class);
+                Intent intent = new Intent(getActivity(), TestActivity.class);
 
                 startActivity(intent);
             }

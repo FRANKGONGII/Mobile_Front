@@ -28,6 +28,62 @@
         />
 
 
+    <TextView
+        android:id="@+id/history_time"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="时间"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_toEndOf="@+id/history_popup_button"
+        android:layout_marginStart="5sp"/>
+    <ImageButton
+        android:id="@+id/history_sort_by_time"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/history_time"
+        android:layout_marginStart="5sp"
+        android:background="#00C0C0C0"
+        android:src="@drawable/baseline_keyboard_arrow_up_24"
+        />
+
+
+    <TextView
+        android:id="@+id/history_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="距离"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_toEndOf="@+id/history_sort_by_time"
+        android:layout_marginStart="15sp"/>
+    <ImageButton
+        android:id="@+id/history_sort_by_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/history_distance"
+        android:layout_marginStart="5sp"
+        android:background="#00C0C0C0"
+        android:src="@drawable/baseline_keyboard_arrow_up_24"
+        />
+
+
+
+
+    <ImageButton
+        android:layout_width="35sp"
+        android:layout_height="35sp"
+        android:id = "@+id/history_count"
+        android:background="@drawable/baseline_equalizer_24"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10sp"
+        android:foregroundGravity="center"
+        />
+
+
+
 
 
 
