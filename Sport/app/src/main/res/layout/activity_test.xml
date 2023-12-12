@@ -21,6 +21,7 @@
 
 
         <TextView
+            android:id="@+id/history_show_distance"
             android:layout_width="80sp"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -30,6 +31,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/history_show_duration"
             android:layout_width="80sp"
             android:layout_height="match_parent"
             android:layout_marginLeft="30sp"
@@ -39,6 +41,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/history_show_calorie"
             android:layout_width="80sp"
             android:layout_height="match_parent"
             android:layout_marginLeft="30sp"

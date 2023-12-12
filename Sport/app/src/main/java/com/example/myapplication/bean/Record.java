@@ -122,6 +122,8 @@ public class Record implements Serializable {
 
     public String getDistanceByStr(){ return String.format("%.2f", distance); }
 
+    public double getDistance(){return distance;}
+
     public String getDurationByStr(){ return parse_duration(duration); }
 
     public int getDuration(){ return duration; }

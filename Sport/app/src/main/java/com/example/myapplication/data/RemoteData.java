@@ -50,6 +50,7 @@ public class RemoteData implements DataService {
         }
     }
 
+
     @Override
     public List<Record> getAllRecords(){
         String serviceRecord = "/v1/record";

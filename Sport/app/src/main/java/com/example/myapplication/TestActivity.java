@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -49,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -63,6 +65,8 @@ public class TestActivity extends AppCompatActivity {
 
     private Date start = null;
     private Date end = null;
+
+    private double nowDistance = 0;
 
 
     @Override
@@ -86,6 +90,10 @@ public class TestActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);//设置布局管理器
         adapter = new RecordAdapter(recordList);
         recyclerView.setAdapter(adapter);
+
+
+        //初始化数据，主要是为了显示那些数值
+        reFreshView(dataService.getAllRecords());
 
         //选择类型按钮
         Button listPopupWindowButton = findViewById(R.id.history_popup_button);
@@ -169,16 +177,16 @@ public class TestActivity extends AppCompatActivity {
                     reFreshView(dataService.getAllRecords());
                 }else if(id==R.id.option_2){
                     nowType = Record.RecordType.RUNNING;
-                    reFreshView(dataService.queryRecordByBoth(Record.RecordType.RUNNING,null,null));
+                    reFreshView(dataService.queryRecordByBoth(Record.RecordType.RUNNING,start,end));
                 }else if(id==R.id.option_3){
                     nowType = Record.RecordType.RIDING;
-                    reFreshView(dataService.queryRecordByBoth(Record.RecordType.RIDING,null,null));
+                    reFreshView(dataService.queryRecordByBoth(Record.RecordType.RIDING,start,end));
                 }else if(id==R.id.option_4){
                     nowType = Record.RecordType.SWIMMING;
-                    reFreshView(dataService.queryRecordByBoth(Record.RecordType.SWIMMING,null,null));
+                    reFreshView(dataService.queryRecordByBoth(Record.RecordType.SWIMMING,start,end));
                 }else if(id==R.id.option_5){
                     nowType = Record.RecordType.WALKING;
-                    reFreshView(dataService.queryRecordByBoth(Record.RecordType.WALKING,null,null));
+                    reFreshView(dataService.queryRecordByBoth(Record.RecordType.WALKING,start,end));
                 }
                 return true;
             }
@@ -198,7 +206,49 @@ public class TestActivity extends AppCompatActivity {
             recordList = records;
             adapter = new RecordAdapter(recordList);
             recyclerView.setAdapter(adapter);
+
+            //修改长度
+            String newSumDistance = getSumDistance(records);
+            TextView distance = findViewById(R.id.history_show_distance);
+            distance.setText(newSumDistance);
+
+            String newDuration = getSumTime(records);
+            TextView duration = findViewById(R.id.history_show_duration);
+            duration.setText(newDuration);
+
+            String newCalorie = getSumTime(records);
+            TextView calorie = findViewById(R.id.history_show_calorie);
+            calorie.setText(newCalorie);
+
+
         }
+    }
+
+    public String getSumDistance(List<Record> list){
+        double sum = 0;
+        for(Record r:list){
+            sum+=r.getDistance();
+        }
+        nowDistance = sum;
+        return String.format("%.2f", sum);
+    }
+
+    public String getSumTime(List<Record> list){
+        int duration = 0;
+        for(Record r:list){
+            duration+=r.getDuration();
+        }
+
+
+        int h = duration / 3600;
+        int min = duration % 3600 / 60;
+        //int s = duration % 60;
+        return String.format(Locale.getDefault(), "%02d:%02d",h,min);
+    }
+
+    public String getCalorie(){
+        int WEIGHT = 60;
+        return String.format("%.1f",1.036*nowDistance*WEIGHT);
     }
 
 }
