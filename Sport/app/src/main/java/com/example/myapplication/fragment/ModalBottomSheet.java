@@ -92,39 +92,39 @@ public class ModalBottomSheet extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        TextView camera = view.findViewById(R.id.choose_camera);
-        TextView photo = view.findViewById(R.id.choose_photo);
-        TextView random = view.findViewById(R.id.choose_random);
-
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Log.d("EDIT", "onClick: camera");
-//                Toast.makeText(getActivity(), "choose from camera", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(mActivity, CameraActivity.class);
-//                startActivity(intent);
-//                cameraLauncher.launch(intent);
-            }
-        });
-
-        photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Log.d("EDIT", "onClick: photo");
-//                Toast.makeText(getActivity(), "choose from photo", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(mActivity, PhotoActivity.class);
-//                startActivity(intent);
-            }
-        });
-
-        random.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Log.d("EDIT", "onClick: random");
-//                Toast.makeText(getActivity(), "choose random", Toast.LENGTH_SHORT).show();
-            }
-        });
+        ((EditUserInfoActivity) mActivity).onAvatarEdit(view);
+//        TextView camera = view.findViewById(R.id.choose_camera);
+//        TextView photo = view.findViewById(R.id.choose_photo);
+//        TextView random = view.findViewById(R.id.choose_random);
+//
+//        camera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Log.d("EDIT", "onClick: camera");
+////                Toast.makeText(getActivity(), "choose from camera", Toast.LENGTH_SHORT).show();
+////                Intent intent = new Intent(mActivity, CameraActivity.class);
+////                startActivity(intent);
+////                cameraLauncher.launch(intent);
+//            }
+//        });
+//
+//        photo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Log.d("EDIT", "onClick: photo");
+////                Toast.makeText(getActivity(), "choose from photo", Toast.LENGTH_SHORT).show();
+////                Intent intent = new Intent(mActivity, PhotoActivity.class);
+////                startActivity(intent);
+//            }
+//        });
+//
+//        random.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Log.d("EDIT", "onClick: random");
+////                Toast.makeText(getActivity(), "choose random", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Nullable

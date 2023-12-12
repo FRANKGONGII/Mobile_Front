@@ -45,9 +45,10 @@ public class CameraActivity extends AppCompatActivity {
                             Intent resultIntent = new Intent();
                             resultIntent.setData(photoUri);
                             setResult(Activity.RESULT_OK, resultIntent);
-                            finish();
+//                            finish();
                         }
                     }
+                    finish();
                 }
             }
     );
