@@ -4,6 +4,7 @@ import static androidx.core.content.ContentProviderCompat.requireContext;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,17 +31,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.ListPopupWindow;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.engine.Resource;
 import com.example.myapplication.adapter.RecordAdapter;
 import com.example.myapplication.bean.Record;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
+import com.example.myapplication.utils.Utils;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
@@ -51,6 +58,11 @@ public class TestActivity extends AppCompatActivity {
     private List<Record> recordList;
 
     private DataService dataService;
+    private boolean pressTime = false;
+    private Record.RecordType nowType = null;
+
+    private Date start = null;
+    private Date end = null;
 
 
     @Override
@@ -60,6 +72,7 @@ public class TestActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_test);
 
+        //列表初始化
         dataService = DataServiceFactory.getInstance();
         recordList = dataService.getAllRecords();
         if(recordList == null){
@@ -74,6 +87,7 @@ public class TestActivity extends AppCompatActivity {
         adapter = new RecordAdapter(recordList);
         recyclerView.setAdapter(adapter);
 
+        //选择类型按钮
         Button listPopupWindowButton = findViewById(R.id.history_popup_button);
         listPopupWindowButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,16 +96,56 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
+        //时间选择按钮
         ImageButton sortByTime = findViewById(R.id.history_sort_by_time);
+        sortByTime.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
+            @Override
+            public void onClick(View v) {
+                ImageButton sortByTime = findViewById(R.id.history_sort_by_time);
 
+                MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
+                builder.setTitleText("选择搜索时间范围");
+                MaterialDatePicker<Pair<Long,Long>> datePicker = builder.build();
+                datePicker.show(getSupportFragmentManager(),"DATE_RANGE_PICKER");
+
+                datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
+                    @Override
+                    public void onPositiveButtonClick(Pair<Long, Long> selection) {
+
+                        start = Utils.getDateFromLong(selection.first);
+                        end = Utils.getDateFromLong(selection.second);
+                        //Log.d("TIME_TEST",start+" "+end);
+
+                        reFreshView(dataService.queryRecordByBoth(nowType,start,end));
+                    }
+                });
+            }
+        });
+
+        ImageButton sortByDis = findViewById(R.id.history_sort_by_distance);
+        sortByDis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //返回按钮
+        ImageButton backButton  =  findViewById(R.id.history_back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TestActivity.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
     private Context requireContext() {
         return this;
     }
-
-
 
     @SuppressLint("RestrictedApi")
     private void showMenu(View v, @MenuRes int menuRes) {
@@ -110,23 +164,41 @@ public class TestActivity extends AppCompatActivity {
                 Button button = v.findViewById(R.id.history_popup_button);
                 int len = item.getTitle().length();
                 button.setText(item.getTitle().subSequence(len-2,len));
-
-
-//                if(id==R.id.option_1){
-//
-//                }else if(id==R.id.option_2){
-//
-//                }else if(id==R.id.option_3){
-//
-//                }else if(id==R.id.option_4){
-//
-//                }else if(id==R.id.option_5){
-//
-//                }
+                if(id==R.id.option_1){
+                    //搜索全部
+                    reFreshView(dataService.getAllRecords());
+                }else if(id==R.id.option_2){
+                    nowType = Record.RecordType.RUNNING;
+                    reFreshView(dataService.queryRecordByBoth(Record.RecordType.RUNNING,null,null));
+                }else if(id==R.id.option_3){
+                    nowType = Record.RecordType.RIDING;
+                    reFreshView(dataService.queryRecordByBoth(Record.RecordType.RIDING,null,null));
+                }else if(id==R.id.option_4){
+                    nowType = Record.RecordType.SWIMMING;
+                    reFreshView(dataService.queryRecordByBoth(Record.RecordType.SWIMMING,null,null));
+                }else if(id==R.id.option_5){
+                    nowType = Record.RecordType.WALKING;
+                    reFreshView(dataService.queryRecordByBoth(Record.RecordType.WALKING,null,null));
+                }
                 return true;
             }
         });
         popup.show();
+    }
+
+
+    /**
+     * @params: records, 需要更新的到视图上的数据，以dataService.getAllRecord()这样的形式传入参数
+     */
+    public void reFreshView(List<Record> records){
+        if(records==null){
+            //如果是空，说明没找到，网络错误
+            Toast.makeText(TestActivity.this, "network error: 408", Toast.LENGTH_SHORT).show();
+        }else{
+            recordList = records;
+            adapter = new RecordAdapter(recordList);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
 }

@@ -37,7 +37,7 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:layout_toEndOf="@+id/history_popup_button"
-        android:layout_marginStart="5sp"/>
+        android:layout_marginStart="20sp"/>
     <ImageButton
         android:id="@+id/history_sort_by_time"
         android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:layout_toEndOf="@+id/history_sort_by_time"
-        android:layout_marginStart="15sp"/>
+        android:layout_marginStart="25sp"/>
     <ImageButton
         android:id="@+id/history_sort_by_distance"
         android:layout_width="wrap_content"
