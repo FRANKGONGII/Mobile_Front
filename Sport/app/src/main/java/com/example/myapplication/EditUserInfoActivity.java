@@ -180,6 +180,30 @@ public class EditUserInfoActivity extends AppCompatActivity {
             }
     );
 
+
+    private final ActivityResultLauncher<Intent> photoLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Log.d("AVA", "OK");
+                        Intent data = result.getData();
+                        if (data != null) {
+                            Uri photoUri = data.getData();
+                            if (photoUri != null) {
+                                latest_uri = photoUri;
+                                avatarViewHolder.updateData(latest_uri);
+                            }
+                        }
+                    } else {
+                        Log.d("AVA", "CANCEL");
+                    }
+
+                    bottomSheet.dismiss();
+                }
+            }
+    );
     public void onAvatarEdit(View view) {
         TextView camera = view.findViewById(R.id.choose_camera);
         TextView photo = view.findViewById(R.id.choose_photo);
@@ -201,9 +225,11 @@ public class EditUserInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Log.d("EDIT", "onClick: photo");
-                Toast.makeText(EditUserInfoActivity.this, "choose from photo", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(mActivity, PhotoActivity.class);
+//                Toast.makeText(EditUserInfoActivity.this, "choose from photo", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(EditUserInfoActivity.this, PhotoActivity.class);
+                latest_uri = null;
 //                startActivity(intent);
+                photoLauncher.launch(intent);
             }
         });
 

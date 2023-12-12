@@ -30,7 +30,6 @@ import java.io.IOException;
 
 public class CameraActivity extends AppCompatActivity {
 
-//    private LayoutPhotoActivityBinding binding;
     private Uri photoUri;
 
     private final ActivityResultLauncher<Uri> takePicture = registerForActivityResult(
