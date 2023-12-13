@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,17 +26,29 @@ import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.RecordingActivity;
 import com.example.myapplication.TestActivity;
+import com.example.myapplication.bean.Record;
+import com.example.myapplication.data.DataService;
+import com.example.myapplication.data.DataServiceFactory;
+
+import org.w3c.dom.Text;
+
+import java.util.List;
 
 public class SportFragment extends Fragment {
 
     String sport_type = "跑步";//默认运动是跑步
+    Record.RecordType recordType = Record.RecordType.RUNNING;
     private AlertDialog alertDialog2;
+    private DataService dataService;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View mView = inflater.inflate(R.layout.fragment_sport, container, false);
+
+        dataService = DataServiceFactory.getInstance();
+
 
         //TODO：这里应该要去获取上面面板的数据
 
@@ -48,6 +61,17 @@ public class SportFragment extends Fragment {
         setButtonGO(view);
         setButtonChoose(view);
         set_nav1(view);
+
+        List<Record> list = dataService.queryRecordByBoth(Record.RecordType.RUNNING,null,null);
+        if(list==null){
+            Toast.makeText(getContext(), "network error: 408", Toast.LENGTH_SHORT).show();
+        }else{
+            TextView textView = view.findViewById(R.id.sum_distance);
+            textView.setText(getSumDistance(list));
+        }
+
+
+
     }
 
     //
@@ -162,7 +186,6 @@ public class SportFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), TestActivity.class);
-
                 startActivity(intent);
             }
         });
@@ -193,6 +216,27 @@ public class SportFragment extends Fragment {
                 button.setText(sport_type);
                 Button button2 = view.findViewById(R.id.ButtonGo);
                 button2.setText(sport_type+"\n"+"GO");
+
+                TextView sumType = view.findViewById(R.id.sum_type);
+                sumType.setText("累计"+sport_type);
+                List<Record> list;
+                if(sport_type.equals("跑步")){
+                    list = dataService.queryRecordByBoth(Record.RecordType.RUNNING,null,null);
+                }else if(sport_type.equals("快走")){
+                    list = dataService.queryRecordByBoth(Record.RecordType.WALKING,null,null);
+                }else if(sport_type.equals("游泳")){
+                    list = dataService.queryRecordByBoth(Record.RecordType.SWIMMING,null,null);
+                }else{
+                    list = dataService.queryRecordByBoth(Record.RecordType.RIDING,null,null);
+                }
+                if(list==null){
+                    Toast.makeText(getContext(), "network error: 408", Toast.LENGTH_SHORT).show();
+                }else{
+                    TextView textView = view.findViewById(R.id.sum_distance);
+                    textView.setText(getSumDistance(list));
+                }
+
+
                 alertDialog2.dismiss();
             }
         });
@@ -205,6 +249,14 @@ public class SportFragment extends Fragment {
         });
         alertDialog2 = alertBuilder.create();
         alertDialog2.show();
+    }
+
+    public String getSumDistance(List<Record> list){
+        double sum = 0;
+        for(Record r:list){
+            sum+=r.getDistance();
+        }
+        return String.format("%.2f", sum);
     }
 
 }

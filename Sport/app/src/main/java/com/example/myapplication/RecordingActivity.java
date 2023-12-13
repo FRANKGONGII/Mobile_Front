@@ -201,10 +201,10 @@ public class RecordingActivity extends AppCompatActivity {
                 endTime = System.currentTimeMillis();
                 Log.d("SAVE_TEST",String.valueOf(new Date(startTime)));
                 Log.d("SAVE_TEST",String.valueOf(new Date(endTime)));
-                if(false && (distance<0.1||latLngList.size()<3)){
+                if(false&&(distance<0.1||latLngList.size()<4)){
                     //TODO:时间太短的结束可能还要完善一下
                     ToastUtils.show("运动时间或距离太短啦");
-                    //Log.d("SAVE_TEST",String.valueOf(ToastUtils.isInit()));
+                    Log.d("SAVE_TEST",latLngList+" ");
                     finish();
                 } else{
                     ifStart = false;
