@@ -207,7 +207,6 @@ public class RecordingActivity extends AppCompatActivity {
                     //Log.d("SAVE_TEST",String.valueOf(ToastUtils.isInit()));
                     finish();
                 } else{
-                    ToastUtils.show("保存运动记录");
                     ifStart = false;
                     if (null != mRunnable) {
                         mHandler.removeCallbacks(mRunnable);
@@ -417,7 +416,13 @@ public class RecordingActivity extends AppCompatActivity {
 
         Record record = new Record(Record.RecordType.getValue(sport_type),new Date(startTime),new Date(endTime),distance,seconds,latLngList);
 
-        dataService.updateRecord(record);
+        if(!dataService.updateRecord(record)){
+            ToastUtils.show("Update timeout (errNo:408)");
+            // TODO: Of course you can jump to other pages,
+        }
+        else{
+            ToastUtils.show("运动记录已上传");
+        }
 
         Log.d("ID_TEST","new re:"+String.valueOf(record.getId()));
         

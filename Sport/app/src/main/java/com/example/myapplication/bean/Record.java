@@ -81,6 +81,21 @@ public class Record implements Serializable {
         this.id = ++id_counter;
     }
 
+    public Record(){}
+
+    public static Record getDefaultOne(){
+        Record record = new Record();
+        record.recordType = RecordType.RUNNING;
+        record.startTime = new Date();
+        record.endTime = new Date();
+        record.distance = 0;
+        record.duration = 0;
+        record.latLngList = null;
+        record.id = 0;
+        return record;
+    }
+
+
     public String getRecordTime(){
         // 仅用于HistoryActivity中，获取用于展示的时间
         Date d = getStartTime();
@@ -106,6 +121,8 @@ public class Record implements Serializable {
     public Date getEndTime(){ return endTime; }
 
     public String getDistanceByStr(){ return String.format("%.2f", distance); }
+
+    public double getDistance(){return distance;}
 
     public String getDurationByStr(){ return parse_duration(duration); }
 

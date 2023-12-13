@@ -36,4 +36,10 @@
         <!-- Customize text field of the text input mode. -->
 <!--        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>-->
     </style>
+
+    <style name="AppThemeNoAnimation" parent="Theme.MyApplication">
+        <item name="android:windowAnimationStyle">@style/noAnimation</item>
+    </style>
+
+
 </resources>

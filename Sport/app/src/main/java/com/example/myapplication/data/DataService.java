@@ -13,7 +13,7 @@ public interface DataService {
 
     public Record getRecord(int index);
 
-    public void updateRecord(Record record) throws JSONException;
+    public boolean updateRecord(Record record) throws JSONException;
 
     public List<Record> queryRecordByTime(Date startTime, Date endTime);
 
