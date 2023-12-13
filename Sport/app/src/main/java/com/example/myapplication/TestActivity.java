@@ -151,6 +151,21 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Bundle bundle = getIntent().getExtras();
+        Record.RecordType recordType = (Record.RecordType) bundle.getSerializable("activity_type");
+//        String typeStr = intent.getStringExtra("activity_type");
+//        switch (typeStr) {
+//            case "RUNNING":
+//                reFreshView(dataService.queryRecordByBoth(Record.RecordType.RUNNING,start,end));
+//                break;
+//            default:
+//        }
+        reFreshView(dataService.queryRecordByBoth(recordType,start,end));
+    }
+
     private Context requireContext() {
         return this;
     }

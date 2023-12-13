@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
@@ -26,17 +25,13 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.EditUserInfoActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.SportCardAdapter;
 import com.example.myapplication.adapter.SportDataAdapter;
 import com.example.myapplication.bean.Record;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.divider.MaterialDividerItemDecoration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -184,6 +179,8 @@ public class HomeFragment extends Fragment {
 //        });
 //    }
 
+    private RecyclerView recyclerView;
+
     public void onSportCardInit() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -199,12 +196,9 @@ public class HomeFragment extends Fragment {
 
 
 
-
-
         //利用RecyclerView加载
         SportDataAdapter adapter = new SportDataAdapter(recordList);
-        RecyclerView recyclerView = view.findViewById(R.id.sportCardRecyclerView);
-
+        recyclerView = view.findViewById(R.id.sportCardRecyclerView);
         int columnCount = 2; // 每行的列数
         int itemCount = adapter.getItemCount(); // item 的数量
         int rowCount = (int) Math.ceil((double) itemCount / columnCount); // 计算行数
@@ -237,5 +231,15 @@ public class HomeFragment extends Fragment {
 //        mGridView.setLayoutParams(params);
     }
 
+
+
+    public void onSportCardClick() {
+        recyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
 
 }

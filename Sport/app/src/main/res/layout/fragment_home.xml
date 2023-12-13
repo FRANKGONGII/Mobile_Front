@@ -193,7 +193,8 @@
                 android:layout_alignEnd="@id/t1"
                 android:layout_centerHorizontal="true"
                 android:clipToPadding="false"
-                android:paddingBottom="8dp"/>
+                android:paddingBottom="8dp"
+                android:background="@color/transparent"/>
 
 
             <TextView
