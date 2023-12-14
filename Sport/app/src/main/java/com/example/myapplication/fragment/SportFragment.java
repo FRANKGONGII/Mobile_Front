@@ -41,6 +41,8 @@ public class SportFragment extends Fragment {
     private AlertDialog alertDialog2;
     private DataService dataService;
 
+    private View v;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,6 +58,8 @@ public class SportFragment extends Fragment {
         return mView;
     }
 
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setButtonGO(view);
@@ -69,15 +73,20 @@ public class SportFragment extends Fragment {
             TextView textView = view.findViewById(R.id.sum_distance);
             textView.setText(getSumDistance(list));
         }
+        v = view;
+    }
 
-
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        Button button = v.findViewById(R.id.ButtonGo);
+        button.setText(sport_type+"GO");
     }
 
     //
     public void setButtonGO(@NonNull View view) {
         Button button = view.findViewById(R.id.ButtonGo);
-        String word = (String) button.getText();
+        // word = (String) button.getText();
         final boolean[] ifStart = {false};
         button.setOnClickListener(
                 new View.OnClickListener() {
@@ -152,17 +161,13 @@ public class SportFragment extends Fragment {
 //                            });
                             // 开启线程
 
-
-
 //                            Intent intent = new Intent(getActivity(), RecordingActivity.class);
 //
 //                            intent.putExtra("sport_type", sport_type);
 //                            startActivity(intent);
                         }else{
-                            button.setText(word);
+                            button.setText(sport_type+"GO");
                         }
-
-
                     }
                 }
         );
@@ -201,9 +206,8 @@ public class SportFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Toast.makeText(getActivity(), items[i], Toast.LENGTH_SHORT).show();
-
                 choose[0] =i;
-                //Log.d("CHOOSE_TEST","CHOOSE:"+String.valueOf(choose[0]));
+                Log.d("CHOOSE_TEST","CHOOSE:"+String.valueOf(choose[0]));
             }
         });
 
@@ -221,12 +225,16 @@ public class SportFragment extends Fragment {
                 sumType.setText("累计"+sport_type);
                 List<Record> list;
                 if(sport_type.equals("跑步")){
+                    //sport_type = "跑步";
                     list = dataService.queryRecordByBoth(Record.RecordType.RUNNING,null,null);
                 }else if(sport_type.equals("快走")){
+                    //sport_type = "快走";
                     list = dataService.queryRecordByBoth(Record.RecordType.WALKING,null,null);
                 }else if(sport_type.equals("游泳")){
+                    //sport_type = "游泳";
                     list = dataService.queryRecordByBoth(Record.RecordType.SWIMMING,null,null);
                 }else{
+                    //sport_type = "骑行";
                     list = dataService.queryRecordByBoth(Record.RecordType.RIDING,null,null);
                 }
                 if(list==null){
