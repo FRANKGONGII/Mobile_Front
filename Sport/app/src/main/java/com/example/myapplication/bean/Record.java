@@ -99,20 +99,20 @@ public class Record implements Serializable {
     public String getRecordTime(){
         // 仅用于HistoryActivity中，获取用于展示的时间
         Date d = getStartTime();
-        DateFormat format=new SimpleDateFormat("EEE, MMM dd HH:mm");
+        DateFormat format=new SimpleDateFormat("EEE, MMM dd HH:mm",Locale.ENGLISH);
         format.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
         return format.format(d);
     }
     public String getStartTimeByStr(){
         Date d = getStartTime();
-        DateFormat format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+        DateFormat format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz",Locale.ENGLISH);
         format.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
         return format.format(d);
     }
 
     public String getEndTimeByStr(){
         Date d = getEndTime();
-        DateFormat format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+        DateFormat format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz",Locale.ENGLISH);
         format.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
         return format.format(d);
     }

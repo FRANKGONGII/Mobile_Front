@@ -100,9 +100,13 @@ public class ResultActivity extends AppCompatActivity {
         tvDistribution.setText(record.getSpeed2());
         tvCalorie.setText(record.getCalorie());
 
-
+        Log.d("CCHHCHCHCHC",list+" ");
 
         if(list!=null){
+            Log.d("CCHHCHCHCHC",list.size()+" ");
+            for(LatLng la:list){
+                Log.d("CCHHCHCHCHC",la.latitude+" "+la.longitude);
+            }
             CameraPosition cameraPosition = new CameraPosition(list.get(0), 64, 0, 0);
             CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
             aMap.moveCamera(cameraUpdate);

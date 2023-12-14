@@ -84,12 +84,15 @@ public class TestActivity extends AppCompatActivity {
             recordList = new ArrayList<>();
         }
 
+        Log.d("CHECK","1");
+
         recyclerView = findViewById(R.id.history_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);//添加布局管理器
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);  //设置为纵向水平滚动
         recyclerView.setLayoutManager(layoutManager);//设置布局管理器
         adapter = new RecordAdapter(recordList);
         recyclerView.setAdapter(adapter);
+        Log.d("CHECK","2");
 
 
         //初始化数据，主要是为了显示那些数值
@@ -103,6 +106,8 @@ public class TestActivity extends AppCompatActivity {
                 showMenu(v,R.menu.history_type_menu);
             }
         });
+
+        Log.d("CHECK","3");
 
         //时间选择按钮
         ImageButton sortByTime = findViewById(R.id.history_sort_by_time);
@@ -131,6 +136,8 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
+        Log.d("CHECK","4");
+
         ImageButton sortByDis = findViewById(R.id.history_sort_by_distance);
         sortByDis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +145,7 @@ public class TestActivity extends AppCompatActivity {
 
             }
         });
+        Log.d("CHECK","5");
 
         //返回按钮
         ImageButton backButton  =  findViewById(R.id.history_back_button);
@@ -148,6 +156,7 @@ public class TestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Log.d("CHECK","6");
 
     }
 
