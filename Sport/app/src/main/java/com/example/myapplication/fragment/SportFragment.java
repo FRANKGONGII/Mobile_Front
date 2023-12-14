@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -83,94 +84,135 @@ public class SportFragment extends Fragment {
         button.setText(sport_type+"GO");
     }
 
-    //
+    boolean isCounting = false;
+    CountDownTimer countDownTimer = null;
     public void setButtonGO(@NonNull View view) {
         Button button = view.findViewById(R.id.ButtonGo);
-        // word = (String) button.getText();
-        final boolean[] ifStart = {false};
-        button.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.d("BUTTON_TEST","press go");
-                        if(!ifStart[0])  ifStart[0] = true;
-                        else ifStart[0] = false;
-                        if(ifStart[0]){
-                            final int[] cntTime = {3};
-                            Handler handler = new Handler();
-                            Runnable runnable = new Runnable(){
-                                @Override
-                                public void run(){
-                                    //数字自增
-                                    // 创建文本
-                                    if(!ifStart[0])return;
-                                    Log.d("CNT_TEST",String.valueOf(cntTime[0]));
-                                    if(cntTime[0]>0)button.setText(String.valueOf(cntTime[0]));
-                                    else if(cntTime[0]==0){
-                                        button.setText("GO!");
-                                        Intent intent = new Intent(getActivity(), RecordingActivity.class);
-                                        intent.putExtra("sport_type", sport_type);
+//        String word = (String) button.getText();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isCounting) {
+                    countDownTimer.cancel();
+                    button.setText(sport_type + "GO");
+                    isCounting = false;
+                } else {
+                    countDownTimer = new CountDownTimer(3000, 1000) {
+                        int count = 3;
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            button.setText("" + Math.max(0, count--));
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            isCounting = false;
+                            button.setText("GO!");
+                            Intent intent = new Intent(getActivity(), RecordingActivity.class);
+                            intent.putExtra("sport_type", sport_type);
 //
-                                        // 揭露动画
-                                        int posX = (int) (button.getX() + button.getWidth() / 2);
-                                        int posY = (int) (button.getY() + button.getHeight() / 2);
-                                        intent.putExtra("x", posX);
-                                        intent.putExtra("y", posY);
+                            // 揭露动画
+                            int posX = (int) (button.getX() + button.getWidth() / 2);
+                            int posY = (int) (button.getY() + button.getHeight() / 2);
+                            intent.putExtra("x", posX);
+                            intent.putExtra("y", posY);
 //                                        Log.d("POS", String.valueOf(button.getX()));
 //                                        Log.d("POS", String.valueOf(button.getY()));
 
-                                        startActivity(intent);
-                                        return;
-                                    }
-
-                                    cntTime[0]--;
-                                    if(cntTime[0]<0)return;
-                                    handler.postDelayed(this, 1000);
-
-                                }
-                            };
-                            handler.post(runnable);
-                            if(!ifStart[0])return;
-
-//                        button.setBackgroundResource(R.drawable.animation_go);//把Drawable设置为button的背景
-//                        //拿到这个我们定义的Drawable，实际也就是AnimationDrawable
-//                        AnimationDrawable animationDrawable = (AnimationDrawable) button.getBackground();
-//                        animationDrawable.setOneShot(true);// 播放一次
-//                        animationDrawable.start();//开启动画
-//
-//                        Log.d("ANI_TEST","end playing");
-                            //Button jumpFragment = view.findViewById(R.id.start_sport_fragment);
-
-                            // 需要另外启动一个线程 在新线程里面去sleep
-                            // 不要在UI线程中sleep UI被sleep会暂停刷新
-//                            Thread t = new Thread(new Runnable() {
-//                                @Override
-//                                public void run() {
-////                                    try {
-////                                        //sleep(3200);
-////                                        //注意，这里设置成3500是为了让GO！能显示一下
-////                                    } catch (InterruptedException e) {
-////                                        // TODO Auto-generated catch block
-////                                        e.printStackTrace();
-////                                    }
-//                                    Intent intent = new Intent(getActivity(), RecordingActivity.class);
-//
-//                                    intent.putExtra("sport_type", sport_type);
-//                                    startActivity(intent);
-//                                }
-//                            });
-                            // 开启线程
-
-//                            Intent intent = new Intent(getActivity(), RecordingActivity.class);
-//
-//                            intent.putExtra("sport_type", sport_type);
-//                            startActivity(intent);
-                        }else{
-                            button.setText(sport_type+"GO");
+                            startActivity(intent);
                         }
-                    }
+                    }.start();
+
+                    isCounting = true;
                 }
-        );
+            }
+        });
+
+//        final boolean[] ifStart = {false};
+//        button.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Log.d("BUTTON_TEST","press go");
+//                        if(!ifStart[0])  ifStart[0] = true;
+//                        else ifStart[0] = false;
+//                        if(ifStart[0]){
+//                            final int[] cntTime = {3};
+//                            Handler handler = new Handler();
+//                            Runnable runnable = new Runnable(){
+//                                @Override
+//                                public void run(){
+//                                    //数字自增
+//                                    // 创建文本
+//                                    if(!ifStart[0])return;
+//                                    Log.d("CNT_TEST",String.valueOf(cntTime[0]));
+//                                    if(cntTime[0]>0)button.setText(String.valueOf(cntTime[0]));
+//                                    else if(cntTime[0]==0){
+//                                        button.setText("GO!");
+//                                        Intent intent = new Intent(getActivity(), RecordingActivity.class);
+//                                        intent.putExtra("sport_type", sport_type);
+////
+//                                        // 揭露动画
+//                                        int posX = (int) (button.getX() + button.getWidth() / 2);
+//                                        int posY = (int) (button.getY() + button.getHeight() / 2);
+//                                        intent.putExtra("x", posX);
+//                                        intent.putExtra("y", posY);
+////                                        Log.d("POS", String.valueOf(button.getX()));
+////                                        Log.d("POS", String.valueOf(button.getY()));
+//
+//                                        startActivity(intent);
+//                                        return;
+//                                    }
+//
+//                                    cntTime[0]--;
+//                                    if(cntTime[0]<0)return;
+//                                    handler.postDelayed(this, 1000);
+//
+//                                }
+//                            };
+//                            handler.post(runnable);
+//                            if(!ifStart[0])return;
+//
+////                        button.setBackgroundResource(R.drawable.animation_go);//把Drawable设置为button的背景
+////                        //拿到这个我们定义的Drawable，实际也就是AnimationDrawable
+////                        AnimationDrawable animationDrawable = (AnimationDrawable) button.getBackground();
+////                        animationDrawable.setOneShot(true);// 播放一次
+////                        animationDrawable.start();//开启动画
+////
+////                        Log.d("ANI_TEST","end playing");
+//                            //Button jumpFragment = view.findViewById(R.id.start_sport_fragment);
+//
+//                            // 需要另外启动一个线程 在新线程里面去sleep
+//                            // 不要在UI线程中sleep UI被sleep会暂停刷新
+////                            Thread t = new Thread(new Runnable() {
+////                                @Override
+////                                public void run() {
+//////                                    try {
+//////                                        //sleep(3200);
+//////                                        //注意，这里设置成3500是为了让GO！能显示一下
+//////                                    } catch (InterruptedException e) {
+//////                                        // TODO Auto-generated catch block
+//////                                        e.printStackTrace();
+//////                                    }
+////                                    Intent intent = new Intent(getActivity(), RecordingActivity.class);
+////
+////                                    intent.putExtra("sport_type", sport_type);
+////                                    startActivity(intent);
+////                                }
+////                            });
+//                            // 开启线程
+//
+////                            Intent intent = new Intent(getActivity(), RecordingActivity.class);
+////
+////                            intent.putExtra("sport_type", sport_type);
+////                            startActivity(intent);
+//                        }else{
+//                            button.setText(sport_type+"GO");
+//                        }
+//                    }
+//                }
+//        );
     }
 
     public void setButtonChoose(@NonNull View view){
