@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="正在启动AI运动助手"
+        android:text="正在启动运动助手，请稍等"
         android:textColor="#000"
         android:textSize="24sp" />
 </LinearLayout>
