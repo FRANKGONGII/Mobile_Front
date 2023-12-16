@@ -62,7 +62,7 @@
                 android:layout_marginRight="10dp"
                 android:onClick="sendMessage"
                 android:text="发送"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:background="@drawable/btn_send_selector"
                 android:textSize="12sp" />
             <EditText
