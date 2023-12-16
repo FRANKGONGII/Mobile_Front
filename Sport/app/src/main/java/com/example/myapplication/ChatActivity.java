@@ -72,12 +72,23 @@ public class ChatActivity extends AppCompatActivity{
             }
             else if(taskType.equals("EvalRecord")){
                 String data = intent.getStringExtra("RecordData");
-                if(data==null){}
+                if(data == null){
+                    Log.e("ChatRecordData", "RecordData to ChatActivity missing");
+                    ChatBean initChat = new ChatBean(1, "获取运动数据时出现错误，请重试");
+                    chatBeanList.add(initChat);
+
+                    send_btn.setEnabled(false);
+                }
                 else{
                     promptList.add("你是一个运动智能问答机器人。你需要分析用户发送的运动数据，从专业的视角给出意见，并回答用户的后续疑问。");
                     roleList.add("system");
                     ChatBean initChat = new ChatBean(1, "已收到您的运动数据，正全力分析，请稍后...");
                     chatBeanList.add(initChat);
+                    adapter.notifyDataSetChanged();
+
+                    promptList.add(data);
+                    roleList.add("user");
+                    LLM_Post();
                 }
             }
             else{
@@ -91,8 +102,6 @@ public class ChatActivity extends AppCompatActivity{
         }
         //显示更新的对话内容
         adapter.notifyDataSetChanged();
-
-        progressDialog = new ProgressDialog(ChatActivity.this);
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +124,7 @@ public class ChatActivity extends AppCompatActivity{
         textBox = findViewById(R.id.et_send_msg);
         send_btn = findViewById(R.id.btn_send);
         back_btn = findViewById(R.id.btn_back);
+        progressDialog = new ProgressDialog(ChatActivity.this);
     }
 
     //onClick 对应的函数必须要public
@@ -127,24 +137,6 @@ public class ChatActivity extends AppCompatActivity{
         chatBeanList.add(request);
 
         LLM_Post();
-
-//        StringBuilder promptsBuilder = new StringBuilder();
-//        StringBuilder rolesBuilder = new StringBuilder();
-//        int len = promptList.size();
-//        for(int i=0;i<len;i++){
-//            promptsBuilder.append(promptList.get(i));
-//            rolesBuilder.append(roleList.get(i));
-//            if(i < len-1){
-//                promptsBuilder.append('#');
-//                rolesBuilder.append('#');
-//            }
-//        }
-//        String prompts = promptsBuilder.toString();
-//        String roles = rolesBuilder.toString();
-//        //用于执行与LLM交流的线程，注意每个AsyncTask只能执行一次，所以一定要new
-//        ChatTask chatTask = new ChatTask(pyChatObject, progressDialog, chatBeanList, adapter);
-//
-//        chatTask.execute(roles, prompts, roleList, promptList);
     }
 
     // LLM调用入口，将promptList和roleList中的内容组合发送
