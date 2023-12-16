@@ -50,9 +50,6 @@ public class ChatActivity extends AppCompatActivity{
         Python python = Python.getInstance();
         pyChatObject = python.getModule("AIConversation");
 
-        promptList = new ArrayList<>();
-        roleList = new ArrayList<>();
-        chatBeanList = new ArrayList<>();
 
         Intent intent = getIntent();
         String taskType = intent.getStringExtra("TaskType");
@@ -83,8 +80,8 @@ public class ChatActivity extends AppCompatActivity{
                 send_btn.setEnabled(false);
             }
         }
-
-        adapter = new ChatAdapter(chatBeanList, this);
+        //显示更新的对话内容
+        adapter.notifyDataSetChanged();
 
         progressDialog = new ProgressDialog(ChatActivity.this);
         back_btn.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +96,11 @@ public class ChatActivity extends AppCompatActivity{
     }
 
     private void initView(){
+        promptList = new ArrayList<>();
+        roleList = new ArrayList<>();
+        chatBeanList = new ArrayList<>();
+        adapter = new ChatAdapter(chatBeanList, this);
+
         listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
         textBox = findViewById(R.id.et_send_msg);

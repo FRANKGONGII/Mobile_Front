@@ -28,7 +28,9 @@ public class CommunityFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        startActivity(new Intent(getActivity(), ChatActivity.class));
+        Intent intent = new Intent(getActivity(), ChatActivity.class);
+        intent.putExtra("TaskType", "NormalChat");
+        startActivity(intent);
         getActivity().finish();
     }
 }
