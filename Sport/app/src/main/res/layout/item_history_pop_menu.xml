@@ -1,0 +1,11 @@
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:padding="16sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="15sp"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
+        android:id="@+id/item_history_pop_menu"/>

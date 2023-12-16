@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -39,6 +40,8 @@ public class ChatActivity extends AppCompatActivity{
 
         setContentView(R.layout.activity_chat);
 
+
+
         if (! Python.isStarted()) {
             Python.start(new AndroidPlatform(this));
         }
@@ -56,6 +59,14 @@ public class ChatActivity extends AppCompatActivity{
         adapter = new ChatAdapter(chatBeanList, this);
 
         progressDialog = new ProgressDialog(ChatActivity.this);
+        Button back = findViewById(R.id.btn_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =  new Intent(ChatActivity.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         initView();
     }

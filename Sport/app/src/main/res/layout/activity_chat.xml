@@ -5,14 +5,36 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical">
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:gravity="center"
-        android:background="#0cc4e5"
-        android:text="机器人"
-        android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:orientation="horizontal"
+        android:background="@color/blue_5">
+
+        <android.widget.Button
+            android:id="@+id/btn_back"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_marginLeft="10sp"
+            android:background="@drawable/baseline_arrow_back_ios_white_24"/>
+
+        <TextView
+            android:id="@+id/chat_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:background="@color/blue_5"
+            android:text="运动助手"
+
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -40,9 +62,9 @@
                 android:layout_marginRight="10dp"
                 android:onClick="sendMessage"
                 android:text="发送"
-                android:textColor="@android:color/black"
+                android:textColor="@color/white"
                 android:background="@drawable/btn_send_selector"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
             <EditText
                 android:id="@+id/et_send_msg"
                 android:layout_width="fill_parent"

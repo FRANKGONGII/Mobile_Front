@@ -5,19 +5,27 @@ package com.example.myapplication;
 import static android.app.PendingIntent.getActivity;
 import static java.lang.Thread.sleep;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +49,7 @@ import com.amap.api.maps2d.model.LatLngBounds;
 import com.amap.api.maps2d.model.MyLocationStyle;
 import com.amap.api.maps2d.model.Polyline;
 import com.amap.api.maps2d.model.PolylineOptions;
+import com.amap.api.services.auto.ListData;
 import com.example.myapplication.R;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
@@ -56,7 +65,7 @@ import com.example.myapplication.bean.Record;
 import org.json.JSONException;
 
 
-public class RecordingActivity extends Activity {
+public class RecordingActivity extends AppCompatActivity {
 
     public double latitude;
     public double longitude;
@@ -93,6 +102,59 @@ public class RecordingActivity extends Activity {
     private long endTime = 0;
 
 
+
+    // 实现揭露动画效果
+    private View content;
+    private int mX;
+    private int mY;
+
+    //用于跳转
+
+
+    public void animPost() {
+        Intent intent = getIntent();
+        content = findViewById(R.id.sport_content);
+        content.post(new Runnable() {
+            @Override
+            public void run() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mX = intent.getIntExtra("x", 0);
+                    mY = intent.getIntExtra("y", 0);
+                    Log.d("POS", String.valueOf(mX));
+                    Log.d("POS", String.valueOf(mY));
+                    Animator animator = createRevealAnimator(false, mX, mY);
+                    animator.start();
+                }
+            }
+        });
+    }
+
+    // 动画
+    @SuppressLint("ResourceAsColor")
+    private Animator createRevealAnimator(boolean reversed, int x, int y) {
+        float hypot = (float) Math.hypot(content.getHeight(), content.getWidth());
+        float startRadius = reversed ? hypot : 0;
+        float endRadius = reversed ? 0 : hypot;
+
+        Log.d("POS", String.valueOf(x));
+        Log.d("POS", String.valueOf(y));
+        Animator animator = ViewAnimationUtils.createCircularReveal(
+                content, x, y,
+                startRadius,
+                endRadius);
+        animator.setDuration(800);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//        if (reversed)
+//            animator.addListener(animatorListener);
+        content.setBackgroundColor(Color.BLUE);
+
+        return animator;
+    }
+
+
+
+
+
     public void Update(){
         Log.d("CHANGE_UI",speedVal+" "+distanceVal);
         speedVal.setText(String.format("%.2f", speed));
@@ -115,6 +177,7 @@ public class RecordingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recording);
+        animPost();
         speedVal = findViewById(R.id.speed);
         distanceVal = findViewById(R.id.distance);
         passtime = findViewById(R.id.cm_passtime);
@@ -128,8 +191,9 @@ public class RecordingActivity extends Activity {
 
 
         LongClickProgressView lcpv = findViewById(R.id.tv0);
-        lcpv.setRingColor(Color.parseColor("#FF0000"));
-        lcpv.setCenterColor(Color.parseColor("#FF0000"));
+        //
+        lcpv.setRingColor(Color.parseColor("#68477be5"));
+        lcpv.setCenterColor(Color.parseColor("#68FFFFFF"));
         lcpv.setOnLongClickStateListener(new LongClickProgressView.OnLongClickStateListener() {
             @Override
             public void onFinish() throws JSONException {
@@ -137,13 +201,12 @@ public class RecordingActivity extends Activity {
                 endTime = System.currentTimeMillis();
                 Log.d("SAVE_TEST",String.valueOf(new Date(startTime)));
                 Log.d("SAVE_TEST",String.valueOf(new Date(endTime)));
-                if(false && (distance<0.1||latLngList.size()<3)){
+                if(false&&(distance<0.1||latLngList.size()<4)){
                     //TODO:时间太短的结束可能还要完善一下
                     ToastUtils.show("运动时间或距离太短啦");
-                    //Log.d("SAVE_TEST",String.valueOf(ToastUtils.isInit()));
+                    Log.d("SAVE_TEST",latLngList+" ");
                     finish();
                 } else{
-                    ToastUtils.show("保存运动记录");
                     ifStart = false;
                     if (null != mRunnable) {
                         mHandler.removeCallbacks(mRunnable);
@@ -353,7 +416,13 @@ public class RecordingActivity extends Activity {
 
         Record record = new Record(Record.RecordType.getValue(sport_type),new Date(startTime),new Date(endTime),distance,seconds,latLngList);
 
-        dataService.updateRecord(record);
+        if(!dataService.updateRecord(record)){
+            ToastUtils.show("Update timeout (errNo:408)");
+            // TODO: Of course you can jump to other pages,
+        }
+        else{
+            ToastUtils.show("运动记录已上传");
+        }
 
         Log.d("ID_TEST","new re:"+String.valueOf(record.getId()));
         
@@ -370,6 +439,7 @@ public class RecordingActivity extends Activity {
 //        }
 //        intent2.putExtra("latitude",array1);
         intent2.putExtra("passId",record.getId());
+        intent2.putExtra("formActivity","record");
         startActivity(intent2);
     }
 

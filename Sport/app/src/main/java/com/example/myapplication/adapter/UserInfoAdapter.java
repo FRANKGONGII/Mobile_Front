@@ -7,8 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -20,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -29,8 +33,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.EditUserInfoActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.fragment.ModalBottomSheet;
 import com.example.myapplication.user.UserInfoItem;
@@ -41,6 +47,8 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -72,6 +80,8 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
+    public AvatarViewHolder avatarViewHolder;
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -81,7 +91,14 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (UserInfoItem.UserInfoType.values()[viewType]) {
             case AVATAR:
                 view = inflater.inflate(R.layout.item_userinfo_image, parent, false);
-                return new AvatarViewHolder(view);
+                avatarViewHolder = new AvatarViewHolder(view);
+
+
+                Log.d("AVA", "onCreateViewHolder: ");
+
+                ((EditUserInfoActivity) activity).setAvatarViewHolder(avatarViewHolder);
+                ((EditUserInfoActivity) activity).onUserInfoEdit();
+                return avatarViewHolder;
             case NICKNAME:
                 view = inflater.inflate(R.layout.item_userinfo_text, parent, false);
                 return new NicknameViewHolder(view);
@@ -137,7 +154,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return itemList.size();
     }
 
-    private class AvatarViewHolder extends RecyclerView.ViewHolder {
+    public class AvatarViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private CircleImageView avatar;
 
@@ -147,21 +164,28 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             avatar = itemView.findViewById(R.id.userInfoImg);
 
             // 设置点击事件
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 处理点击事件
-                    ModalBottomSheet bottomSheet = new ModalBottomSheet(R.layout.modal_bottom_sheet_avatar);
-                    bottomSheet.show(((AppCompatActivity) mContext).getSupportFragmentManager(), bottomSheet.getTag());
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    // 弹出底部弹窗
+//                    bottomSheet = new ModalBottomSheet(R.layout.modal_bottom_sheet_avatar);
+//                    bottomSheet.show(((AppCompatActivity) mContext).getSupportFragmentManager(), bottomSheet.getTag());
+//                }
+//            });
+
         }
+
 
         public void bindData(UserInfoItem item) {
             // 设置数据
             title.setText(item.getType().getStr());
             //头像暂时设置默认，后面要考虑加载不同类型的image资源
             avatar.setImageResource(R.drawable.user_bkg_test);
+        }
+
+        public void updateData(Uri uri) {
+            avatar.setImageURI(uri);
         }
 
     }
@@ -234,6 +258,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //                        public void afterTextChanged(Editable s) {}
 //                    });
 
+                    editText.setText(nickname.getText());
                     // 布局
                     editText.setLayoutParams(layoutParams);
 
@@ -300,10 +325,109 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             // 设置点击事件
             itemView.setOnClickListener(new View.OnClickListener() {
+
+                String chosenGender = "";
+
                 @Override
                 public void onClick(View v) {
-                    // 处理点击事件
-                    // ...
+                    // 创建builder
+                    MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext);
+
+
+
+                    // 设置builder属性
+                    builder.setTitle("修改性别");
+
+
+                    View view = inflater.inflate(R.layout.dialog_choose_gender, null);
+
+                    ImageButton maleButton = view.findViewById(R.id.male);
+                    ImageButton unknownButton = view.findViewById(R.id.unknown);
+                    ImageButton femaleButton = view.findViewById(R.id.female);
+
+
+                    if (gender.getText().equals("男")) {
+                        maleButton.setBackgroundResource(R.color.blue_sky);
+                        maleButton.setImageResource(R.drawable.baseline_male_white_24);
+                    } else if (gender.getText().equals("女")) {
+                        unknownButton.setBackgroundResource(R.color.gray0);
+                        unknownButton.setImageResource(R.drawable.baseline_question_mark_white_24);
+                    } else if (gender.getText().equals("保密")) {
+                        femaleButton.setBackgroundResource(R.color.white);
+                        femaleButton.setImageResource(R.drawable.baseline_female_pink_24);
+                    }
+
+                    maleButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // 设置男性按钮选中状态的背景色和图片颜色
+                            maleButton.setBackgroundResource(R.color.blue_sky);
+                            maleButton.setImageResource(R.drawable.baseline_male_white_24);
+
+                            // 设置其他按钮非选中状态的背景色和图片颜色
+                            unknownButton.setBackgroundResource(R.color.white);
+                            unknownButton.setImageResource(R.drawable.baseline_question_mark_grey_24);
+
+                            femaleButton.setBackgroundResource(R.color.white);
+                            femaleButton.setImageResource(R.drawable.baseline_female_pink_24);
+
+                            chosenGender = "男";
+                        }
+                    });
+
+                    unknownButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            maleButton.setBackgroundResource(R.color.white);
+                            maleButton.setImageResource(R.drawable.baseline_male_blue_24);
+
+                            // 设置其他按钮非选中状态的背景色和图片颜色
+                            unknownButton.setBackgroundResource(R.color.gray0);
+                            unknownButton.setImageResource(R.drawable.baseline_question_mark_white_24);
+
+                            femaleButton.setBackgroundResource(R.color.white);
+                            femaleButton.setImageResource(R.drawable.baseline_female_pink_24);
+
+                            chosenGender = "保密";
+                        }
+                    });
+
+                    femaleButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            maleButton.setBackgroundResource(R.color.white);
+                            maleButton.setImageResource(R.drawable.baseline_male_blue_24);
+
+                            // 设置其他按钮非选中状态的背景色和图片颜色
+                            unknownButton.setBackgroundResource(R.color.white);
+                            unknownButton.setImageResource(R.drawable.baseline_question_mark_grey_24);
+
+                            femaleButton.setBackgroundResource(R.color.pink_sakura);
+                            femaleButton.setImageResource(R.drawable.baseline_female_white_24);
+
+                            chosenGender = "女";
+                        }
+                    });
+
+
+
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            updateData(chosenGender);
+                        }
+                    });
+
+
+                    builder.setView(view);
+                    builder.show();
                 }
             });
         }
@@ -312,6 +436,11 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // 设置数据
             title.setText(item.getType().getStr());
             gender.setText(item.getContent());
+        }
+
+        public void updateData(String content) {
+            gender.setText(content);
+            //
         }
     }
 
@@ -328,6 +457,9 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
+
                     // 创建DatePicker Builder
                     MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
 
@@ -349,6 +481,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                     // 设置输入模式
 //                    builder.setInputMode(MaterialDatePicker.INPUT_MODE_TEXT);
+
 
                     // 创建DatePicker
                     MaterialDatePicker<Long> datePicker = builder.build();
@@ -454,6 +587,9 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //                        public void afterTextChanged(Editable s) {}
 //                    });
 
+                    // 默认显示个签
+                    editText.setText(signature.getText());
+
                     // 布局
                     editText.setLayoutParams(layoutParams);
 
@@ -468,7 +604,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            updateData(editText.getText().toString());
                         }
                     });
 
@@ -503,6 +639,11 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // 设置数据
             title.setText(item.getType().getStr());
             signature.setText(item.getContent());
+        }
+
+        public void updateData(String content) {
+            signature.setText(content);
+            //
         }
     }
 }
