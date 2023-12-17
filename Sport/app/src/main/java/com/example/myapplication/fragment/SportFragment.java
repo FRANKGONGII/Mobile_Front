@@ -239,7 +239,7 @@ public class SportFragment extends Fragment {
     }
 
     public void showSingleAlertDialog(View view){
-        final String[] items = {"跑步", "骑行", "游泳", "快走"};
+        final String[] items = {"跑步", "骑行", "游泳", "健走"};
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
         alertBuilder.setTitle("请选择运动");
 
@@ -269,8 +269,8 @@ public class SportFragment extends Fragment {
                 if(sport_type.equals("跑步")){
                     //sport_type = "跑步";
                     list = dataService.queryRecordByBoth(Record.RecordType.RUNNING,null,null);
-                }else if(sport_type.equals("快走")){
-                    //sport_type = "快走";
+                }else if(sport_type.equals("健走")){
+                    //sport_type = "健走";
                     list = dataService.queryRecordByBoth(Record.RecordType.WALKING,null,null);
                 }else if(sport_type.equals("游泳")){
                     //sport_type = "游泳";
