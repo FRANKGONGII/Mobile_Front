@@ -98,9 +98,11 @@ public class LocalData implements DataService {
         Record b = new Record(Record.RecordType.RUNNING,new Date(now-30000000),new Date(now-29999200),2.0,800);
         Record c = new Record(Record.RecordType.SWIMMING,new Date(now-1000000000),new Date(now-999000000),0.6,600);
         Record d = new Record(Record.RecordType.RIDING,new Date(now-5000000000L),new Date(now-4999998700L),5.0,1300);
+        Record e = new Record(Record.RecordType.RIDING,new Date(now),new Date(now),5.0,1300);
         records.add(a);
         records.add(b);
         records.add(c);
         records.add(d);
+        records.add(e);
     }
 }

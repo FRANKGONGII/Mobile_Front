@@ -2,7 +2,12 @@ package com.example.myapplication.utils;
 
 import android.text.TextUtils;
 
+
+import java.util.Locale;
 import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -187,6 +192,7 @@ public class Utils {
         return newKey.toString().getBytes();
     }
 
+
     public   static String getBodyParams(Map<String, String> bodyParams) {
         //1.添加请求参数
         //遍历map中所有参数到builder
@@ -209,6 +215,16 @@ public class Utils {
         } else {
             return "";
         }
+    }
+
+    public static Date getDateFromLong(Long l){
+        return new Date(l);
+    }
+
+    public static String getStringFormDate(Date date){
+        java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
+        return sdf.format(date);
     }
 
 }

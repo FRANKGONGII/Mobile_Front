@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,8 +33,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.EditUserInfoActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.fragment.ModalBottomSheet;
 import com.example.myapplication.user.UserInfoItem;
@@ -44,6 +47,8 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -75,6 +80,8 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
+    public AvatarViewHolder avatarViewHolder;
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -84,7 +91,14 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (UserInfoItem.UserInfoType.values()[viewType]) {
             case AVATAR:
                 view = inflater.inflate(R.layout.item_userinfo_image, parent, false);
-                return new AvatarViewHolder(view);
+                avatarViewHolder = new AvatarViewHolder(view);
+
+
+                Log.d("AVA", "onCreateViewHolder: ");
+
+                ((EditUserInfoActivity) activity).setAvatarViewHolder(avatarViewHolder);
+                ((EditUserInfoActivity) activity).onUserInfoEdit();
+                return avatarViewHolder;
             case NICKNAME:
                 view = inflater.inflate(R.layout.item_userinfo_text, parent, false);
                 return new NicknameViewHolder(view);
@@ -140,7 +154,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return itemList.size();
     }
 
-    private class AvatarViewHolder extends RecyclerView.ViewHolder {
+    public class AvatarViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private CircleImageView avatar;
 
@@ -150,21 +164,28 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             avatar = itemView.findViewById(R.id.userInfoImg);
 
             // 设置点击事件
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 处理点击事件
-                    ModalBottomSheet bottomSheet = new ModalBottomSheet(R.layout.modal_bottom_sheet_avatar);
-                    bottomSheet.show(((AppCompatActivity) mContext).getSupportFragmentManager(), bottomSheet.getTag());
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    // 弹出底部弹窗
+//                    bottomSheet = new ModalBottomSheet(R.layout.modal_bottom_sheet_avatar);
+//                    bottomSheet.show(((AppCompatActivity) mContext).getSupportFragmentManager(), bottomSheet.getTag());
+//                }
+//            });
+
         }
+
 
         public void bindData(UserInfoItem item) {
             // 设置数据
             title.setText(item.getType().getStr());
             //头像暂时设置默认，后面要考虑加载不同类型的image资源
             avatar.setImageResource(R.drawable.user_bkg_test);
+        }
+
+        public void updateData(Uri uri) {
+            avatar.setImageURI(uri);
         }
 
     }
@@ -436,6 +457,9 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
+
                     // 创建DatePicker Builder
                     MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
 
@@ -457,6 +481,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                     // 设置输入模式
 //                    builder.setInputMode(MaterialDatePicker.INPUT_MODE_TEXT);
+
 
                     // 创建DatePicker
                     MaterialDatePicker<Long> datePicker = builder.build();

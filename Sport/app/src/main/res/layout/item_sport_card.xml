@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="5dp"
+    android:paddingHorizontal="10dp"
+    android:background="@color/transparent"
+    android:clickable="true">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="140dp"
-        android:layout_height="wrap_content">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/sportCard"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,13 +43,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:padding="5dp" />
+
         </LinearLayout>
 
-
-
-    </androidx.cardview.widget.CardView>
-
-
-
-
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

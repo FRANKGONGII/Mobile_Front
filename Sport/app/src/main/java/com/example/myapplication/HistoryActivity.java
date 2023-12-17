@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import android.widget.Toast;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,9 +23,11 @@ import com.example.myapplication.data.DataServiceFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class HistoryActivity extends AppCompatActivity{
@@ -53,6 +58,10 @@ public class HistoryActivity extends AppCompatActivity{
 
         dataService = DataServiceFactory.getInstance();
         recordList = dataService.getAllRecords();
+        if(recordList == null){
+            Toast.makeText(this, "network error: 408", Toast.LENGTH_SHORT).show();
+            recordList = new ArrayList<>();
+        }
 
         recyclerView = findViewById(R.id.runningHistoryList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);//添加布局管理器
@@ -65,28 +74,45 @@ public class HistoryActivity extends AppCompatActivity{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(view.getContext(), LoginActivity.class);
-                startActivity(intent);
-//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//                try {
-//                    recordList = dataService.queryRecordByTime(sdf.parse("2023-11-01 00:00:00"),sdf.parse("2023-12-01 00:00:00"));
-//                    recordList = dataService.queryRecordByType(Record.RecordType.RUNNING);
-//                    adapter = new RecordAdapter(recordList);
-//                    recyclerView.setAdapter(adapter);
-//                    Log.d("Data_test","!"+recordList.size());
-//                } catch (ParseException e) {
-//                    throw new RuntimeException(e);
-//                }
+//<<<<<<< HEAD
+//                Intent intent = new Intent(view.getContext(), LoginActivity.class);
+//                startActivity(intent);
+////                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+////                try {
+////                    recordList = dataService.queryRecordByTime(sdf.parse("2023-11-01 00:00:00"),sdf.parse("2023-12-01 00:00:00"));
+////                    recordList = dataService.queryRecordByType(Record.RecordType.RUNNING);
+////                    adapter = new RecordAdapter(recordList);
+////                    recyclerView.setAdapter(adapter);
+////                    Log.d("Data_test","!"+recordList.size());
+////                } catch (ParseException e) {
+////                    throw new RuntimeException(e);
+////                }
+//            }
+//        });
+//
+//        ImageButton back_button = findViewById(R.id.back_button);
+//        back_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//            }
+//        });
+//=======
             }
         });
 
-        ImageButton back_button = findViewById(R.id.back_button);
-        back_button.setOnClickListener(new View.OnClickListener() {
+
+        ImageButton back = findViewById(R.id.back_button);
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                finish();
+            public void onClick(View v) {
+                Intent intent = new Intent(HistoryActivity.this,MainActivity.class);
+                startActivity(intent);
             }
         });
+
+
+//>>>>>>> 0df985dd
         init_type();
         init_time();
     }
@@ -172,6 +198,11 @@ public class HistoryActivity extends AppCompatActivity{
         Date endTime = get_next_month(startTime);
 
         recordList = dataService.queryRecordByBoth(chosen_type,startTime,endTime);
+        if(recordList == null){
+            Toast.makeText(this, "network error: 408", Toast.LENGTH_SHORT).show();
+            recordList = new ArrayList<>();
+        }
+
         adapter = new RecordAdapter(recordList);
         recyclerView.setAdapter(adapter);
     }
@@ -179,7 +210,7 @@ public class HistoryActivity extends AppCompatActivity{
     private Date get_this_month() {
         if(chosen_month == -1) return null;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
         try{
             Date dt = sdf.parse(String.format("2023-%02d-01", chosen_month));

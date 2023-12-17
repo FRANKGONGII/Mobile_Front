@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".HistoryActivity">
 
-    <include layout="@layout/topbar"
+    <include layout="@layout/layout_topbar"
         android:id="@+id/top"/>
     <!-- 添加标题 -->
     <TextView

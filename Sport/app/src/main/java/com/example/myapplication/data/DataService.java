@@ -13,7 +13,9 @@ public interface DataService {
 
     public Record getRecord(long index);
 
+
     public long updateRecord(Record record) throws JSONException;
+
 
     public List<Record> queryRecordByTime(Date startTime, Date endTime);
 

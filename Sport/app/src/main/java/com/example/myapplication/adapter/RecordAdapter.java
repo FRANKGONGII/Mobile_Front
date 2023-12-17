@@ -57,6 +57,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
 
                 Intent intent = new Intent(view.getContext(), ResultActivity.class);
                 intent.putExtra("passId",id);
+                intent.putExtra("formActivity","history");
 
                 view.getContext().startActivity(intent);
             }

@@ -148,50 +148,73 @@
         app:layout_anchorGravity="center"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginTop="30dp">
 
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/sportsDataRecycler"-->
+
+<!--            <TextView-->
 <!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_marginStart="25dp"/>-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="我的数据"-->
+<!--                android:textSize="@dimen/fifteen"-->
+<!--                android:layout_marginStart="30dp"/>-->
+
+<!--            <GridView-->
+<!--                android:id="@+id/sportCardGridView"-->
+<!--                android:layout_width="350dp"-->
+<!--                android:layout_height="250dp"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:columnWidth="140dp"-->
+<!--                android:gravity="center"-->
+<!--                android:horizontalSpacing="10dp"-->
+<!--                android:numColumns="2"-->
+<!--                android:stretchMode="columnWidth"-->
+<!--                android:verticalSpacing="10dp"-->
+<!--                android:scrollbars="none"-->
+<!--                android:scrollingCache="false"/>-->
+
+            <TextView
+                android:id="@+id/t1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_centerHorizontal="true"
+                android:text="运动数据"
+                android:textSize="@dimen/fifteen" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sportCardRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/t1"
+                android:layout_alignStart="@id/t1"
+                android:layout_alignEnd="@id/t1"
+                android:layout_centerHorizontal="true"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp"
+                android:background="@color/transparent"/>
 
 
             <TextView
+                android:id="@+id/t2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="我的数据"
-                android:textSize="@dimen/fifteen"
-                android:layout_marginStart="30dp"/>
-
-            <GridView
-                android:id="@+id/sportCardGridView"
-                android:layout_width="350dp"
-                android:layout_height="250dp"
-                android:layout_gravity="center_horizontal"
-                android:columnWidth="140dp"
-                android:gravity="center"
-                android:horizontalSpacing="10dp"
-                android:numColumns="2"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="10dp"
-                android:scrollbars="none"
-                android:scrollingCache="false"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_below="@id/sportCardRecyclerView"
+                android:layout_centerHorizontal="true"
                 android:text="其它数据"
                 android:textSize="@dimen/fifteen"
-                android:layout_marginStart="30dp"/>
+                android:layout_marginStart="50dp"/>
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="350dp"
+                android:id="@+id/other"
+                android:layout_width="300dp"
                 android:layout_height="150dp"
+                android:layout_below="@id/t2"
+                android:layout_alignStart="@id/sportCardRecyclerView"
+                android:layout_alignEnd="@id/sportCardRecyclerView"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:theme="@style/Theme.MaterialComponents.Light"
                 app:cardCornerRadius="4dp"
@@ -200,35 +223,24 @@
                 app:strokeColor="@android:color/transparent">
 
             </com.google.android.material.card.MaterialCardView>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="其它数据"
-                android:textSize="@dimen/fifteen"
-                android:layout_marginStart="30dp"/>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="350dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center_horizontal"
-                android:theme="@style/Theme.MaterialComponents.Light"
-                app:cardCornerRadius="4dp"
-                app:cardMaxElevation="20dp"
-                app:layout_anchorGravity="top|center"
-                app:strokeColor="@android:color/transparent">
-
-            </com.google.android.material.card.MaterialCardView>
 
             <TextView
+                android:id="@+id/t3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/other"
+                android:layout_centerHorizontal="true"
                 android:text="运动日历"
                 android:textSize="@dimen/fifteen"
-                android:layout_marginStart="30dp"/>
+                android:layout_marginStart="50dp"/>
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:layout_below="@id/t3"
+                android:layout_alignStart="@id/sportCardRecyclerView"
+                android:layout_alignEnd="@id/sportCardRecyclerView"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:theme="@style/Theme.MaterialComponents.Light"
                 app:cardCornerRadius="4dp"
@@ -239,6 +251,7 @@
                 <com.haibin.calendarview.CalendarLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
                     android:orientation="vertical"
                     app:default_status="shrink"
                     app:calendar_show_mode="only_week_view">
@@ -276,7 +289,9 @@
 
 
 
-        </LinearLayout>
+        </RelativeLayout>
+
+
     </androidx.core.widget.NestedScrollView>
 
     <!--        <com.google.android.material.card.MaterialCardView-->
