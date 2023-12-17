@@ -42,8 +42,8 @@ public class ResultActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        int id = intent.getIntExtra("passId",-1);
-        Log.d("ID_TEST","need id:"+id);
+        long id = intent.getLongExtra("passId",11);
+        Log.d("URL_TEST","need id:"+id);
         if(id==-1) {
             ToastUtils.show("获取运动数据错误");
         }

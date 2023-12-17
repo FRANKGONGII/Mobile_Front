@@ -39,22 +39,49 @@ import okhttp3.Response;
 
 public class RemoteData implements DataService {
 
-    private Record[] parseJson(String result){
+    private Record[] parseJson2RecordArray(String result){
 
         int startIndex = result.indexOf("data");
         int len = result.length();
         String recordArray = result.substring(startIndex+6,len-1);
         Log.i("URL_TEST", "arr: "+recordArray);
 
+        //Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        //Record[] tmp = gson.fromJson(result,HashMap<String,String>.class);
+        //String  map1= gson.fromJson(result,type);
+        Gson gson = new Gson();
+        return gson.fromJson(recordArray,Record[].class);
+    }
+
+    private Record parseJson2Record(String result){
+
+        int startIndex = result.indexOf("data");
+        int len = result.length();
+        String recordArray = result.substring(startIndex+6,len-1);
+        Log.i("URL_TEST", "arr: "+recordArray);
+        //Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        //Record[] tmp = gson.fromJson(result,HashMap<String,String>.class);
+        //String  map1= gson.fromJson(result,type);
+        Gson gson = new Gson();
+        return gson.fromJson(recordArray,Record.class);
+    }
+
+    private long parseJson2Long(String result){
+
+        int startIndex = result.indexOf("data");
+        int len = result.length();
+        String recordArray = result.substring(startIndex+6,len-1);
+        Log.i("URL_TEST", "arr: "+recordArray);
 
         //Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
         //Record[] tmp = gson.fromJson(result,HashMap<String,String>.class);
         //String  map1= gson.fromJson(result,type);
-
         Gson gson = new Gson();
-        return gson.fromJson(recordArray,Record[].class);
-
+        return gson.fromJson(recordArray,Long.class);
     }
+
+
+
     //后端启动的地址
     private String url = LinkConstant.url;
 
@@ -111,7 +138,7 @@ public class RemoteData implements DataService {
 
 
                 //Gson gson = new Gson();
-                Record[] tmp = parseJson(result);
+                Record[] tmp = parseJson2RecordArray(result);
                 //Log.d("URL_TEST",tmp+"");
 
 
@@ -144,7 +171,7 @@ public class RemoteData implements DataService {
     }
 
     @Override
-    public Record getRecord(int index) {
+    public Record getRecord(long index) {
         Log.d("URL_TEST","start get");
         String serviceRecord = "/v1/record"+"/"+ index;
         final Record[] record = new Record[1];
@@ -153,6 +180,7 @@ public class RemoteData implements DataService {
         params.put("userId", String.valueOf(UserAccount.id));
 
         Log.d("URL_TEST","get path: "+url+serviceRecord+Utils.getBodyParams(params));
+        Log.d("URL_TEST","get record id: "+index);
 
 
         OkHttpClient client = new OkHttpClient();
@@ -183,7 +211,7 @@ public class RemoteData implements DataService {
                 Log.i("URL_TEST", "result : " + result);
 
                 //Gson gson = new Gson();
-                if(parseJson(result).length>=1)record[0] = parseJson(result)[0];
+                record[0] = parseJson2Record(result);
 
 
 
@@ -207,7 +235,7 @@ public class RemoteData implements DataService {
     }
 
     @Override
-    public void updateRecord(Record record) throws JSONException {
+    public long updateRecord(Record record) throws JSONException {
         Log.d("URL_TEST","start save");
 
 
@@ -262,21 +290,78 @@ public class RemoteData implements DataService {
                 .post(requestBody)
                 .build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d("URL_TEST", "连接失败" + e.getLocalizedMessage());
-            }
+        final long[] newId = {-1};
 
+//        Call call = client.newCall(request);
+//        try {
+//            Response response = call.execute();
+//            Log.i("URL_TEST", "postSync: " + response.body().string());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
+        Thread thread = new Thread(new Runnable() {
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String result = response.body().string();
-                Log.d("URL_TEST", result);
-                if (response.body() != null) {
-                    response.body().close();
+            public void run() {
+                Response response = null;
+                try {
+                    response = client.newCall(request).execute();
+                    Log.d("URL_TEST","status: "+response.isSuccessful());
+                } catch (IOException e) {
+                    Log.d("URL_TEST",e.getMessage());
+                    //e.printStackTrace();
                 }
+
+                String result = null;
+                try {
+                    result = response.body().string();
+                } catch (IOException e) {
+                    Log.i("URL_TEST","fail: "+response.isSuccessful());
+                    e.printStackTrace();
+                }
+                Log.i("URL_TEST", "resultaa : " + result);
+
+                //Gson gson = new Gson();
+                newId[0] = parseJson2Long(result);
+
+
+
             }
         });
+
+        thread.start();
+        try{
+            thread.join();
+            //尝试构建坐标List
+            return newId[0];
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Log.i("URL_TEST", "result wrong"+e);
+        }
+
+
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                Log.d("URL_TEST", "连接失败" + e.getLocalizedMessage());
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                String result = response.body().string();
+//                Log.d("URL_TEST", "result: "+result);
+//                Log.d("URL_TEST","id before: "+newId[0]+"");
+//                if (response.body() != null) {
+//                    newId[0] = parseJson2Long(result);
+//                    Log.d("URL_TEST","id after: "+newId[0]+"");
+//                    response.body().close();
+//                }
+//            }
+//        });
+
+        return newId[0];
     }
 
     private Headers setHeaderParams(Map<String, String> headerParams) {
@@ -334,7 +419,7 @@ public class RemoteData implements DataService {
                 Log.i("URL_TEST", "result : " + result);
 
                 Gson gson = new Gson();
-                Record[] tmp = parseJson(result);
+                Record[] tmp = parseJson2RecordArray(result);
                 Log.d("URL_TEST",tmp.length+" "+tmp[0].toString());
 
                 for(Record record : tmp){
@@ -403,7 +488,7 @@ public class RemoteData implements DataService {
                 Log.i("URL_TEST", "result : " + result);
 
                 Gson gson = new Gson();
-                Record[] tmp = parseJson(result);
+                Record[] tmp = parseJson2RecordArray(result);
                 Log.d("URL_TEST",tmp.length+" "+tmp[0].toString());
 
                 for(Record record : tmp){
@@ -494,7 +579,7 @@ public class RemoteData implements DataService {
                 Log.i("URL_TEST", "result : " + result);
 
                 Gson gson = new Gson();
-                Record[] tmp = parseJson(result);
+                Record[] tmp = parseJson2RecordArray(result);
                 if(tmp.length != 0) Log.d("URL_TEST",tmp.length+" "+tmp[0].toString());
 
                 for(Record record : tmp){

@@ -45,7 +45,7 @@ public class Record implements Serializable {
         }
     }
 
-    public static int id_counter = 3;
+    public static int id_counter = 0;
 
     public int id;
     RecordType recordType;
@@ -71,6 +71,7 @@ public class Record implements Serializable {
         this.duration = duration;
         this.latLngList = latLngList;
         this.userId = 0;
+        this.id_counter =
         this.id = ++id_counter;
     }
 

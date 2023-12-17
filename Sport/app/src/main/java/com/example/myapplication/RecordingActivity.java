@@ -353,9 +353,9 @@ public class RecordingActivity extends Activity {
 
         Record record = new Record(Record.RecordType.getValue(sport_type),new Date(startTime),new Date(endTime),distance,seconds,latLngList);
 
-        dataService.updateRecord(record);
+        long newId = dataService.updateRecord(record);
 
-        Log.d("ID_TEST","new re:"+String.valueOf(record.getId()));
+        Log.d("URL_TEST","new record id:"+newId);
         
 
         Intent intent2 = new Intent(this, ResultActivity.class);
@@ -369,7 +369,7 @@ public class RecordingActivity extends Activity {
 //            index++;
 //        }
 //        intent2.putExtra("latitude",array1);
-        intent2.putExtra("passId",record.getId());
+        intent2.putExtra("passId",newId);
         startActivity(intent2);
     }
 

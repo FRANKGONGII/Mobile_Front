@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.bean.UserAccount;
 import com.example.myapplication.data.LocalUser;
 import com.example.myapplication.data.UserService;
 import com.example.myapplication.data.UserServiceFactory;
@@ -98,9 +99,12 @@ public class LoginActivity extends AppCompatActivity {
         btLogin.setEnabled(false);
         String user = String.valueOf(etUsername.getText());
         String pwd = String.valueOf(etPsd.getText());
-        if(userService.LoginByPwd(user,pwd)!=-1){
+        int userId = userService.LoginByPwd(user,pwd);
+        if(userId!=-1){
             Toast.makeText(this, "登陆成功", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
+            UserAccount.id = userId;
+            Log.d("URL_TEST",UserAccount.id+"");
             startActivity(intent);
         }
         else{

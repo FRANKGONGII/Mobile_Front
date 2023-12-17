@@ -94,7 +94,7 @@ public class RemoteUser implements UserService{
             int len = data[0].length();
             int startIndex = data[0].indexOf("data");
             UserAccount.id = Integer.parseInt(data[0].substring(startIndex+6,len-1));
-            //Log.d("URL_TEST","code: " + result[0]+" data: "+data[0]+" "+data[0].substring(startIndex+6,len-1));
+            Log.d("URL_TEST","code: " + result[0]+" data: "+data[0]+" "+data[0].substring(startIndex+6,len-1));
 
             if(result[0]==200){
                 return Integer.parseInt(data[0].substring(startIndex+6,len-1));
