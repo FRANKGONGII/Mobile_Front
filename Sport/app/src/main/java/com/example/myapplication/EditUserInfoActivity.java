@@ -33,6 +33,8 @@ import com.example.myapplication.adapter.UserInfoAdapter;
 import com.example.myapplication.fragment.ModalBottomSheet;
 import com.example.myapplication.user.UserInfoItem;
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDragHandleView;
 import com.google.android.material.divider.MaterialDivider;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -146,8 +148,10 @@ public class EditUserInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 bottomSheet = new ModalBottomSheet(R.layout.modal_bottom_sheet_avatar);
+//                BottomSheetDragHandleView dragHandle = bottomSheet.getView().findViewById(R.id.drag_handle);
+//                BottomSheetBehavior<View> behavior = BottomSheetBehavior.from((View) dragHandle.getParent());
+//                behavior.setDraggable(true);
                 bottomSheet.show(EditUserInfoActivity.this.getSupportFragmentManager(), bottomSheet.getTag());
-
             }
         });
     }
