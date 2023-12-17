@@ -323,7 +323,7 @@ public class RemoteData implements DataService {
                 Log.i("URL_TEST", "resultaa : " + result);
 
                 //Gson gson = new Gson();
-                newId[0] = parseJson2Long(result);
+                if(response.code()==200)newId[0] = parseJson2Long(result);
 
 
 
