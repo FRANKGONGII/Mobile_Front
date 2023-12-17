@@ -5,8 +5,12 @@ import android.util.Log;
 
 import com.amap.api.maps2d.model.LatLng;
 import com.example.myapplication.bean.Record;
+import com.example.myapplication.bean.UserAccount;
 import com.example.myapplication.constant.LinkConstant;
+import com.example.myapplication.utils.Utils;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 
 import org.json.JSONArray;
@@ -14,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.TransferQueue;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -32,6 +38,23 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class RemoteData implements DataService {
+
+    private Record[] parseJson(String result){
+
+        int startIndex = result.indexOf("data");
+        int len = result.length();
+        String recordArray = result.substring(startIndex+6,len-1);
+        Log.i("URL_TEST", "arr: "+recordArray);
+
+
+        //Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        //Record[] tmp = gson.fromJson(result,HashMap<String,String>.class);
+        //String  map1= gson.fromJson(result,type);
+
+        Gson gson = new Gson();
+        return gson.fromJson(recordArray,Record[].class);
+
+    }
     //后端启动的地址
     private String url = LinkConstant.url;
 
@@ -44,11 +67,18 @@ public class RemoteData implements DataService {
         String serviceRecord = "/v1/record";
         List<Record> ret = new ArrayList<>();
 
+        Map<String, String> params = new HashMap<>();
+        params.put("userId", String.valueOf(UserAccount.id));
+
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(url+serviceRecord)   // 设置请求地址
+                .url(url+serviceRecord+ Utils.getBodyParams(params))   // 设置请求地址
                 .get()                    // 使用 Get 方法
                 .build();
+
+        Log.d("URL_TEST",url+serviceRecord+ Utils.getBodyParams(params));
+        Type type = new TypeToken<Map<String,String>>(){}.getType();
+        final Map<String, String>[] map2 = new Map[]{null};
 
         // 同步 Get 请求
         Thread thread = new Thread(new Runnable() {
@@ -57,29 +87,39 @@ public class RemoteData implements DataService {
                 Response response = null;
                 try {
                     response = client.newCall(request).execute();
-                    //Log.d("URL_TEST","status:"+response.isSuccessful());
+                    Log.d("URL_TEST","status:"+response.isSuccessful());
                 } catch (IOException e) {
                     Log.d("URL_TEST",e.getMessage());
-                    //e.printStackTrace();
+                    e.printStackTrace();
                 }
 
                 String result = null;
                 try {
                     result = response.body().string();
+                    Log.d("URL_TEST","jjjjjjj"+" "+result);
                 } catch (IOException e) {
                     Log.i("URL_TEST","fail"+response.isSuccessful());
                     e.printStackTrace();
                 }
-                Log.i("URL_TEST", "result : " + result);
+                Log.i("URL_TEST", "result : " + result+" "+type);
+//                int startIndex = result.indexOf("data");
+//                int len = result.length();
+//                String recordArray = result.substring(startIndex+6,len-1);
+//                Log.i("URL_TEST", "arr: "+recordArray);
 
-                Gson gson = new Gson();
-                Record[] tmp = gson.fromJson(result,Record[].class);
-                Log.d("URL_TEST",tmp.length+" "+tmp[1].toString());
 
-                for(Record record : tmp){
-                    ret.add(record);
-                }
-                Log.d("URL_TEST","???" + ret.toString());
+
+
+                //Gson gson = new Gson();
+                Record[] tmp = parseJson(result);
+                //Log.d("URL_TEST",tmp+"");
+
+
+
+//                for(Record record : map2[0].get("data")){
+//                    ret.add(record);
+//                }
+//                Log.d("URL_TEST","???" + ret.toString());
             }
         });
 
@@ -105,12 +145,19 @@ public class RemoteData implements DataService {
 
     @Override
     public Record getRecord(int index) {
+        Log.d("URL_TEST","start get");
         String serviceRecord = "/v1/record"+"/"+ index;
         final Record[] record = new Record[1];
 
+        Map<String, String> params = new HashMap<>();
+        params.put("userId", String.valueOf(UserAccount.id));
+
+        Log.d("URL_TEST","get path: "+url+serviceRecord+Utils.getBodyParams(params));
+
+
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(url+serviceRecord)   // 设置请求地址
+                .url(url+serviceRecord+Utils.getBodyParams(params))   // 设置请求地址
                 .get()                    // 使用Get方法
                 .build();
 
@@ -135,8 +182,10 @@ public class RemoteData implements DataService {
                 }
                 Log.i("URL_TEST", "result : " + result);
 
-                Gson gson = new Gson();
-                record[0] = gson.fromJson(result,Record.class);
+                //Gson gson = new Gson();
+                if(parseJson(result).length>=1)record[0] = parseJson(result)[0];
+
+
 
             }
         });
@@ -159,6 +208,7 @@ public class RemoteData implements DataService {
 
     @Override
     public void updateRecord(Record record) throws JSONException {
+        Log.d("URL_TEST","start save");
 
 
 
@@ -187,7 +237,7 @@ public class RemoteData implements DataService {
         }
         jsonObject.put("latitudeList", jsonArrayLa);
         jsonObject.put("longitudeList", jsonArrayLo);
-        jsonObject.put("id", id);
+        //jsonObject.put("id", id);
         jsonObject.put("duration", duration);
         jsonObject.put("distance", distance);
         jsonObject.put("recordType", recordType);
@@ -202,10 +252,13 @@ public class RemoteData implements DataService {
 
         // 3个字符串参数
 
+        Map<String, String> params = new HashMap<>();
+        params.put("userId", String.valueOf(UserAccount.id));
 
+        Log.d("URL_TEST","save path: "+url+serviceSave+Utils.getBodyParams(params));
 
         Request request=new Request.Builder()
-                .url(url+serviceSave)
+                .url(url+serviceSave+Utils.getBodyParams(params))
                 .post(requestBody)
                 .build();
 
@@ -242,7 +295,6 @@ public class RemoteData implements DataService {
         return headers;
     }
 
-
     @Override
     public List<Record> queryRecordByTime(Date startTime, Date endTime){
         List<Record> ret = new ArrayList<>();
@@ -251,6 +303,8 @@ public class RemoteData implements DataService {
         Map<String, String>params = new HashMap<>();
         params.put("startDate", String.valueOf(startTime));
         params.put("endDate", String.valueOf(endTime));
+
+        params.put("userId", String.valueOf(UserAccount.id));
 
         Headers headers = setHeaderParams(params);
         Request request=new Request.Builder()
@@ -280,8 +334,8 @@ public class RemoteData implements DataService {
                 Log.i("URL_TEST", "result : " + result);
 
                 Gson gson = new Gson();
-                Record[] tmp = gson.fromJson(result,Record[].class);
-                Log.d("URL_TEST",tmp.length+" "+tmp[1].toString());
+                Record[] tmp = parseJson(result);
+                Log.d("URL_TEST",tmp.length+" "+tmp[0].toString());
 
                 for(Record record : tmp){
                     ret.add(record);
@@ -319,6 +373,8 @@ public class RemoteData implements DataService {
         params.put("endDate",null);
         params.put("recordType", String.valueOf(type));
 
+        params.put("userId", String.valueOf(UserAccount.id));
+
         Headers headers = setHeaderParams(params);
         Request request=new Request.Builder()
                 .url(url+serviceQueryInfo)
@@ -347,7 +403,7 @@ public class RemoteData implements DataService {
                 Log.i("URL_TEST", "result : " + result);
 
                 Gson gson = new Gson();
-                Record[] tmp = gson.fromJson(result,Record[].class);
+                Record[] tmp = parseJson(result);
                 Log.d("URL_TEST",tmp.length+" "+tmp[0].toString());
 
                 for(Record record : tmp){
@@ -409,6 +465,8 @@ public class RemoteData implements DataService {
         params.put("endDate", getFormatTime(endTime,"yyyy-MM-dd"));
         params.put("recordType", String.valueOf(type));
 
+        params.put("userId", String.valueOf(UserAccount.id));
+
         Log.d("URL_TEST",url+serviceQueryInfo+getBodyParams(params));
         Request request=new Request.Builder()
                 .url(url+serviceQueryInfo+getBodyParams(params))
@@ -436,7 +494,7 @@ public class RemoteData implements DataService {
                 Log.i("URL_TEST", "result : " + result);
 
                 Gson gson = new Gson();
-                Record[] tmp = gson.fromJson(result,Record[].class);
+                Record[] tmp = parseJson(result);
                 if(tmp.length != 0) Log.d("URL_TEST",tmp.length+" "+tmp[0].toString());
 
                 for(Record record : tmp){

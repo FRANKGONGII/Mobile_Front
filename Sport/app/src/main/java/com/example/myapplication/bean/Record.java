@@ -61,6 +61,8 @@ public class Record implements Serializable {
 
     public List<Double> longitudeList;
 
+    public long userId;
+
     public Record(RecordType recordType, Date startTime, Date endTime, double dist, int duration, List<LatLng> latLngList){
         this.recordType = recordType;
         this.startTime = startTime;
@@ -68,6 +70,7 @@ public class Record implements Serializable {
         this.distance = dist;
         this.duration = duration;
         this.latLngList = latLngList;
+        this.userId = 0;
         this.id = ++id_counter;
     }
 
@@ -78,6 +81,7 @@ public class Record implements Serializable {
         this.distance = dist;
         this.duration = duration;
         this.latLngList = null;
+        this.userId = 0;
         this.id = ++id_counter;
     }
 

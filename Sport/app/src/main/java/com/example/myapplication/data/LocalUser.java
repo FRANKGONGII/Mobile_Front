@@ -14,16 +14,17 @@ public class LocalUser implements UserService{
         users = new ArrayList<>();
     }
 
-    public boolean LoginByPwd(String str,String pwd){
+    public int LoginByPwd(String str,String pwd){
         for(UserAccount userAccount:users){
             Log.d("my_test","?"+userAccount.toString());
             if(userAccount.getPhone().equals(str)){
                 Log.d("my_test","1");
-                return userAccount.getPwd().equals(pwd);
+                //return userAccount.getPwd().equals(pwd);
+                return 1;
             }
         }
         Log.d("my_test","2");
-        return false;
+        return -1;
     }
 
     //TODO:验证码登录

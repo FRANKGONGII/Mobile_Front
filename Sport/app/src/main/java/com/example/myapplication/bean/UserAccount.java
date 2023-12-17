@@ -12,7 +12,7 @@ public class UserAccount{
         this.sex = "male";
     }
 
-    private int id;
+    public static int id;
     //用户名
     private String username;
 

@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         btLogin.setEnabled(false);
         String user = String.valueOf(etUsername.getText());
         String pwd = String.valueOf(etPsd.getText());
-        if(userService.LoginByPwd(user,pwd)){
+        if(userService.LoginByPwd(user,pwd)!=-1){
             Toast.makeText(this, "登陆成功", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

@@ -2,6 +2,7 @@ package com.example.myapplication.utils;
 
 import android.text.TextUtils;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -184,6 +185,30 @@ public class Utils {
             newKey.append(key);
         }
         return newKey.toString().getBytes();
+    }
+
+    public   static String getBodyParams(Map<String, String> bodyParams) {
+        //1.添加请求参数
+        //遍历map中所有参数到builder
+        if (bodyParams != null && bodyParams.size() > 0) {
+            StringBuffer temp = new StringBuffer("?");
+            StringBuffer stringBuffer = new StringBuffer();
+            for (String key : bodyParams.keySet()) {
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null并且不是""，就拼接起来
+                    stringBuffer.append("&");
+                    stringBuffer.append(key);
+                    stringBuffer.append("=");
+                    stringBuffer.append(bodyParams.get(key));
+                }
+            }
+
+            temp.append(stringBuffer.toString().substring(1));
+
+            return temp.toString();
+        } else {
+            return "";
+        }
     }
 
 }

@@ -5,7 +5,7 @@ public class UserServiceFactory {
 
     public static UserService getInstance() {
         if(userService==null){
-            userService = new LocalUser();
+            userService = new RemoteUser();
         }
         return userService;
     }
