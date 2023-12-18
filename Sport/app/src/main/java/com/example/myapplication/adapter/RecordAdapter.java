@@ -30,7 +30,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         TextView duration; // 跑步时间，秒计
 
         TextView record_type;
-        Button chat_btn;
+//        Button chat_btn;
 
         int record_id;
 
@@ -41,7 +41,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
             distance = view.findViewById(R.id.distance);
             duration = view.findViewById(R.id.duration);
             record_type = view.findViewById(R.id.record_type);
-            chat_btn = view.findViewById(R.id.btn_chat);
+//            chat_btn = view.findViewById(R.id.btn_chat);
         }
     }
 
@@ -69,20 +69,20 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         });
 
         // Button的onClick，用于进入ai界面对话分析运动数据
-        viewHolder.chat_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ChatActivity.class);
-                intent.putExtra("TaskType", "EvalRecord");
-                String data = "我进行了一次" + viewHolder.record_type.getText() + "运动，总距离为" +
-                        viewHolder.distance.getText() + "公里， 用时" + viewHolder.duration.getText() +
-                        "。请你根据上述数据对我本次运动的表现给出意见。";
-
-                intent.putExtra("RecordData", data);
-
-                view.getContext().startActivity(intent);
-            }
-        });
+//        viewHolder.chat_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(view.getContext(), ChatActivity.class);
+//                intent.putExtra("TaskType", "EvalRecord");
+//                String data = "我进行了一次" + viewHolder.record_type.getText() + "运动，总距离为" +
+//                        viewHolder.distance.getText() + "公里， 用时" + viewHolder.duration.getText() +
+//                        "。请你根据上述数据对我本次运动的表现给出意见。";
+//
+//                intent.putExtra("RecordData", data);
+//
+//                view.getContext().startActivity(intent);
+//            }
+//        });
 
         return viewHolder;
     }

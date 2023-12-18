@@ -166,48 +166,95 @@
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line"
-        android:layout_marginTop="@dimen/margin_edge_20"
-        android:background="@color/divider_color" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_edge_20"
         android:orientation="horizontal">
 
-        <View
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/green_round" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/line"-->
+<!--            android:layout_marginTop="@dimen/margin_edge_20"-->
+<!--            android:background="@color/divider_color" />-->
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-            <TextView
+            <View
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/green_round" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="消耗热量(卡)"
-                android:textColor="@color/text_color_3"
-                android:textSize="@dimen/textsize_2" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvCalorie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="@dimen/margin_edge"
-                android:text="0"
-                android:textColor="@color/text_color_1"
-                android:textSize="20sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="消耗热量(卡)"
+                    android:textColor="@color/text_color_3"
+                    android:textSize="@dimen/textsize_2" />
+
+                <TextView
+                    android:id="@+id/tvCalorie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/margin_edge"
+                    android:text="0"
+                    android:textColor="@color/text_color_1"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/circle_blue" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="AI智能分析"
+                    android:textColor="@color/blue_5"
+                    android:textSize="15sp" />
+
+                <android.widget.Button
+                    android:id="@+id/btn_chat"
+                    android:layout_width="62dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/btn_send_selector"
+                    android:text="开始"
+                    android:textColor="#000000"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
+
+
 </LinearLayout>
