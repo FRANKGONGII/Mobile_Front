@@ -18,9 +18,9 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 public class VideoChooseAdapter extends BaseAdapter implements View.OnClickListener {
 
-    private String[] types = {"test","test2","test3","test4","test5",
-            "running","se","pri","type9","type10",
-            "type11"};
+    private String[] types = {"跑步","健走","骑行","健身","减脂",
+            "塑形","增肌", "瑜伽",
+            "初级","中级","高级"};
 
     private ChooseItemOnclickListener mListener;
 

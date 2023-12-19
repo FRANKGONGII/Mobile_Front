@@ -1,9 +1,11 @@
 package com.example.myapplication.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -31,11 +34,20 @@ import com.example.myapplication.EditUserInfoActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.SportDataAdapter;
 import com.example.myapplication.bean.Record;
+import com.example.myapplication.data.DataService;
+import com.example.myapplication.data.DataServiceFactory;
 import com.google.android.material.appbar.AppBarLayout;
+import com.jjoe64.graphview.DefaultLabelFormatter;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.ValueDependentColor;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -52,6 +64,10 @@ public class HomeFragment extends Fragment {
     private Toolbar toolbar;
     private ImageButton editUserInfoBtn;
 
+    private DataService dataService;
+
+    private String[] sportType = {"跑步","骑行","游泳","快走"};
+
 
 
 
@@ -59,6 +75,7 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = (AppCompatActivity) getActivity();
+        dataService = DataServiceFactory.getInstance();
         window = activity.getWindow();
     }
 
@@ -72,6 +89,9 @@ public class HomeFragment extends Fragment {
         editUserInfoBtn = view.findViewById((R.id.editUserInfoButton));
 
         //        drawerLayout = view.findViewById(R.id.drawer_layout);
+
+
+
 
 
         //设置系统状态栏为toolbar颜色
@@ -129,6 +149,80 @@ public class HomeFragment extends Fragment {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+
+        List<Record> records = dataService.getAllRecords();
+        if(records==null){
+            Toast.makeText(getActivity(), "获取历史运动记录失败", Toast.LENGTH_SHORT).show();
+        }else{
+            //设置图表
+//            GraphView graph = (GraphView) view.findViewById(R.id.graph);
+           DataPoint[] dataPointArray = new DataPoint[4];//默认按照类型显示
+            int[] cnt = new int[4];
+            for(Record record:records){
+                Record.RecordType recordType = record.getRecordType();
+                if(recordType== Record.RecordType.RUNNING){
+                    cnt[0]++;
+                }else if(recordType== Record.RecordType.RIDING){
+                    cnt[1]++;
+                }else if(recordType== Record.RecordType.SWIMMING){
+                    cnt[2]++;
+                }else if(recordType== Record.RecordType.WALKING){
+                    cnt[3]++;
+                }
+            }
+//
+            for(int i = 0;i<4;i++){
+                dataPointArray[i] = new DataPoint(i,cnt[i]);
+            }
+//
+//            BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(dataPointArray);
+//            graph.addSeries(series);
+
+
+
+            GraphView graph = (GraphView) view.findViewById(R.id.graph);
+            BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPointArray);
+            graph.addSeries(series);
+
+
+            series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+                @Override
+                public int get(DataPoint data) {
+                    return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
+                }
+            });
+
+            series.setSpacing(50);
+
+
+            //series.setDrawValuesOnTop(true);
+            //series.setValuesOnTopColor(Color.RED);
+
+
+            graph.getGridLabelRenderer().setNumHorizontalLabels(4);
+
+
+
+            graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+                @Override
+                public String formatLabel(double value, boolean isValueX) {
+                    if (isValueX) {
+                        Log.d("NUM_TEST",value+"");
+                       if(0<=value&&value<=3){
+                           return sportType[(int) value];
+                       }
+                        return super.formatLabel(value, isValueX);
+
+                    } else {
+                        // show currency for y values
+                        return super.formatLabel(value, isValueX)+"次";
+                    }
+
+                }
+            });
+        }
+
+
 
 
         return view;

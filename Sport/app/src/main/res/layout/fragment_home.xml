@@ -222,6 +222,12 @@
                 app:layout_anchorGravity="top|center"
                 app:strokeColor="@android:color/transparent">
 
+
+                <com.jjoe64.graphview.GraphView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/graph" />
+
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
