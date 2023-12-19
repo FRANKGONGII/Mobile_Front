@@ -29,7 +29,7 @@ public class LocalData implements DataService {
 
 
     @Override
-    public Record getRecord(int id){
+    public Record getRecord(long id){
         for(Record record: getAllRecords()){
             if(record.getId() == id){
                 return record;
@@ -42,9 +42,9 @@ public class LocalData implements DataService {
 
 
     @Override
-    public boolean updateRecord(Record record){
+    public long updateRecord(Record record){
         records.add(record);
-        return true;
+        return record.id+1;
     }
 
     @Override

@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+
 import android.widget.Toast;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class HistoryActivity extends AppCompatActivity{
@@ -71,16 +74,30 @@ public class HistoryActivity extends AppCompatActivity{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//                try {
+//<<<<<<< HEAD
+//                Intent intent = new Intent(view.getContext(), LoginActivity.class);
+//                startActivity(intent);
+////                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+////                try {
 ////                    recordList = dataService.queryRecordByTime(sdf.parse("2023-11-01 00:00:00"),sdf.parse("2023-12-01 00:00:00"));
 ////                    recordList = dataService.queryRecordByType(Record.RecordType.RUNNING);
 ////                    adapter = new RecordAdapter(recordList);
 ////                    recyclerView.setAdapter(adapter);
 ////                    Log.d("Data_test","!"+recordList.size());
-//                } catch (ParseException e) {
-//                    throw new RuntimeException(e);
-//                }
+////                } catch (ParseException e) {
+////                    throw new RuntimeException(e);
+////                }
+//            }
+//        });
+//
+//        ImageButton back_button = findViewById(R.id.back_button);
+//        back_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//            }
+//        });
+//=======
             }
         });
 
@@ -95,6 +112,7 @@ public class HistoryActivity extends AppCompatActivity{
         });
 
 
+//>>>>>>> 0df985dd
         init_type();
         init_time();
     }
@@ -192,7 +210,7 @@ public class HistoryActivity extends AppCompatActivity{
     private Date get_this_month() {
         if(chosen_month == -1) return null;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
         try{
             Date dt = sdf.parse(String.format("2023-%02d-01", chosen_month));

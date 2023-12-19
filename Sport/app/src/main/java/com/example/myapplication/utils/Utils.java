@@ -2,6 +2,9 @@ package com.example.myapplication.utils;
 
 import android.text.TextUtils;
 
+
+import java.util.Locale;
+import java.util.Map;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -189,12 +192,37 @@ public class Utils {
         return newKey.toString().getBytes();
     }
 
+
+    public   static String getBodyParams(Map<String, String> bodyParams) {
+        //1.添加请求参数
+        //遍历map中所有参数到builder
+        if (bodyParams != null && bodyParams.size() > 0) {
+            StringBuffer temp = new StringBuffer("?");
+            StringBuffer stringBuffer = new StringBuffer();
+            for (String key : bodyParams.keySet()) {
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null并且不是""，就拼接起来
+                    stringBuffer.append("&");
+                    stringBuffer.append(key);
+                    stringBuffer.append("=");
+                    stringBuffer.append(bodyParams.get(key));
+                }
+            }
+
+            temp.append(stringBuffer.toString().substring(1));
+
+            return temp.toString();
+        } else {
+            return "";
+        }
+    }
+
     public static Date getDateFromLong(Long l){
         return new Date(l);
     }
 
     public static String getStringFormDate(Date date){
-        java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
         return sdf.format(date);
     }

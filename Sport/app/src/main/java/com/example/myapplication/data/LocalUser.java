@@ -1,5 +1,7 @@
 package com.example.myapplication.data;
 
+import android.util.Log;
+
 import com.example.myapplication.bean.UserAccount;
 
 import java.util.ArrayList;
@@ -8,21 +10,21 @@ import java.util.List;
 public class LocalUser implements UserService{
     List<UserAccount> users;
 
-    LocalUser() {
+    public LocalUser() {
         users = new ArrayList<>();
     }
 
-    public boolean LoginByPwd(String str,String pwd){
+    public int LoginByPwd(String str,String pwd){
         for(UserAccount userAccount:users){
+            Log.d("my_test","?"+userAccount.toString());
             if(userAccount.getPhone().equals(str)){
-                if(userAccount.getPwd().equals(pwd)){
-                    return true;
-                }else{
-                    return false;
-                }
+                Log.d("my_test","1");
+                //return userAccount.getPwd().equals(pwd);
+                return 1;
             }
         }
-        return false;
+        Log.d("my_test","2");
+        return -1;
     }
 
     //TODO:验证码登录
@@ -31,6 +33,7 @@ public class LocalUser implements UserService{
     }
 
     public boolean Register(String name,String phone, String pwd){
+        Log.d("my_test","regist ok"+name + " " + phone + " " + pwd);
         for(UserAccount userAccount:users){
             if(userAccount.getPhone().equals(phone)){
                return false;
