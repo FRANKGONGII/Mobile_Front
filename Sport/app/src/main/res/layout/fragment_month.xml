@@ -1,0 +1,127 @@
+<!-- fragment_monthly.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- 顶部左上角的运动类型选择器 -->
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinnerSportType"
+        android:layout_width="100sp"
+        android:layout_height="40sp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="100dp"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textColor ="@color/white"
+        style="@style/CustomSpinnerStyle"/>
+
+    <!-- 顶部右上角的月份选择器 -->
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinnerMonth"
+        android:layout_width="100sp"
+        android:layout_height="40sp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="100dp"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        style="@style/CustomSpinnerStyle"/>
+
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="300sp"
+        android:layout_below="@+id/spinnerSportType"/>
+
+    <!-- 下面是一个4x2排列的八组数据 -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="200sp"
+        android:layout_below="@id/chart"
+        android:layout_marginTop="16dp"
+        android:columnCount="2"
+        android:rowCount="4">
+
+        <!-- 累计公里数 -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="累计公里"
+            android:textSize="18sp"/>
+
+        <!-- 累计天数 -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="累计天数"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/textViewTotalDistance"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="10km"
+            android:textSize="18sp"/>
+
+
+        <TextView
+            android:id="@+id/textViewTotalDays"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="11"
+            android:textSize="18sp"/>
+
+        <!-- 累计时长 -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="累计时长"
+            android:textSize="18sp"/>
+
+        <!-- 累计运动消耗 -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="累计消耗"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/textViewTotalDuration"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="00:10:11"
+            android:textSize="18sp"/>
+
+
+        <TextView
+            android:id="@+id/textViewTotalCalories"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:text="500ka"
+            android:textSize="18sp"/>
+    </GridLayout>
+
+    <!-- 中间的统计图表 -->
+    <!-- 这里添加你的统计图表控件 -->
+
+</RelativeLayout>

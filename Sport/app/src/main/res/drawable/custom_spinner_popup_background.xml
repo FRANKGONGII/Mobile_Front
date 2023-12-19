@@ -1,0 +1,5 @@
+<!-- custom_spinner_popup_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/blue_1"/> <!-- 设置弹出菜单背景颜色为蓝色 -->
+    <corners android:radius="4dp"/>
+</shape>

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.EditUserInfoActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.StatisticActivity;
 import com.example.myapplication.adapter.SportDataAdapter;
 import com.example.myapplication.bean.Record;
 import com.example.myapplication.data.DataService;
@@ -89,6 +91,15 @@ public class HomeFragment extends Fragment {
         editUserInfoBtn = view.findViewById((R.id.editUserInfoButton));
 
         //        drawerLayout = view.findViewById(R.id.drawer_layout);
+
+        ImageView imageView = view.findViewById(R.id.statistic);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(getActivity(), StatisticActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -156,70 +167,70 @@ public class HomeFragment extends Fragment {
         }else{
             //设置图表
 //            GraphView graph = (GraphView) view.findViewById(R.id.graph);
-           DataPoint[] dataPointArray = new DataPoint[4];//默认按照类型显示
-            int[] cnt = new int[4];
-            for(Record record:records){
-                Record.RecordType recordType = record.getRecordType();
-                if(recordType== Record.RecordType.RUNNING){
-                    cnt[0]++;
-                }else if(recordType== Record.RecordType.RIDING){
-                    cnt[1]++;
-                }else if(recordType== Record.RecordType.SWIMMING){
-                    cnt[2]++;
-                }else if(recordType== Record.RecordType.WALKING){
-                    cnt[3]++;
-                }
-            }
+//           DataPoint[] dataPointArray = new DataPoint[4];//默认按照类型显示
+//            int[] cnt = new int[4];
+//            for(Record record:records){
+//                Record.RecordType recordType = record.getRecordType();
+//                if(recordType== Record.RecordType.RUNNING){
+//                    cnt[0]++;
+//                }else if(recordType== Record.RecordType.RIDING){
+//                    cnt[1]++;
+//                }else if(recordType== Record.RecordType.SWIMMING){
+//                    cnt[2]++;
+//                }else if(recordType== Record.RecordType.WALKING){
+//                    cnt[3]++;
+//                }
+//            }
+////
+//            for(int i = 0;i<4;i++){
+//                dataPointArray[i] = new DataPoint(i,cnt[i]);
+//            }
+////
+////            BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(dataPointArray);
+////            graph.addSeries(series);
 //
-            for(int i = 0;i<4;i++){
-                dataPointArray[i] = new DataPoint(i,cnt[i]);
-            }
 //
-//            BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(dataPointArray);
+//
+//            GraphView graph = (GraphView) view.findViewById(R.id.graph);
+//            BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPointArray);
 //            graph.addSeries(series);
-
-
-
-            GraphView graph = (GraphView) view.findViewById(R.id.graph);
-            BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPointArray);
-            graph.addSeries(series);
-
-
-            series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-                @Override
-                public int get(DataPoint data) {
-                    return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
-                }
-            });
-
-            series.setSpacing(50);
-
-
-            //series.setDrawValuesOnTop(true);
-            //series.setValuesOnTopColor(Color.RED);
-
-
-            graph.getGridLabelRenderer().setNumHorizontalLabels(4);
-
-
-
-            graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
-                @Override
-                public String formatLabel(double value, boolean isValueX) {
-                    if (isValueX) {
-                        Log.d("NUM_TEST",value+"");
-                       if(0<=value&&value<=3){
-                           return sportType[(int) value];
-                       }
-                        return super.formatLabel(value, isValueX);
-
-                    } else {
-                        // show currency for y values
-                        return super.formatLabel(value, isValueX)+"次";
-                    }
-
-                }
-            });
+//
+//
+//            series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+//                @Override
+//                public int get(DataPoint data) {
+//                    return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
+//                }
+//            });
+//
+//            series.setSpacing(50);
+//
+//
+//            //series.setDrawValuesOnTop(true);
+//            //series.setValuesOnTopColor(Color.RED);
+//
+//
+//            graph.getGridLabelRenderer().setNumHorizontalLabels(4);
+//
+//
+//
+//            graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+//                @Override
+//                public String formatLabel(double value, boolean isValueX) {
+//                    if (isValueX) {
+//                        Log.d("NUM_TEST",value+"");
+//                       if(0<=value&&value<=3){
+//                           return sportType[(int) value];
+//                       }
+//                        return super.formatLabel(value, isValueX);
+//
+//                    } else {
+//                        // show currency for y values
+//                        return super.formatLabel(value, isValueX)+"次";
+//                    }
+//
+//                }
+//            });
         }
 
 

@@ -15,6 +15,21 @@
         <!--<item name="android:windowAnimationStyle">@style/   activityAnimation</item>-->
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@drawable/custom_spinner_background</item>
+        <item name="android:popupBackground">@drawable/custom_spinner_popup_background</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:dropDownSelector">@android:color/white</item>
+        <item name="android:textAlignment">center</item>
+
+    </style>
+
+
     <!-- animation 样式 -->
     <style name="activityAnimation" parent="@android:style/Animation">
         <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>

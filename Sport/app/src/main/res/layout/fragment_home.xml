@@ -223,10 +223,16 @@
                 app:strokeColor="@android:color/transparent">
 
 
-                <com.jjoe64.graphview.GraphView
-                    android:layout_width="match_parent"
+<!--                <com.jjoe64.graphview.GraphView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:id="@+id/graph" />-->
+
+                <ImageView
+                    android:layout_width="150sp"
                     android:layout_height="match_parent"
-                    android:id="@+id/graph" />
+                    android:src="@drawable/statistic_background"
+                    android:id="@+id/statistic"/>
 
             </com.google.android.material.card.MaterialCardView>
 

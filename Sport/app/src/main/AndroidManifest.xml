@@ -33,11 +33,6 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -50,6 +45,10 @@
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -103,6 +102,10 @@
 
         <activity
             android:name=".TestActivity">
+        </activity>
+
+        <activity
+            android:name=".StatisticActivity">
         </activity>
 
         <meta-data
