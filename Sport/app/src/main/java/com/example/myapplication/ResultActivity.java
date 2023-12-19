@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ public class ResultActivity extends AppCompatActivity {
     TextView tvSpeed;
     TextView tvDistribution;
     TextView tvCalorie;
+    Button chat_btn;
 
 
     private LineChart chart;
@@ -192,8 +194,6 @@ public class ResultActivity extends AppCompatActivity {
         //Log.d("ID_TEST", list.get(0).latitude+" "+list.get(0).longitude);
         Log.d("ID_TEST",String.valueOf(record.getId()));
 
-
-
         //TODO:图表测试
 
 
@@ -207,6 +207,7 @@ public class ResultActivity extends AppCompatActivity {
 //        tvSpeed = findViewById(R.id.tvSpeed);
 //        tvDistribution = findViewById(R.id.tvDistribution);
 //        tvCalorie = findViewById(R.id.tvCalorie);
+//        chat_btn = findViewById(R.id.btn_chat);
 //
 //        tvDistance.setText(record.getDistanceByStr());
 //        tvDuration.setText(record.getDurationByStr());
@@ -214,13 +215,26 @@ public class ResultActivity extends AppCompatActivity {
 //        tvDistribution.setText(record.getSpeed2());
 //        tvCalorie.setText(record.getCalorie());
 //
-//        Log.d("CCHHCHCHCHC",list+" ");
+//        String type_name = record.getRecordTypeByStr();
+//
+//        chat_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(view.getContext(), ChatActivity.class);
+//                intent.putExtra("TaskType", "EvalRecord");
+//                String data = "我进行了一次" + type_name + "运动，总距离为" +
+//                        tvDistance.getText() + "公里， 用时" + tvDuration.getText() +
+//                        "。请你根据上述数据对我本次运动的表现给出意见。";
+//
+//                intent.putExtra("RecordData", data);
+//
+//                view.getContext().startActivity(intent);
+//            }
+//        });
+//
+//
 //
 //        if(list!=null){
-//            Log.d("CCHHCHCHCHC",list.size()+" ");
-//            for(LatLng la:list){
-//                Log.d("CCHHCHCHCHC",la.latitude+" "+la.longitude);
-//            }
 //            CameraPosition cameraPosition = new CameraPosition(list.get(0), 64, 0, 0);
 //            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
 //            aMap.moveCamera(cameraUpdate);
@@ -244,19 +258,11 @@ public class ResultActivity extends AppCompatActivity {
 //                }
 //            }
 //
-//
 //            Marker marker1 = aMap.addMarker(new MarkerOptions().
 //                    position(list.get(2)).title("北京").snippet("DefaultMarker"));
 //            Marker marker2 = aMap.addMarker(new MarkerOptions().
 //                    position(list.get(list.size()-1)).title("北京").snippet("DefaultMarker"));
 //        }
-
-
-
-
-
-
-
 
 
     }

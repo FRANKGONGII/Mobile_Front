@@ -29,7 +29,8 @@ public class ChatActivity extends AppCompatActivity{
     private List<String> promptList; //这是传给LLM的prompt的内容，与应用显示的对话内容并不相同
     private List<String> roleList; //传给LLM的role的列表，与上面的prompt一一对应
     private List<ChatBean> chatBeanList; //实际显示的对话内容列表，与prompt相区别
-    private Button btn;
+    private Button send_btn;
+    private Button back_btn;
     private EditText textBox;
     private ProgressDialog progressDialog;
 
@@ -39,7 +40,7 @@ public class ChatActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_chat);
-
+        initView();
 
 
         if (! Python.isStarted()) {
@@ -49,18 +50,59 @@ public class ChatActivity extends AppCompatActivity{
         Python python = Python.getInstance();
         pyChatObject = python.getModule("AIConversation");
 
-        promptList = new ArrayList<>();
-        promptList.add("你是一个运动智能问答机器人，你需要与用户对话，并以尽量专业的内容进行回答。被问到你的身份时，请称自己为‘智能运动助手’");
-        roleList = new ArrayList<>();
-        roleList.add("system");
-        chatBeanList = new ArrayList<>();
-        ChatBean initChat = new ChatBean(1, "你好，我是你的智能运动助手，有什么需要我帮助的吗？");
-        chatBeanList.add(initChat);
-        adapter = new ChatAdapter(chatBeanList, this);
 
-        progressDialog = new ProgressDialog(ChatActivity.this);
-        Button back = findViewById(R.id.btn_back);
-        back.setOnClickListener(new View.OnClickListener() {
+        Intent intent = getIntent();
+        String taskType = intent.getStringExtra("TaskType");
+        if(taskType == null) {
+            Log.e("ChatTaskType", "No Chat TaskType passed");
+
+            ChatBean initChat = new ChatBean(1, "抱歉，系统出现错误，请退出重试");
+            chatBeanList.add(initChat);
+
+            send_btn.setEnabled(false);
+        }
+        else{
+            Log.i("ChatTaskType", taskType);
+
+            if(taskType.equals("NormalChat")){
+                promptList.add("你是一个运动智能问答机器人，你需要与用户对话，并以尽量专业的内容进行回答。被问到你的身份时，请称自己为‘智能运动助手’");
+                roleList.add("system");
+                ChatBean initChat = new ChatBean(1, "你好，我是你的智能运动助手，有什么需要我帮助的吗？");
+                chatBeanList.add(initChat);
+            }
+            else if(taskType.equals("EvalRecord")){
+                String data = intent.getStringExtra("RecordData");
+                if(data == null){
+                    Log.e("ChatRecordData", "RecordData to ChatActivity missing");
+                    ChatBean initChat = new ChatBean(1, "获取运动数据时出现错误，请重试");
+                    chatBeanList.add(initChat);
+
+                    send_btn.setEnabled(false);
+                }
+                else{
+                    promptList.add("你是一个运动智能问答机器人。你需要分析用户发送的运动数据，从专业的视角给出意见，并回答用户的后续疑问。");
+                    roleList.add("system");
+                    ChatBean initChat = new ChatBean(1, "已收到您的运动数据，正全力分析，请稍后...");
+                    chatBeanList.add(initChat);
+                    adapter.notifyDataSetChanged();
+
+                    promptList.add(data);
+                    roleList.add("user");
+                    LLM_Post();
+                }
+            }
+            else{
+                Log.e("ChatTaskType", "Undefined TaskType in ChatActivity");
+
+                ChatBean initChat = new ChatBean(1, "抱歉，系统出现错误，请退出重试");
+                chatBeanList.add(initChat);
+
+                send_btn.setEnabled(false);
+            }
+        }
+        //显示更新的对话内容
+        adapter.notifyDataSetChanged();
+        back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent =  new Intent(ChatActivity.this,MainActivity.class);
@@ -68,14 +110,21 @@ public class ChatActivity extends AppCompatActivity{
             }
         });
 
-        initView();
+
     }
 
     private void initView(){
+        promptList = new ArrayList<>();
+        roleList = new ArrayList<>();
+        chatBeanList = new ArrayList<>();
+        adapter = new ChatAdapter(chatBeanList, this);
+
         listView = findViewById(R.id.list);
         listView.setAdapter(adapter);
         textBox = findViewById(R.id.et_send_msg);
-        btn = findViewById(R.id.btn_send);
+        send_btn = findViewById(R.id.btn_send);
+        back_btn = findViewById(R.id.btn_back);
+        progressDialog = new ProgressDialog(ChatActivity.this);
     }
 
     //onClick 对应的函数必须要public
@@ -87,6 +136,11 @@ public class ChatActivity extends AppCompatActivity{
         roleList.add("user");
         chatBeanList.add(request);
 
+        LLM_Post();
+    }
+
+    // LLM调用入口，将promptList和roleList中的内容组合发送
+    private void LLM_Post(){
         StringBuilder promptsBuilder = new StringBuilder();
         StringBuilder rolesBuilder = new StringBuilder();
         int len = promptList.size();
@@ -104,16 +158,6 @@ public class ChatActivity extends AppCompatActivity{
         ChatTask chatTask = new ChatTask(pyChatObject, progressDialog, chatBeanList, adapter);
 
         chatTask.execute(roles, prompts, roleList, promptList);
-//        String res = chatBeanList.get(chatBeanList.size()-1).getMessage();
-
-//        if(res.equals("Internet Error")){
-//            promptList.remove(promptList.size()-1);
-//            roleList.remove(roleList.size()-1);
-//        }
-//        else{
-//            promptList.add(res);
-//            roleList.add("assistant");
-//        }
     }
 
 }

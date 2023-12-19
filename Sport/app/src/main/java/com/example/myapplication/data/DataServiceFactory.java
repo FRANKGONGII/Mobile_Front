@@ -7,7 +7,7 @@ public class DataServiceFactory {
 
     public static DataService getInstance() {
         if(dataService == null){
-            dataService = new RemoteData();
+            dataService = new LocalData();
         }
         return dataService;
     }
