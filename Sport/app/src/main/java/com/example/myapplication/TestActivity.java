@@ -165,7 +165,7 @@ public class TestActivity extends AppCompatActivity {
         super.onStart();
         Bundle bundle = getIntent().getExtras();
 
-        Record.RecordType recordType =Record.RecordType.RUNNING;
+        Record.RecordType recordType = Record.RecordType.RUNNING;
         if(bundle!=null){
             recordType = (Record.RecordType) bundle.getSerializable("activity_type");
         }
@@ -176,6 +176,10 @@ public class TestActivity extends AppCompatActivity {
 //                break;
 //            default:
 //        }
+        //选择类型按钮
+//        Button listPopupWindowButton = findViewById(R.id.history_popup_button);
+//        listPopupWindowButton.setText();
+
         reFreshView(dataService.queryRecordByBoth(recordType, start, end));
     }
 
