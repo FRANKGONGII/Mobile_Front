@@ -154,6 +154,12 @@ public class Record implements Serializable {
         return String.format("%.1f",1.036*distance*WEIGHT);
     }
 
+    public static String getCalorie(int dis){
+        int WEIGHT = 60;
+        return String.format("%.1f",1.036*dis*WEIGHT);
+    }
+
+
     public static String parse_duration(int duration){
         int h = duration / 3600;
         int min = duration % 3600 / 60;

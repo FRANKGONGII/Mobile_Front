@@ -25,7 +25,7 @@
         android:layout_height="40sp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="16sp"
         android:layout_marginTop="16sp"
         android:textSize="30sp"
         android:textAlignment="center"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/spinnerSportType"
         android:orientation="vertical"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16sp">
 
         <!-- 数字+km -->
         <TextView
@@ -67,7 +67,7 @@
         android:layout_below="@+id/spinnerMonth"
         android:layout_alignParentEnd="true"
         android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16sp">
 
         <RadioButton
             android:id="@+id/radioButtonDistance"
@@ -99,7 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="200sp"
         android:layout_below="@id/chart"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="16sp"
         android:columnCount="2"
         android:rowCount="4">
 

@@ -22,6 +22,8 @@ import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
+import org.w3c.dom.Text;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,6 +54,10 @@ public class MonthlyFragment extends Fragment {
     int chosen_month = -1;
     // 创建月份的数组
     String[] months = {"一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"};
+
+    double[][] duration = new double[sportTypes.length][31];
+    double[][] distance = new double[sportTypes.length][31];
+    double[][] frequency = new double[sportTypes.length][31];
 
     //默认是选里程
     int radio = 0;
@@ -107,20 +113,20 @@ public class MonthlyFragment extends Fragment {
                     Toast.makeText(getContext(),"查询失败",Toast.LENGTH_SHORT);
                 }else{
                     //构建根据另一个选项图表
-                    double[] cnt; // 记录次数或者距离
+                    //double[] cnt; // 记录次数或者距离
                     //String[] timeCnt; // 记录时间
+                    generateData(result);
                     if(radio==0){
-                        Log.d("DATE_TEST","choose distance");
-                        cnt = drawTableByDis(result);
-                        drawChartDis(cnt);
+                        //Log.d("DATE_TEST","choose distance");
+                        drawChartDis(distance[chosen_type]);
                     }else if(radio==1){
-                        cnt = drawTableByCnt(result);
-                        drawChartDis(cnt);
+                        //cnt = drawTableByCnt(result);
+                        drawChartDis(frequency[chosen_type]);
                     }else{
-                        cnt = drawTableByTime(result);
-                        drawChartTime(cnt);
+                        //cnt = drawTableByTime(result);
+                        drawChartTime(duration[chosen_type]);
                     }
-
+                    changePanelData();
                 }
             }
             @Override
@@ -132,13 +138,10 @@ public class MonthlyFragment extends Fragment {
 
         // 在活动的onCreate或Fragment的onCreateView中
         Spinner monthSpinner = view.findViewById(R.id.spinnerMonth);
-
-
         // 创建适配器并设置给 Spinner
         ArrayAdapter<String> monthAdapter = new ArrayAdapter<>(getContext(), R.layout.custom_spinner_item_black, months);
         monthAdapter.setDropDownViewResource(R.layout.custom_spinner_item_black);
         monthSpinner.setAdapter(monthAdapter);
-
         //获取现在的月份
         Calendar calendar = Calendar.getInstance();
         int currentMonth = calendar.get(Calendar.MONTH) + 1; // 月份从0开始计数，所以需要加1
@@ -155,8 +158,6 @@ public class MonthlyFragment extends Fragment {
                 // 打印选中项
                 Log.d("DATE_TEST",selectedMonth+"");
                 chosen_month = position+1;
-
-
                 // 查询
                 List<Record> result = dataService.queryRecordByBoth(Record.RecordType.valueOf(sportTypesEn[chosen_type]),
                         get_this_month(),get_next_month(get_this_month()));
@@ -165,18 +166,20 @@ public class MonthlyFragment extends Fragment {
                     Toast.makeText(getContext(),"查询失败",Toast.LENGTH_SHORT);
                 }else{
                     //构建根据另一个选项图表
-                    double[] cnt; // 记录次数或者距离
-                    //String[] timeCnt; // 记录时间
+                    generateData(result);
                     if(radio==0){
-                        cnt = drawTableByDis(result);
-                        drawChartDis(cnt);
+                        //Log.d("DATE_TEST","choose distance");
+                        drawChartDis(distance[chosen_type]);
                     }else if(radio==1){
-                        cnt = drawTableByCnt(result);
-                        drawChartDis(cnt);
+                        //cnt = drawTableByCnt(result);
+                        drawChartDis(frequency[chosen_type]);
                     }else{
-                        cnt = drawTableByTime(result);
-                        drawChartTime(cnt);
+                        //cnt = drawTableByTime(result);
+                        drawChartTime(duration[chosen_type]);
                     }
+                    changePanelData();
+
+
                 }
             }
             @Override
@@ -195,41 +198,30 @@ public class MonthlyFragment extends Fragment {
                 List<Record> result = dataService.queryRecordByBoth(Record.RecordType.valueOf(sportTypesEn[chosen_type]),
                         get_this_month(),get_next_month(get_this_month()));
                 // 处理选中变化的逻辑
+                if(result==null){
+                    Toast.makeText(getContext(),"获取数据错误",Toast.LENGTH_LONG);
+                    return;
+                }
+                generateData(result);
                 if (checkedId == R.id.radioButtonDistance) {
                     // 选中了里程
                     Log.d("RADIO_TEST","distance");
                     // 处理相关逻辑
                     radio = 0;
-                    if(result==null){
-                        Toast.makeText(getContext(),"查询失败",Toast.LENGTH_SHORT);
-                    }else{
-                        double[] cnt =  drawTableByDis(result);
-                        drawChartDis(cnt);
-                    }
+                    drawChartDis(distance[chosen_type]);
                 } else if (checkedId == R.id.radioButtonDays) {
                     // 选中了次数
                     radio = 1;
                     Log.d("RADIO_TEST","days");
-                    // 处理相关逻辑
-                    if(result==null){
-                        Toast.makeText(getContext(),"查询失败",Toast.LENGTH_SHORT);
-                    }else{
-                        double[] cnt =  drawTableByCnt(result);
-                        drawChartDis(cnt);
-                    }
-
+                    drawChartDis(frequency[chosen_type]);
                 } else if (checkedId == R.id.radioButtonDuration) {
                     // 选中了时长
                     radio = 2;
-                    Log.d("RADIO_TEST","duration");
-                    // 处理相关逻辑
-                    if(result==null){
-                        Toast.makeText(getContext(),"查询失败",Toast.LENGTH_SHORT);
-                    }else{
-                        double[] cnt =  drawTableByTime(result);
-                        drawChartTime(cnt);
-                    }
+                    drawChartTime(duration[chosen_type]);
                 }
+                changePanelData();
+
+
             }
         });
 
@@ -278,9 +270,12 @@ public class MonthlyFragment extends Fragment {
         return rightNow.getTime();
     }
 
-    private double[] drawTableByDis(List<Record> records){
+    private void generateData(List<Record> records){
+        reSet2Array(distance);
+        reSet2Array(duration);
+        reSet2Array(frequency);
         Log.d("DATE_TEST","draw by type:"+sportTypesEn[chosen_type]);
-        double[][] cnt = new double[4][31];
+        //double[][] cnt = new double[4][31];
         for(Record record:records){
             SimpleDateFormat sdf = new SimpleDateFormat("d",Locale.ENGLISH);
             String dayStr = sdf.format(record.getStartTime());
@@ -292,56 +287,60 @@ public class MonthlyFragment extends Fragment {
 
             Log.d("DATE_TEST",record.getStartTime()+" "+day+" " +month);
             Log.d("DATE_TEST","chosen_month: "+chosen_month);
-            if(month==chosen_month)cnt[getTypeIndex(record)][day-1]+=record.getDistance();
+            if(month==chosen_month){
+                distance[getTypeIndex(record)][day-1]+=record.getDistance();
+                frequency[getTypeIndex(record)][day-1]++;
+                duration[getTypeIndex(record)][day-1]+=record.getDuration();
+            }
         }
-        for(int i = 0;i<31;i++){
-            Log.d("DATE_TEST",+(i+1)+" : "+cnt[chosen_type][i]);
-        }
-        return cnt[chosen_type];
+//        for(int i = 0;i<31;i++){
+//            Log.d("DATE_TEST",+(i+1)+" : "+cnt[chosen_type][i]);
+//        }
+        return;
     }
 
-    private double[] drawTableByCnt(List<Record> records){
-        Log.d("DATE_TEST","draw by type:"+sportTypesEn[chosen_type]);
-        double[][] cnt = new double[4][31];
-        for(Record record:records){
-            SimpleDateFormat sdf = new SimpleDateFormat("d",Locale.ENGLISH);
-            String dayStr = sdf.format(record.getStartTime());
-            int day = Integer.parseInt(dayStr);
+//    private double[] drawTableByCnt(List<Record> records){
+//        Log.d("DATE_TEST","draw by type:"+sportTypesEn[chosen_type]);
+//        double[][] cnt = new double[4][31];
+//        for(Record record:records){
+//            SimpleDateFormat sdf = new SimpleDateFormat("d",Locale.ENGLISH);
+//            String dayStr = sdf.format(record.getStartTime());
+//            int day = Integer.parseInt(dayStr);
+//
+//            sdf = new SimpleDateFormat("MM",Locale.ENGLISH);
+//            dayStr = sdf.format(record.getStartTime());
+//            int month = Integer.parseInt(dayStr);
+//            Log.d("DATE_TEST",record.getStartTime()+" "+day+" " +month);
+//            Log.d("DATE_TEST","chosen_month: "+chosen_month);
+//            if(month==chosen_month)cnt[getTypeIndex(record)][day-1]++;
+//        }
+//        for(int i = 0;i<31;i++){
+//            Log.d("DATE_TEST",+(i+1)+" : "+cnt[chosen_type][i]);
+//        }
+//        return cnt[chosen_type];
+//    }
 
-            sdf = new SimpleDateFormat("MM",Locale.ENGLISH);
-            dayStr = sdf.format(record.getStartTime());
-            int month = Integer.parseInt(dayStr);
-            Log.d("DATE_TEST",record.getStartTime()+" "+day+" " +month);
-            Log.d("DATE_TEST","chosen_month: "+chosen_month);
-            if(month==chosen_month)cnt[getTypeIndex(record)][day-1]++;
-        }
-        for(int i = 0;i<31;i++){
-            Log.d("DATE_TEST",+(i+1)+" : "+cnt[chosen_type][i]);
-        }
-        return cnt[chosen_type];
-    }
-
-    private double[] drawTableByTime(List<Record> records){
-        Log.d("DATE_TEST","draw by type:"+sportTypesEn[chosen_type]);
-        double[][] cnt = new double[4][31];
-        for(Record record:records){
-            SimpleDateFormat sdf = new SimpleDateFormat("d",Locale.ENGLISH);
-            String dayStr = sdf.format(record.getStartTime());
-            int day = Integer.parseInt(dayStr);
-
-            sdf = new SimpleDateFormat("MM",Locale.ENGLISH);
-            dayStr = sdf.format(record.getStartTime());
-            int month = Integer.parseInt(dayStr);
-
-            Log.d("DATE_TEST",record.getStartTime()+" "+day+" " +month);
-            Log.d("DATE_TEST","chosen_month: "+chosen_month);
-            if(month==chosen_month)cnt[getTypeIndex(record)][day-1]+=record.getDuration();
-        }
-        for(int i = 0;i<31;i++){
-            Log.d("DATE_TEST",+(i+1)+" : "+cnt[chosen_type][i]);
-        }
-        return cnt[chosen_type];
-    }
+//    private double[] drawTableByTime(List<Record> records){
+//        Log.d("DATE_TEST","draw by type:"+sportTypesEn[chosen_type]);
+//        double[][] cnt = new double[4][31];
+//        for(Record record:records){
+//            SimpleDateFormat sdf = new SimpleDateFormat("d",Locale.ENGLISH);
+//            String dayStr = sdf.format(record.getStartTime());
+//            int day = Integer.parseInt(dayStr);
+//
+//            sdf = new SimpleDateFormat("MM",Locale.ENGLISH);
+//            dayStr = sdf.format(record.getStartTime());
+//            int month = Integer.parseInt(dayStr);
+//
+//            Log.d("DATE_TEST",record.getStartTime()+" "+day+" " +month);
+//            Log.d("DATE_TEST","chosen_month: "+chosen_month);
+//            if(month==chosen_month)cnt[getTypeIndex(record)][day-1]+=record.getDuration();
+//        }
+//        for(int i = 0;i<31;i++){
+//            Log.d("DATE_TEST",+(i+1)+" : "+cnt[chosen_type][i]);
+//        }
+//        return cnt[chosen_type];
+//    }
 
 
     //画次数和距离都是这个
@@ -467,6 +466,40 @@ public class MonthlyFragment extends Fragment {
             return 3;
         }
     }
+
+    private void reSet2Array(double[][] array){
+        for(int i = 0;i<array.length;i++){
+            for(int j = 0;j<array[0].length;j++){
+                array[i][j] = 0;
+            }
+        }
+    }
+
+    private void changePanelData(){
+        double sumDistance = 0;
+        int days = 0;
+        int sumDuration = 0;
+        for(int i = 0;i<31;i++){
+            sumDistance+=distance[chosen_type][i];
+            sumDuration+=duration[chosen_type][i];
+            if(distance[chosen_type][i]!=0)days++;
+        }
+        TextView headDistance = thisView.findViewById(R.id.headDistanceShow);
+        headDistance.setText(sumDistance+"km");
+        TextView textViewTotalDistance = thisView.findViewById(R.id.textViewTotalDistance);
+        textViewTotalDistance.setText(sumDistance+"km");
+
+        TextView textViewTotalDays = thisView.findViewById(R.id.textViewTotalDays);
+        textViewTotalDays.setText(days+"天");
+
+        TextView textViewTotalDuration = thisView.findViewById(R.id.textViewTotalDuration);
+        textViewTotalDuration.setText(Record.parse_duration(sumDuration));
+
+        TextView textViewTotalCalories = thisView.findViewById(R.id.textViewTotalCalories);
+        textViewTotalCalories.setText(Record.getCalorie((int) sumDistance)+"ka");
+
+    }
+
 
 
 
