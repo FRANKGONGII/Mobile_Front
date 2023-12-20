@@ -12,11 +12,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="16sp"
         android:textSize="30sp"
         android:textAlignment="center"
         android:textColor ="@color/white"
-        style="@style/CustomSpinnerStyle"/>
+        style="@style/BlueSpinnerStyle"/>
 
     <!-- 顶部右上角的月份选择器 -->
     <androidx.appcompat.widget.AppCompatSpinner
@@ -26,16 +26,73 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="16sp"
         android:textSize="30sp"
         android:textAlignment="center"
+        android:textColor ="@color/black"
         style="@style/CustomSpinnerStyle"/>
 
-    <lecho.lib.hellocharts.view.LineChartView
+    <!-- 公里数数据显示 -->
+    <LinearLayout
+        android:id="@+id/linearDistance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerSportType"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp">
+
+        <!-- 数字+km -->
+        <TextView
+            android:id="@+id/headDistanceShow"
+            style="@style/numberFontStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10km"
+            android:textSize="40sp"/>
+
+        <!-- 累计跑步 -->
+        <TextView
+            android:id="@+id/textViewRunning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="累计跑步"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+    <!-- 横向的三选框 -->
+    <RadioGroup
+        android:id="@+id/radioGroupOptions"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinnerMonth"
+        android:layout_alignParentEnd="true"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/radioButtonDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="里程" />
+
+        <RadioButton
+            android:id="@+id/radioButtonDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="次数" />
+
+        <RadioButton
+            android:id="@+id/radioButtonDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="时长" />
+    </RadioGroup>
+
+    <lecho.lib.hellocharts.view.ColumnChartView
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="300sp"
-        android:layout_below="@+id/spinnerSportType"/>
+        android:layout_below="@+id/linearDistance"/>
 
     <!-- 下面是一个4x2排列的八组数据 -->
     <GridLayout
@@ -52,8 +109,9 @@
             android:layout_height="0dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
+            android:gravity="center_vertical"
             android:text="累计公里"
-            android:textSize="18sp"/>
+            android:textSize="20sp"/>
 
         <!-- 累计天数 -->
         <TextView
@@ -61,36 +119,40 @@
             android:layout_height="0dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
+            android:gravity="center_vertical"
             android:text="累计天数"
-            android:textSize="18sp"/>
+            android:textSize="20sp"/>
+
 
         <TextView
             android:id="@+id/textViewTotalDistance"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            style="@style/numberFontStyle"
             android:text="10km"
-            android:textSize="18sp"/>
+            android:textSize="30sp" />
 
-
+        <!-- 累计时长 -->
         <TextView
             android:id="@+id/textViewTotalDays"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            style="@style/numberFontStyle"
             android:text="11"
-            android:textSize="18sp"/>
+            android:textSize="30sp" />
 
-        <!-- 累计时长 -->
         <TextView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
+            android:gravity="center_vertical"
             android:text="累计时长"
-            android:textSize="18sp"/>
+            android:textSize="20sp"/>
 
         <!-- 累计运动消耗 -->
         <TextView
@@ -99,26 +161,29 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:text="累计消耗"
-            android:textSize="18sp"/>
+            android:gravity="center_vertical"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/textViewTotalDuration"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            style="@style/numberFontStyle"
             android:text="00:10:11"
-            android:textSize="18sp"/>
+            android:textSize="30sp" />
 
 
         <TextView
             android:id="@+id/textViewTotalCalories"
+            style="@style/numberFontStyle"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
             android:text="500ka"
-            android:textSize="18sp"/>
+            android:textSize="30sp" />
     </GridLayout>
 
     <!-- 中间的统计图表 -->

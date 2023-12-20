@@ -71,6 +71,7 @@ public class LocalData implements DataService {
 
     @Override
     public List<Record> queryRecordByBoth(Record.RecordType type, Date startTime, Date endTime) {
+        Log.d("DATE_TEST",type.getStr()+" "+startTime+" "+endTime);
         if(type == null && startTime == null){
             return getAllRecords();
         }

@@ -154,7 +154,7 @@ public class Record implements Serializable {
         return String.format("%.1f",1.036*distance*WEIGHT);
     }
 
-    public String parse_duration(int duration){
+    public static String parse_duration(int duration){
         int h = duration / 3600;
         int min = duration % 3600 / 60;
         int s = duration % 60;
