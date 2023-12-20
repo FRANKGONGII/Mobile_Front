@@ -19,15 +19,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabGravity="fill"
-            app:tabMode="fixed"/>
+            app:tabMode="fixed"
+            android:isScrollContainer="false"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- ViewPager用于显示不同选项卡的内容 -->
-    <androidx.viewpager.widget.ViewPager
+    <com.example.myapplication.adapter.NonSwipeableViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+        />
 
     <FrameLayout
         android:id="@+id/fragmentContainer"

@@ -10,6 +10,7 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.myapplication.adapter.StatisticPageAdapter;
 import com.example.myapplication.fragment.MonthlyFragment;
