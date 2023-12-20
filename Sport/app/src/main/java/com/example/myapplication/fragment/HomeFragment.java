@@ -1,8 +1,12 @@
 package com.example.myapplication.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -25,6 +30,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -36,6 +43,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.StatisticActivity;
 import com.example.myapplication.adapter.SportDataAdapter;
 import com.example.myapplication.bean.Record;
+import com.example.myapplication.utils.PhotoUtil;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
 import com.google.android.material.appbar.AppBarLayout;
@@ -52,6 +60,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class HomeFragment extends Fragment {
 
@@ -64,12 +74,16 @@ public class HomeFragment extends Fragment {
     private DrawerLayout drawerLayout;
     private AppBarLayout appBarLayout;
     private Toolbar toolbar;
+    private CircleImageView avatarView;
+    private TextView nicknameView;
     private ImageButton editUserInfoBtn;
 
     private DataService dataService;
 
     private String[] sportType = {"跑步","骑行","游泳","快走"};
 
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
 
 
 
@@ -79,6 +93,8 @@ public class HomeFragment extends Fragment {
         activity = (AppCompatActivity) getActivity();
         dataService = DataServiceFactory.getInstance();
         window = activity.getWindow();
+        pref = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        editor = pref.edit();
     }
 
 
@@ -88,9 +104,11 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(layout, container, false);
         appBarLayout = view.findViewById(R.id.appBar);
         toolbar = view.findViewById(R.id.toolbar);
+        avatarView = view.findViewById(R.id.userAvatar);
+        nicknameView = view.findViewById(R.id.userNickname);
         editUserInfoBtn = view.findViewById((R.id.editUserInfoButton));
 
-        //        drawerLayout = view.findViewById(R.id.drawer_layout);
+
 
         ImageView imageView = view.findViewById(R.id.statistic);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -105,16 +123,13 @@ public class HomeFragment extends Fragment {
 
 
 
-        //设置系统状态栏为toolbar颜色
+        // 设置系统状态栏为toolbar颜色
         int toolbarColor = ((ColorDrawable)toolbar.getBackground()).getColor();
         setSysWinColor(toolbarColor);
 
-        //用toolbar取代actionBar
+        // 用toolbar取代actionBar
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-//        toolbar.setLogo(R.drawable.user_bkg_test);
-//        toolbar.setNavigationIcon(R.drawable.user_bkg_test);
 
         // AppBar向上滑动渐变透明，同时toolbar逐渐显现
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -131,8 +146,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-
-
         //开启隐藏菜单
 //        setOptMenu();
 
@@ -143,7 +156,7 @@ public class HomeFragment extends Fragment {
 //        ImageView imageView = view.findViewById(R.id.userBkgImg);
 //        imageView.setImageResource(R.drawable.user_bkg_test);
 
-        //设置编辑用户信息按钮
+        // 设置编辑用户信息按钮
         editUserInfoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,9 +165,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-
-        //初始化运动卡片
+        // 初始化运动卡片
         try {
             onSportCardInit();
         } catch (ParseException e) {
@@ -237,6 +248,18 @@ public class HomeFragment extends Fragment {
 
 
         return view;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        refreshUserCard();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -336,15 +359,18 @@ public class HomeFragment extends Fragment {
 //        mGridView.setLayoutParams(params);
     }
 
+    public void refreshUserCard() {
+        String avatarBase64Str = pref.getString("avatar", "");
+        String nickname = pref.getString("nickname", "Runner");
 
+        if (avatarBase64Str.equals("")) {
+            // 设置默认头像
+            avatarView.setImageResource(R.drawable.user_bkg_test);
+        } else {
+            // 转化为bitmap
+            avatarView.setImageBitmap(PhotoUtil.base64Str2Bitmap(avatarBase64Str));
+        }
 
-    public void onSportCardClick() {
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        nicknameView.setText(nickname);
     }
-
 }

@@ -5,6 +5,7 @@
     android:id="@+id/avatar_coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/shape_sheet_dialog_bg"
     tools:context=".EditUserInfoActivity">
 
     <FrameLayout
@@ -19,58 +20,59 @@
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"/>-->
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/choose_photo"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:clickable="true"
+                android:text="从相册选择"
+                android:textSize="18dp"
+                android:textColor="@color/black"/>
+
+            <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/choose_photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="16dp"
-                    android:clickable="true"
-                    android:text="从相册选择"
-                    android:textSize="18dp"
-                    android:textColor="@color/black"/>
+                app:dividerInsetStart="16dp"
+                app:dividerInsetEnd="16dp"/>
 
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:dividerInsetStart="16dp"
-                    app:dividerInsetEnd="16dp"/>
+            <TextView
+                android:id="@+id/choose_camera"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:clickable="true"
+                android:text="拍照"
+                android:textSize="18dp"
+                android:textColor="@color/black"/>
 
-                <TextView
-                    android:id="@+id/choose_camera"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="16dp"
-                    android:clickable="true"
-                    android:text="拍照"
-                    android:textSize="18dp"
-                    android:textColor="@color/black"/>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerInsetStart="16dp"
+                app:dividerInsetEnd="16dp" />
 
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:dividerInsetStart="16dp"
-                    app:dividerInsetEnd="16dp" />
-
-                <TextView
-                    android:id="@+id/choose_random"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="16dp"
-                    android:clickable="true"
-                    android:text="随机"
-                    android:textSize="18dp"
-                    android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/choose_random"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:clickable="true"
+                android:text="随机"
+                android:textSize="18dp"
+                android:textColor="@color/black"/>
 
 
-            </LinearLayout>
 
+        </LinearLayout>
 
     </FrameLayout>
 
