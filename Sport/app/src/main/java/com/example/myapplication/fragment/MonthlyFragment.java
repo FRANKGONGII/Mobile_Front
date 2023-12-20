@@ -28,6 +28,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -41,7 +42,11 @@ import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Column;
 import lecho.lib.hellocharts.model.ColumnChartData;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.SubcolumnValue;
+import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.ColumnChartView;
 
 public class MonthlyFragment extends Fragment {
@@ -354,9 +359,12 @@ public class MonthlyFragment extends Fragment {
         for (int i = 0; i < 31; ++i) {
             values = new ArrayList<SubcolumnValue>();
             //遍历每一列的每一个子列
+            boolean ifZero = true;
             for (int j = 0; j < 1; ++j) {
                 //为每一柱图添加颜色和数值
+
                 float f = (float) cnt[i];
+                if(f>0)ifZero = false;
                 values.add(new SubcolumnValue(f, columnColor));
             }
 
@@ -367,11 +375,17 @@ public class MonthlyFragment extends Fragment {
             //是否有数据标注
             column.setHasLabels(true);
             //是否是点击圆柱才显示数据标注
-            column.setHasLabelsOnlyForSelected(true);
+            if(ifZero)column.setHasLabelsOnlyForSelected(true);
+            else column.setHasLabelsOnlyForSelected(false);
+            Log.d("DATA_TEST",ifZero+"");
             columns.add(column);
             //给x轴坐标设置描述
             axisValues.add(new AxisValue(i).setLabel((i+1)+"日"));
         }
+
+
+
+
 
 
 
@@ -412,9 +426,11 @@ public class MonthlyFragment extends Fragment {
         for (int i = 0; i < 31; ++i) {
             values = new ArrayList<>();
             //遍历每一列的每一个子列
+            boolean ifZero = true;
             for (int j = 0; j < 1; ++j) {
                 //为每一柱图添加颜色和数值
                 float f = (float) cnt[i];
+                if(f>0)ifZero = false;
                 values.add(new SubcolumnValue(f, columnColor).setLabel(times[i]));
             }
             //创建Column对象
@@ -424,19 +440,20 @@ public class MonthlyFragment extends Fragment {
             //是否有数据标注
             column.setHasLabels(true);
             //是否是点击圆柱才显示数据标注
-            column.setHasLabelsOnlyForSelected(true);
+            if(ifZero)column.setHasLabelsOnlyForSelected(true);
+            else column.setHasLabelsOnlyForSelected(false);
+            Log.d("DATA_TEST",ifZero+"");
             columns.add(column);
             //给x轴坐标设置描述
             axisValues.add(new AxisValue(i).setLabel((i+1)+"日"));
         }
-
-
 
         ColumnChartData data = new ColumnChartData();
         data.setColumns(columns);
 
 
         ColumnChartView chart = thisView.findViewById(R.id.chart);
+
         //允许交互
         chart.setInteractive(true);
         //设置缩放的轴
