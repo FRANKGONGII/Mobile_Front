@@ -454,26 +454,13 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     String dateString = item.getContent();
 
                     if (!dateString.equals("")) {
-//                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-//                        Date date = null;
-//                        try {
-//                            date = format.parse(dateString);
-//                        } catch (ParseException e) {
-//                            throw new RuntimeException(e);
-//                        }
-//                        Calendar calendar = Calendar.getInstance();
-//                        calendar.setTime(date);
-
                         Calendar calendar = Calendar.getInstance();
                         calendar.set(Calendar.YEAR, Integer.parseInt(dateString.substring(0, 4)));
-                        calendar.set(Calendar.MONTH, Integer.parseInt(dateString.substring(5, 7)));
+                        calendar.set(Calendar.MONTH, Integer.parseInt(dateString.substring(5, 7))-1);
                         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateString.substring(8, 10)));
                         long timeStamp = calendar.getTimeInMillis();
                         builder.setSelection(timeStamp);
                     }
-
-
-
 
 
 
