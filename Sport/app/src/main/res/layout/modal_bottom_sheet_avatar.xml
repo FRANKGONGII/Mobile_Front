@@ -26,49 +26,101 @@
             android:orientation="vertical">
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:gravity="center"
+                android:text="新头像来自"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+<!--            <TextView-->
+<!--                android:id="@+id/choose_photo"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:clickable="true"-->
+<!--                android:text="从相册选择"-->
+<!--                android:textSize="18dp"-->
+<!--                android:textColor="@color/black"/>-->
+
+            <RadioButton
                 android:id="@+id/choose_photo"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:gravity="center_vertical"
                 android:layout_marginStart="16dp"
-                android:clickable="true"
-                android:text="从相册选择"
-                android:textSize="18dp"
-                android:textColor="@color/black"/>
+                android:layout_marginEnd="16dp"
+                android:layoutDirection="rtl"
+                android:textDirection="ltr"
+                android:drawableLeft="@drawable/baseline_photo_24"
+                android:drawablePadding="10dp"
+                android:text="相册"
+                android:textSize="18dp"/>
 
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:dividerInsetStart="16dp"
-                app:dividerInsetEnd="16dp"/>
+<!--            <com.google.android.material.divider.MaterialDivider-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:dividerInsetStart="16dp"-->
+<!--                app:dividerInsetEnd="16dp"/>-->
 
-            <TextView
+<!--            <TextView-->
+<!--                android:id="@+id/choose_camera"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:clickable="true"-->
+<!--                android:text="拍照"-->
+<!--                android:textSize="18dp"-->
+<!--                android:textColor="@color/black"/>-->
+
+            <RadioButton
                 android:id="@+id/choose_camera"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:gravity="center_vertical"
                 android:layout_marginStart="16dp"
-                android:clickable="true"
+                android:layout_marginEnd="16dp"
+                android:layoutDirection="rtl"
+                android:textDirection="ltr"
+                android:drawableLeft="@drawable/baseline_photo_camera_24"
+                android:drawablePadding="10dp"
                 android:text="拍照"
-                android:textSize="18dp"
-                android:textColor="@color/black"/>
+                android:textSize="18dp"/>
 
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:dividerInsetStart="16dp"
-                app:dividerInsetEnd="16dp" />
+<!--            <com.google.android.material.divider.MaterialDivider-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:dividerInsetStart="16dp"-->
+<!--                app:dividerInsetEnd="16dp" />-->
 
-            <TextView
+<!--            <TextView-->
+<!--                android:id="@+id/choose_random"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:clickable="true"-->
+<!--                android:text="随机"-->
+<!--                android:textSize="18dp"-->
+<!--                android:textColor="@color/black"/>-->
+
+            <RadioButton
                 android:id="@+id/choose_random"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:gravity="center_vertical"
                 android:layout_marginStart="16dp"
-                android:clickable="true"
+                android:layout_marginEnd="16dp"
+                android:layoutDirection="rtl"
+                android:textDirection="ltr"
+                android:drawableLeft="@drawable/baseline_account_circle_24"
+                android:drawablePadding="10dp"
                 android:text="随机"
-                android:textSize="18dp"
-                android:textColor="@color/black"/>
+                android:textSize="18dp"/>
 
 
 
