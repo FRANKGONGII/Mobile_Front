@@ -277,7 +277,7 @@ public class HomeFragment extends Fragment {
 
         if (avatarBase64Str.equals("")) {
             // 设置默认头像
-            avatarView.setImageResource(R.drawable.user_bkg_test);
+            avatarView.setImageResource(R.drawable.baseline_avatar_default1);
         } else {
             // 转化为bitmap
             avatarView.setImageBitmap(PhotoUtil.base64Str2Bitmap(avatarBase64Str));

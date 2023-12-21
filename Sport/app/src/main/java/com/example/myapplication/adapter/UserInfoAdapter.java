@@ -174,13 +174,21 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 avatar.setImageBitmap(PhotoUtil.base64Str2Bitmap(item.getContent()));
             } else {
                 // 设置默认头像
-                avatar.setImageResource(R.drawable.user_bkg_test);
+                avatar.setImageResource(R.drawable.baseline_avatar_default1);
             }
 
             this.item = item;
         }
 
         public void updateData(String filePath) {
+            // 随机头像
+            if (filePath.equals("")) {
+                avatar.setImageResource(R.drawable.baseline_avatar_default1);
+                item.setContent("");
+                ((EditUserInfoActivity) activity).updateLocalUserInfo(UserInfoItem.UserInfoType.AVATAR, "");
+                return;
+            }
+
             Bitmap bitmap = BitmapFactory.decodeFile(filePath);
             avatar.setImageBitmap(bitmap);
 
