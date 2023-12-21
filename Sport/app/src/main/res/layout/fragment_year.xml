@@ -1,0 +1,245 @@
+<!-- fragment_monthly.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F5F5F5">
+
+    <!-- 顶部左上角的运动类型选择器 -->
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinnerSportType3"
+        android:layout_width="70sp"
+        android:layout_height="30sp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10sp"
+        android:textAlignment="center"
+        android:layout_marginStart="10dp"
+        android:textColor ="@color/white"
+        style="@style/BlueSpinnerStyle"/>
+
+    <!-- 顶部右上角的月份选择器 -->
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinnerYear"
+        android:layout_width="70sp"
+        android:layout_height="30sp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10sp"
+        android:layout_marginEnd="10dp"
+        android:textAlignment="center"
+        android:textColor ="@color/black"
+        style="@style/CustomSpinnerStyle"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/year_card1"
+        android:layout_below="@id/spinnerSportType3"
+        app:cardCornerRadius="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/year_con1">
+
+            <!-- 公里数数据显示 -->
+            <LinearLayout
+                android:id="@+id/linearDistance3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="@id/year_con1"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="16sp">
+
+                <!-- 数字+km -->
+                <TextView
+                    android:id="@+id/headDistanceShow3"
+                    style="@style/numberFontStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10km"
+                    android:textSize="30sp"/>
+
+                <!-- 累计跑步 -->
+                <TextView
+                    android:id="@+id/textViewRunning3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="累计跑步" />
+            </LinearLayout>
+
+            <!-- 横向的三选框 -->
+            <RadioGroup
+                android:id="@+id/radioGroupOptions3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="16sp"
+                android:layout_marginEnd="10sp">
+
+                <RadioButton
+                    android:id="@+id/radioButtonDistance3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="里程" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonDays3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="次数" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonDuration3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="时长" />
+            </RadioGroup>
+
+            <lecho.lib.hellocharts.view.ColumnChartView
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="300sp"
+                app:layout_constraintTop_toBottomOf="@id/linearDistance3"
+                app:layout_goneMarginLeft="10dp"
+                app:layout_goneMarginRight="10dp"
+                android:layout_below="@+id/linearDistance3"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@id/year_card1"
+        app:cardCornerRadius="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
+
+
+        <!-- 下面是一个4x2排列的八组数据 -->
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="4">
+
+            <!-- 累计公里数 -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:gravity="center_vertical"
+                android:text="累计公里"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="15dp" />
+
+            <!-- 累计天数 -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:gravity="center_vertical"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="累计天数" />
+
+
+            <TextView
+                android:id="@+id/textViewTotalDistance3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                style="@style/numberFontStyle"
+                android:text="10km"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textSize="15sp" />
+
+            <!-- 累计时长 -->
+            <TextView
+                android:id="@+id/textViewTotalDays3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_rowWeight="1"
+                android:paddingLeft="15dp"
+                android:layout_columnWeight="1"
+                style="@style/numberFontStyle"
+                android:text="11"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:gravity="center_vertical"
+                android:text="累计时长"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="15dp" />
+
+            <!-- 累计运动消耗 -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:text="累计消耗"
+                android:paddingLeft="15dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/textViewTotalDuration3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                style="@style/numberFontStyle"
+                android:paddingLeft="15dp"
+                android:text="00:10:11"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/textViewTotalCalories3"
+                style="@style/numberFontStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_rowWeight="1"
+                android:paddingLeft="15dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:layout_columnWeight="1"
+                android:text="500ka"
+                android:textSize="15sp" />
+        </GridLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- 中间的统计图表 -->
+    <!-- 这里添加你的统计图表控件 -->
+
+</RelativeLayout>

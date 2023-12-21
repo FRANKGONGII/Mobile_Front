@@ -239,7 +239,7 @@ public class MonthlyFragment extends Fragment {
 
     private Date get_this_month() {
         Log.d("DATE_TEST","chosen_month: "+chosen_month);
-        if(chosen_month == -1) return null;
+        if(chosen_month <= 0) return null;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
@@ -303,49 +303,6 @@ public class MonthlyFragment extends Fragment {
 //        }
         return;
     }
-
-//    private double[] drawTableByCnt(List<Record> records){
-//        Log.d("DATE_TEST","draw by type:"+sportTypesEn[chosen_type]);
-//        double[][] cnt = new double[4][31];
-//        for(Record record:records){
-//            SimpleDateFormat sdf = new SimpleDateFormat("d",Locale.ENGLISH);
-//            String dayStr = sdf.format(record.getStartTime());
-//            int day = Integer.parseInt(dayStr);
-//
-//            sdf = new SimpleDateFormat("MM",Locale.ENGLISH);
-//            dayStr = sdf.format(record.getStartTime());
-//            int month = Integer.parseInt(dayStr);
-//            Log.d("DATE_TEST",record.getStartTime()+" "+day+" " +month);
-//            Log.d("DATE_TEST","chosen_month: "+chosen_month);
-//            if(month==chosen_month)cnt[getTypeIndex(record)][day-1]++;
-//        }
-//        for(int i = 0;i<31;i++){
-//            Log.d("DATE_TEST",+(i+1)+" : "+cnt[chosen_type][i]);
-//        }
-//        return cnt[chosen_type];
-//    }
-
-//    private double[] drawTableByTime(List<Record> records){
-//        Log.d("DATE_TEST","draw by type:"+sportTypesEn[chosen_type]);
-//        double[][] cnt = new double[4][31];
-//        for(Record record:records){
-//            SimpleDateFormat sdf = new SimpleDateFormat("d",Locale.ENGLISH);
-//            String dayStr = sdf.format(record.getStartTime());
-//            int day = Integer.parseInt(dayStr);
-//
-//            sdf = new SimpleDateFormat("MM",Locale.ENGLISH);
-//            dayStr = sdf.format(record.getStartTime());
-//            int month = Integer.parseInt(dayStr);
-//
-//            Log.d("DATE_TEST",record.getStartTime()+" "+day+" " +month);
-//            Log.d("DATE_TEST","chosen_month: "+chosen_month);
-//            if(month==chosen_month)cnt[getTypeIndex(record)][day-1]+=record.getDuration();
-//        }
-//        for(int i = 0;i<31;i++){
-//            Log.d("DATE_TEST",+(i+1)+" : "+cnt[chosen_type][i]);
-//        }
-//        return cnt[chosen_type];
-//    }
 
 
     //画次数和距离都是这个
