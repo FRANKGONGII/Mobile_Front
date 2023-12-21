@@ -26,6 +26,35 @@
             android:orientation="vertical">
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:gravity="center"
+                android:text="新头像来自"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                app:dividerInsetStart="16dp"
+                app:dividerInsetEnd="16dp"/>
+
+<!--            <RadioGroup-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+<!--                <RadioButton-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
+
+<!--                </RadioButton>-->
+
+<!--                -->
+
+<!--            </RadioGroup>-->
+
+
+            <TextView
                 android:id="@+id/choose_photo"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -36,11 +65,11 @@
                 android:textSize="18dp"
                 android:textColor="@color/black"/>
 
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:dividerInsetStart="16dp"
-                app:dividerInsetEnd="16dp"/>
+<!--            <com.google.android.material.divider.MaterialDivider-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:dividerInsetStart="16dp"-->
+<!--                app:dividerInsetEnd="16dp"/>-->
 
             <TextView
                 android:id="@+id/choose_camera"
@@ -53,11 +82,11 @@
                 android:textSize="18dp"
                 android:textColor="@color/black"/>
 
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:dividerInsetStart="16dp"
-                app:dividerInsetEnd="16dp" />
+<!--            <com.google.android.material.divider.MaterialDivider-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:dividerInsetStart="16dp"-->
+<!--                app:dividerInsetEnd="16dp" />-->
 
             <TextView
                 android:id="@+id/choose_random"
