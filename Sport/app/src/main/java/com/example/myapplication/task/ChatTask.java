@@ -43,7 +43,7 @@ public class ChatTask extends AsyncTask<Object, Void, String> {
         String res = pyChatObject.callAttr("conversation",roles, prompts).toString().trim();
         ChatBean response;
         if(res.equals("Internet Error")){
-            response = new ChatBean(1, "网络错误，请稍后再试");
+            response = new ChatBean(1, "网络错误，请检查网络连接，并退出重试");
             promptList.remove(promptList.size()-1);
             roleList.remove(roleList.size()-1);
         }

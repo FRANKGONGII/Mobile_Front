@@ -3,12 +3,6 @@ package com.example.myapplication.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 描述: 账号密码
- * 作者: james
- * 日期: 2019/2/25 19:59
- * 类名: UserAccount
- */
 public class UserAccount{
 
     public UserAccount(String username,String phone,String pwd){
@@ -18,7 +12,7 @@ public class UserAccount{
         this.sex = "male";
     }
 
-    private int id;
+    public static int id;
     //用户名
     private String username;
 

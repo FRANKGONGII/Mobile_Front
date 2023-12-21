@@ -47,7 +47,7 @@ public class LongClickProgressView extends View {
     private Handler mHandler;  //计时用的handler
     private Runnable mRunnable;  //长按动作的执行
     private Runnable mCancelRunnable;  //取消动作的执行
-    private static final int FINISH_TIME = 100;
+    private static final int FINISH_TIME = 200;
 
 
 

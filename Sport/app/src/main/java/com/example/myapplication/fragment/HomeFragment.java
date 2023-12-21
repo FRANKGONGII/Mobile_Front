@@ -1,9 +1,15 @@
 package com.example.myapplication.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,9 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -22,26 +30,40 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.EditUserInfoActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.SportCardAdapter;
+import com.example.myapplication.StatisticActivity;
 import com.example.myapplication.adapter.SportDataAdapter;
 import com.example.myapplication.bean.Record;
+import com.example.myapplication.data.DataService;
+import com.example.myapplication.data.DataServiceFactory;
+import com.example.myapplication.data.LocalData;
+import com.example.myapplication.utils.PhotoUtil;
+import com.example.myapplication.data.DataService;
+import com.example.myapplication.data.DataServiceFactory;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.divider.MaterialDividerItemDecoration;
+import com.jjoe64.graphview.DefaultLabelFormatter;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.ValueDependentColor;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class HomeFragment extends Fragment {
@@ -55,8 +77,14 @@ public class HomeFragment extends Fragment {
     private DrawerLayout drawerLayout;
     private AppBarLayout appBarLayout;
     private Toolbar toolbar;
+    private CircleImageView avatarView;
+    private TextView nicknameView;
     private ImageButton editUserInfoBtn;
+    private String[] sportType = {"跑步","骑行","游泳","快走"};
 
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
+    private DataService dataService;
 
 
 
@@ -65,6 +93,9 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         activity = (AppCompatActivity) getActivity();
         window = activity.getWindow();
+        pref = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        editor = pref.edit();
+        dataService = DataServiceFactory.getInstance();
     }
 
 
@@ -74,21 +105,32 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(layout, container, false);
         appBarLayout = view.findViewById(R.id.appBar);
         toolbar = view.findViewById(R.id.toolbar);
+        avatarView = view.findViewById(R.id.userAvatar);
+        nicknameView = view.findViewById(R.id.userNickname);
         editUserInfoBtn = view.findViewById((R.id.editUserInfoButton));
 
-        //        drawerLayout = view.findViewById(R.id.drawer_layout);
 
 
-        //设置系统状态栏为toolbar颜色
+        ImageView imageView = view.findViewById(R.id.statistic);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(getActivity(), StatisticActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
+        // 设置系统状态栏为toolbar颜色
         int toolbarColor = ((ColorDrawable)toolbar.getBackground()).getColor();
         setSysWinColor(toolbarColor);
 
-        //用toolbar取代actionBar
+        // 用toolbar取代actionBar
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-//        toolbar.setLogo(R.drawable.user_bkg_test);
-//        toolbar.setNavigationIcon(R.drawable.user_bkg_test);
 
         // AppBar向上滑动渐变透明，同时toolbar逐渐显现
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -105,8 +147,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-
-
         //开启隐藏菜单
 //        setOptMenu();
 
@@ -117,7 +157,7 @@ public class HomeFragment extends Fragment {
 //        ImageView imageView = view.findViewById(R.id.userBkgImg);
 //        imageView.setImageResource(R.drawable.user_bkg_test);
 
-        //设置编辑用户信息按钮
+        // 设置编辑用户信息按钮
         editUserInfoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,17 +166,101 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-
-        //初始化运动卡片
+        // 初始化运动卡片
         try {
             onSportCardInit();
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
 
+        List<Record> records = dataService.getAllRecords();
+        if(records==null){
+            Toast.makeText(getActivity(), "获取历史运动记录失败", Toast.LENGTH_SHORT).show();
+        }else{
+            //设置图表
+//            GraphView graph = (GraphView) view.findViewById(R.id.graph);
+//           DataPoint[] dataPointArray = new DataPoint[4];//默认按照类型显示
+//            int[] cnt = new int[4];
+//            for(Record record:records){
+//                Record.RecordType recordType = record.getRecordType();
+//                if(recordType== Record.RecordType.RUNNING){
+//                    cnt[0]++;
+//                }else if(recordType== Record.RecordType.RIDING){
+//                    cnt[1]++;
+//                }else if(recordType== Record.RecordType.SWIMMING){
+//                    cnt[2]++;
+//                }else if(recordType== Record.RecordType.WALKING){
+//                    cnt[3]++;
+//                }
+//            }
+////
+//            for(int i = 0;i<4;i++){
+//                dataPointArray[i] = new DataPoint(i,cnt[i]);
+//            }
+////
+////            BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(dataPointArray);
+////            graph.addSeries(series);
+//
+//
+//
+//            GraphView graph = (GraphView) view.findViewById(R.id.graph);
+//            BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPointArray);
+//            graph.addSeries(series);
+//
+//
+//            series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+//                @Override
+//                public int get(DataPoint data) {
+//                    return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
+//                }
+//            });
+//
+//            series.setSpacing(50);
+//
+//
+//            //series.setDrawValuesOnTop(true);
+//            //series.setValuesOnTopColor(Color.RED);
+//
+//
+//            graph.getGridLabelRenderer().setNumHorizontalLabels(4);
+//
+//
+//
+//            graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+//                @Override
+//                public String formatLabel(double value, boolean isValueX) {
+//                    if (isValueX) {
+//                        Log.d("NUM_TEST",value+"");
+//                       if(0<=value&&value<=3){
+//                           return sportType[(int) value];
+//                       }
+//                        return super.formatLabel(value, isValueX);
+//
+//                    } else {
+//                        // show currency for y values
+//                        return super.formatLabel(value, isValueX)+"次";
+//                    }
+//
+//                }
+//            });
+        }
+
+
+
 
         return view;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        refreshUserCard();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -184,27 +308,38 @@ public class HomeFragment extends Fragment {
 //        });
 //    }
 
+    private RecyclerView recyclerView;
+
     public void onSportCardInit() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        Record runningRecord = new Record(Record.RecordType.RUNNING, sdf.parse("2021-10-01 08:00:00"), sdf.parse("2021-10-01 08:30:00"), 5.2, 1800);
-        Record ridingRecord = new Record(Record.RecordType.RIDING, sdf.parse("2021-10-02 10:00:00"), sdf.parse("2021-10-02 11:30:00"), 12.7, 5400);
-        Record walkingRecord = new Record(Record.RecordType.WALKING, sdf.parse("2021-10-03 15:30:00"), sdf.parse("2021-10-03 16:00:00"), 3.1, 1800);
-        Record swimmingRecord = new Record(Record.RecordType.SWIMMING, sdf.parse("2021-10-04 18:00:00"), sdf.parse("2021-10-04 19:30:00"), 0, 5400);
+
+        // 从数据库加载最近一次运动记录
+
+        List<Record> runningRecords = dataService.queryRecordByBoth(Record.RecordType.RUNNING,null,null);
+        List<Record> ridingRecords = dataService.queryRecordByBoth(Record.RecordType.RIDING, null, null);
+        List<Record> walkingRecords = dataService.queryRecordByBoth(Record.RecordType.WALKING, null, null);
+        List<Record> swimmingRecords = dataService.queryRecordByBoth(Record.RecordType.SWIMMING, null, null);
+
+        Record runningRecord = runningRecords.isEmpty() ? new Record(Record.RecordType.RUNNING, null, null, 0.0, 0) : runningRecords.get(runningRecords.size()-1);
+        Record ridingRecord = ridingRecords.isEmpty() ? new Record(Record.RecordType.RIDING, null, null, 0.0, 0) : ridingRecords.get(ridingRecords.size()-1);
+        Record walkingRecord = walkingRecords.isEmpty() ? new Record(Record.RecordType.WALKING, null, null, 0.0, 0) : walkingRecords.get(walkingRecords.size()-1);
+        Record swimmingRecord = swimmingRecords.isEmpty() ? new Record(Record.RecordType.SWIMMING, null, null, 0.0, 0) :swimmingRecords.get(swimmingRecords.size()-1);
+
+//        Record runningRecord = new Record(Record.RecordType.RUNNING, sdf.parse("2021-10-01 08:00:00"), sdf.parse("2021-10-01 08:30:00"), 5.2, 1800);
+//        Record ridingRecord = new Record(Record.RecordType.RIDING, sdf.parse("2021-10-02 10:00:00"), sdf.parse("2021-10-02 11:30:00"), 12.7, 5400);
+//        Record walkingRecord = new Record(Record.RecordType.WALKING, sdf.parse("2021-10-03 15:30:00"), sdf.parse("2021-10-03 16:00:00"), 3.1, 1800);
+//        Record swimmingRecord = new Record(Record.RecordType.SWIMMING, sdf.parse("2021-10-04 18:00:00"), sdf.parse("2021-10-04 19:30:00"), 0, 5400);
         List<Record> recordList = new ArrayList<>();
         recordList.add(runningRecord);
         recordList.add(ridingRecord);
         recordList.add(walkingRecord);
         recordList.add(swimmingRecord);
 
-
-
-
-
+        
         //利用RecyclerView加载
         SportDataAdapter adapter = new SportDataAdapter(recordList);
-        RecyclerView recyclerView = view.findViewById(R.id.sportCardRecyclerView);
-
+        recyclerView = view.findViewById(R.id.sportCardRecyclerView);
         int columnCount = 2; // 每行的列数
         int itemCount = adapter.getItemCount(); // item 的数量
         int rowCount = (int) Math.ceil((double) itemCount / columnCount); // 计算行数
@@ -237,5 +372,18 @@ public class HomeFragment extends Fragment {
 //        mGridView.setLayoutParams(params);
     }
 
+    public void refreshUserCard() {
+        String avatarBase64Str = pref.getString("avatar", "");
+        String nickname = pref.getString("nickname", "Runner");
 
+        if (avatarBase64Str.equals("")) {
+            // 设置默认头像
+            avatarView.setImageResource(R.drawable.baseline_avatar_default1);
+        } else {
+            // 转化为bitmap
+            avatarView.setImageBitmap(PhotoUtil.base64Str2Bitmap(avatarBase64Str));
+        }
+
+        nicknameView.setText(nickname);
+    }
 }

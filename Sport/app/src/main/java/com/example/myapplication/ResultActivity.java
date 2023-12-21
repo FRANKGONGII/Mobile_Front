@@ -3,14 +3,18 @@ package com.example.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.AMapUtils;
@@ -25,8 +29,17 @@ import com.amap.api.maps2d.model.PolylineOptions;
 import com.example.myapplication.bean.Record;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IFillFormatter;
+import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.Utils;
 import com.hjq.toast.ToastUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResultActivity extends AppCompatActivity {
@@ -37,6 +50,97 @@ public class ResultActivity extends AppCompatActivity {
     TextView tvSpeed;
     TextView tvDistribution;
     TextView tvCalorie;
+    Button chat_btn;
+
+
+//    private LineChart chart;
+//
+//
+//
+//
+//
+//    private void setData(List<Record> records) {
+//
+//        ArrayList<Entry> values = new ArrayList<>();
+//        int count = records.size();
+//
+//        for (int i = 0; i < count; i++) {
+//
+//            float val = (float) records.get(i).getDistance();
+//            //这里的star可以替换为你自己项目的图标
+//            values.add(new Entry(i, val));
+//        }
+//
+//        LineDataSet set1;
+//
+//        if (chart.getData() != null &&
+//                chart.getData().getDataSetCount() > 0) {
+//            set1 = (LineDataSet) chart.getData().getDataSetByIndex(0);
+//            set1.setValues(values);
+//            set1.notifyDataSetChanged();
+//            chart.getData().notifyDataChanged();
+//            chart.notifyDataSetChanged();
+//        } else {
+//            // create a dataset and give it a type
+//            set1 = new LineDataSet(values, "DataSet 1");
+//
+//            set1.setDrawIcons(false);
+//
+//            // draw dashed line
+//            set1.enableDashedLine(10f, 5f, 0f);
+//
+//            // black lines and points
+//            set1.setColor(Color.BLACK);
+//            set1.setCircleColor(Color.BLACK);
+//
+//            // line thickness and point size
+//            set1.setLineWidth(1f);
+//            set1.setCircleRadius(3f);
+//
+//            // draw points as solid circles
+//            set1.setDrawCircleHole(false);
+//
+//            // customize legend entry
+//            set1.setFormLineWidth(1f);
+//            set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+//            set1.setFormSize(15.f);
+//
+//            // text size of values
+//            set1.setValueTextSize(9f);
+//
+//            // draw selection line as dashed
+//            set1.enableDashedHighlightLine(10f, 5f, 0f);
+//
+//            // set the filled area
+//            set1.setDrawFilled(true);
+//            set1.setFillFormatter(new IFillFormatter() {
+//                @Override
+//                public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
+//                    return chart.getAxisLeft().getAxisMinimum();
+//                }
+//            });
+//
+//            // set color of filled area
+//            if (Utils.getSDKInt() >= 18) {
+//                // drawables only supported on api level 18 and above
+//
+//                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.baseline_male_blue_24);
+//                set1.setFillDrawable(drawable);
+//            } else {
+//                set1.setFillColor(Color.BLACK);
+//            }
+//
+//            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+//            dataSets.add(set1); // add the data sets
+//
+//            // create a data object with the data sets
+//            LineData data = new LineData(dataSets);
+//
+//            // set data
+//            chart.setData(data);
+//        }
+//    }
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +152,18 @@ public class ResultActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        int id = intent.getIntExtra("passId",-1);
+
+        long id = intent.getLongExtra("passId",-1);
+        Log.d("URL_TEST","need id:"+id);
         String act = intent.getStringExtra("formActivity");
         Log.d("JUMP_TEST","need id:"+id+" from: "+act);
+
         if(id==-1) {
             ToastUtils.show("获取运动数据错误");
         }
+
+
+        //setData(dataService.getAllRecords());
 
 
         ImageView back = findViewById(R.id.re_back);
@@ -84,61 +194,75 @@ public class ResultActivity extends AppCompatActivity {
         //Log.d("ID_TEST", list.get(0).latitude+" "+list.get(0).longitude);
         Log.d("ID_TEST",String.valueOf(record.getId()));
 
-        MapView mapView = (MapView) findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);// 此方法必须重写
-        aMap = mapView.getMap();
-
-        tvDistance = findViewById(R.id.tvDistance);
-        tvDuration = findViewById(R.id.tvDuration);
-        tvSpeed = findViewById(R.id.tvSpeed);
-        tvDistribution = findViewById(R.id.tvDistribution);
-        tvCalorie = findViewById(R.id.tvCalorie);
-
-        tvDistance.setText(record.getDistanceByStr());
-        tvDuration.setText(record.getDurationByStr());
-        tvSpeed.setText(record.getSpeed1());
-        tvDistribution.setText(record.getSpeed2());
-        tvCalorie.setText(record.getCalorie());
+        //TODO:图表测试
 
 
-
-        if(list!=null){
-            CameraPosition cameraPosition = new CameraPosition(list.get(0), 64, 0, 0);
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-            aMap.moveCamera(cameraUpdate);
-
-            for(int i = 3;i<list.size();i++){
-                LatLng l1 = list.get(i-1);
-                LatLng l2 = list.get(i);
-                double speed = AMapUtils.calculateLineDistance(l1,l2);
-                speed = speed*3600/1000;
-
-                PolylineOptions options = new PolylineOptions();
-                options.add(l1);
-                options.add(l2);
-
-                if(speed>6) {
-                    aMap.addPolyline(options.width(10).color(Color.argb(255, 204, 0, 51)));
-                } else if(speed<=6&&speed>=4){
-                    aMap.addPolyline(options.width(10).color(Color.argb(255, 255, 255, 0)));
-                }else{
-                    aMap.addPolyline(options.width(10).color(Color.argb(255, 36, 164, 255)));
-                }
-            }
-
-
-            Marker marker1 = aMap.addMarker(new MarkerOptions().
-                    position(list.get(2)).title("北京").snippet("DefaultMarker"));
-            Marker marker2 = aMap.addMarker(new MarkerOptions().
-                    position(list.get(list.size()-1)).title("北京").snippet("DefaultMarker"));
-        }
-
-
-
-
-
-
-
+         //TODO:暂时不用这个，我想要测试图表
+//        MapView mapView = (MapView) findViewById(R.id.mapView);
+//        mapView.onCreate(savedInstanceState);// 此方法必须重写
+//        aMap = mapView.getMap();
+//
+//        tvDistance = findViewById(R.id.tvDistance);
+//        tvDuration = findViewById(R.id.tvDuration);
+//        tvSpeed = findViewById(R.id.tvSpeed);
+//        tvDistribution = findViewById(R.id.tvDistribution);
+//        tvCalorie = findViewById(R.id.tvCalorie);
+//        chat_btn = findViewById(R.id.btn_chat);
+//
+//        tvDistance.setText(record.getDistanceByStr());
+//        tvDuration.setText(record.getDurationByStr());
+//        tvSpeed.setText(record.getSpeed1());
+//        tvDistribution.setText(record.getSpeed2());
+//        tvCalorie.setText(record.getCalorie());
+//
+//        String type_name = record.getRecordTypeByStr();
+//
+//        chat_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(view.getContext(), ChatActivity.class);
+//                intent.putExtra("TaskType", "EvalRecord");
+//                String data = "我进行了一次" + type_name + "运动，总距离为" +
+//                        tvDistance.getText() + "公里， 用时" + tvDuration.getText() +
+//                        "。请你根据上述数据对我本次运动的表现给出意见。";
+//
+//                intent.putExtra("RecordData", data);
+//
+//                view.getContext().startActivity(intent);
+//            }
+//        });
+//
+//
+//
+//        if(list!=null){
+//            CameraPosition cameraPosition = new CameraPosition(list.get(0), 64, 0, 0);
+//            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+//            aMap.moveCamera(cameraUpdate);
+//
+//            for(int i = 3;i<list.size();i++){
+//                LatLng l1 = list.get(i-1);
+//                LatLng l2 = list.get(i);
+//                double speed = AMapUtils.calculateLineDistance(l1,l2);
+//                speed = speed*3600/1000;
+//
+//                PolylineOptions options = new PolylineOptions();
+//                options.add(l1);
+//                options.add(l2);
+//
+//                if(speed>6) {
+//                    aMap.addPolyline(options.width(10).color(Color.argb(255, 204, 0, 51)));
+//                } else if(speed<=6&&speed>=4){
+//                    aMap.addPolyline(options.width(10).color(Color.argb(255, 255, 255, 0)));
+//                }else{
+//                    aMap.addPolyline(options.width(10).color(Color.argb(255, 36, 164, 255)));
+//                }
+//            }
+//
+//            Marker marker1 = aMap.addMarker(new MarkerOptions().
+//                    position(list.get(2)).title("北京").snippet("DefaultMarker"));
+//            Marker marker2 = aMap.addMarker(new MarkerOptions().
+//                    position(list.get(list.size()-1)).title("北京").snippet("DefaultMarker"));
+//        }
 
 
     }

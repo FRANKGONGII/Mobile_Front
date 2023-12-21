@@ -4,52 +4,44 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.provider.ContactsContract;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.EditUserInfoActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.fragment.ModalBottomSheet;
 import com.example.myapplication.user.UserInfoItem;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.example.myapplication.utils.PhotoUtil;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.w3c.dom.Text;
-
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -80,8 +72,6 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-    public AvatarViewHolder avatarViewHolder;
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -91,17 +81,16 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (UserInfoItem.UserInfoType.values()[viewType]) {
             case AVATAR:
                 view = inflater.inflate(R.layout.item_userinfo_image, parent, false);
-                avatarViewHolder = new AvatarViewHolder(view);
-
-
-                Log.d("AVA", "onCreateViewHolder: ");
-
+                AvatarViewHolder avatarViewHolder = new AvatarViewHolder(view);
                 ((EditUserInfoActivity) activity).setAvatarViewHolder(avatarViewHolder);
-                ((EditUserInfoActivity) activity).onUserInfoEdit();
+                ((EditUserInfoActivity) activity).onAvatarClick();
                 return avatarViewHolder;
             case NICKNAME:
                 view = inflater.inflate(R.layout.item_userinfo_text, parent, false);
-                return new NicknameViewHolder(view);
+                NicknameViewHolder nicknameViewHolder = new NicknameViewHolder(view);
+//                ((EditUserInfoActivity) activity).setNicknameViewHolder(nicknameViewHolder);
+//                ((EditUserInfoActivity) activity).onNicknameEdit();
+                return nicknameViewHolder;
             case GENDER:
                 view = inflater.inflate(R.layout.item_userinfo_text, parent, false);
                 return new GenderViewHolder(view);
@@ -114,8 +103,6 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             default:
                 return null;
         }
-
-
     }
 
     @Override
@@ -144,6 +131,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
+
     @Override
     public int getItemViewType(int position) {
         return itemList.get(position).getType().ordinal();
@@ -157,6 +145,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class AvatarViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private CircleImageView avatar;
+        private UserInfoItem item;
 
         public AvatarViewHolder(View itemView) {
             super(itemView);
@@ -180,19 +169,40 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public void bindData(UserInfoItem item) {
             // 设置数据
             title.setText(item.getType().getStr());
-            //头像暂时设置默认，后面要考虑加载不同类型的image资源
-            avatar.setImageResource(R.drawable.user_bkg_test);
+            // 读取base64Str转为bitmap设置头像
+            if (!item.getContent().equals("")) {
+                avatar.setImageBitmap(PhotoUtil.base64Str2Bitmap(item.getContent()));
+            } else {
+                // 设置默认头像
+                avatar.setImageResource(R.drawable.baseline_avatar_default1);
+            }
+
+            this.item = item;
         }
 
-        public void updateData(Uri uri) {
-            avatar.setImageURI(uri);
+        public void updateData(String filePath) {
+            // 随机头像
+            if (filePath.equals("")) {
+                avatar.setImageResource(R.drawable.baseline_avatar_default1);
+                item.setContent("");
+                ((EditUserInfoActivity) activity).updateLocalUserInfo(UserInfoItem.UserInfoType.AVATAR, "");
+                return;
+            }
+
+            Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+            avatar.setImageBitmap(bitmap);
+
+            String base64Str = PhotoUtil.bitmap2Base64Str(bitmap);
+            item.setContent(base64Str);
+            ((EditUserInfoActivity) activity).updateLocalUserInfo(UserInfoItem.UserInfoType.AVATAR, base64Str);
         }
 
     }
 
-    private class NicknameViewHolder extends RecyclerView.ViewHolder {
+    public class NicknameViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private TextView nickname;
+        private UserInfoItem item;
 
         public NicknameViewHolder(View itemView) {
             super(itemView);
@@ -231,7 +241,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     inputLayout.setBoxStrokeColor(R.color.blue_5);
                     inputLayout.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_NONE);
                     // helperText
-                    inputLayout.setHelperText("修改昵称需要花费100$");
+                    inputLayout.setHelperText("    每月只能修改一次昵称哦");
                     // EndIcon
                     inputLayout.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
                     // 布局
@@ -243,22 +253,8 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                     // 输入文本大小
                     editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-//                    editText.addTextChangedListener(new TextWatcher() {
-//                        @Override
-//                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-//                        @Override
-//                        public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                            if (s.length() > 0) {
-//                                inputLayout.setHintEnabled(true);
-//                            } else {
-//                                inputLayout.setHintEnabled(true);
-//                            }
-//                        }
-//                        @Override
-//                        public void afterTextChanged(Editable s) {}
-//                    });
 
-                    editText.setText(nickname.getText());
+                    editText.setText(item.getContent());
                     // 布局
                     editText.setLayoutParams(layoutParams);
 
@@ -278,7 +274,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     });
 
 
-                    AlertDialog dialog = builder.create();
+//                    AlertDialog dialog = builder.create();
 //                    dialog.show();
 //                    dialog.setOnShowListener(new DialogInterface.OnShowListener() {
 //                        @Override
@@ -305,39 +301,37 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // 设置数据
             title.setText(item.getType().getStr());
             nickname.setText(item.getContent());
+            this.item = item;
         }
 
         public void updateData(String content) {
             nickname.setText(content);
-            //改变UserInfoItem
-            //...
+            // 改变UserInfoItem
+            item.setContent(content);
+            // 更新本地存储数据
+            ((EditUserInfoActivity) activity).updateLocalUserInfo(UserInfoItem.UserInfoType.NICKNAME, content);
         }
     }
 
-    private class GenderViewHolder extends RecyclerView.ViewHolder {
+    public class GenderViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private TextView gender;
+        private UserInfoItem item;
 
         public GenderViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.userInfoType);
             gender = itemView.findViewById(R.id.userInfoText);
-
             // 设置点击事件
             itemView.setOnClickListener(new View.OnClickListener() {
-
-                String chosenGender = "";
 
                 @Override
                 public void onClick(View v) {
                     // 创建builder
                     MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext);
 
-
-
                     // 设置builder属性
                     builder.setTitle("修改性别");
-
 
                     View view = inflater.inflate(R.layout.dialog_choose_gender, null);
 
@@ -345,18 +339,18 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     ImageButton unknownButton = view.findViewById(R.id.unknown);
                     ImageButton femaleButton = view.findViewById(R.id.female);
 
-
                     if (gender.getText().equals("男")) {
                         maleButton.setBackgroundResource(R.color.blue_sky);
                         maleButton.setImageResource(R.drawable.baseline_male_white_24);
-                    } else if (gender.getText().equals("女")) {
+                    } else if (gender.getText().equals("保密")) {
                         unknownButton.setBackgroundResource(R.color.gray0);
                         unknownButton.setImageResource(R.drawable.baseline_question_mark_white_24);
-                    } else if (gender.getText().equals("保密")) {
-                        femaleButton.setBackgroundResource(R.color.white);
-                        femaleButton.setImageResource(R.drawable.baseline_female_pink_24);
+                    } else if (gender.getText().equals("女")) {
+                        femaleButton.setBackgroundResource(R.color.pink_sakura);
+                        femaleButton.setImageResource(R.drawable.baseline_female_white_24);
                     }
 
+                    final String[] chosenGender = {(String) gender.getText()};
                     maleButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -371,7 +365,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             femaleButton.setBackgroundResource(R.color.white);
                             femaleButton.setImageResource(R.drawable.baseline_female_pink_24);
 
-                            chosenGender = "男";
+                            chosenGender[0] = "男";
                         }
                     });
 
@@ -388,7 +382,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             femaleButton.setBackgroundResource(R.color.white);
                             femaleButton.setImageResource(R.drawable.baseline_female_pink_24);
 
-                            chosenGender = "保密";
+                            chosenGender[0] = "保密";
                         }
                     });
 
@@ -405,10 +399,9 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             femaleButton.setBackgroundResource(R.color.pink_sakura);
                             femaleButton.setImageResource(R.drawable.baseline_female_white_24);
 
-                            chosenGender = "女";
+                            chosenGender[0] = "女";
                         }
                     });
-
 
 
                     builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -421,7 +414,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            updateData(chosenGender);
+                            updateData(chosenGender[0]);
                         }
                     });
 
@@ -436,18 +429,20 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // 设置数据
             title.setText(item.getType().getStr());
             gender.setText(item.getContent());
+            this.item = item;
         }
 
         public void updateData(String content) {
             gender.setText(content);
-            //
+            item.setContent(content);
+            ((EditUserInfoActivity) activity).updateLocalUserInfo(UserInfoItem.UserInfoType.GENDER, content);
         }
     }
 
-    private class BirthViewHolder extends RecyclerView.ViewHolder {
+    public class BirthViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private TextView birth;
-
+        private UserInfoItem item;
         public BirthViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.userInfoType);
@@ -457,9 +452,6 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-
-
                     // 创建DatePicker Builder
                     MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
 
@@ -467,16 +459,20 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     builder.setTitleText("选择生日");
 
                     // 设置主题
-
                     builder.setTheme(R.style.ThemeOverlay_App_DatePicker);
 
                     // 设置默认选中日期
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.YEAR, 2022);
-                    calendar.set(Calendar.MONTH, Calendar.MARCH);
-                    calendar.set(Calendar.DAY_OF_MONTH, 15);
-                    long timeStamp = calendar.getTimeInMillis();
-                    builder.setSelection(timeStamp);
+                    String dateString = item.getContent();
+
+                    if (!dateString.equals("")) {
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.YEAR, Integer.parseInt(dateString.substring(0, 4)));
+                        calendar.set(Calendar.MONTH, Integer.parseInt(dateString.substring(5, 7))-1);
+                        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateString.substring(8, 10)));
+                        long timeStamp = calendar.getTimeInMillis();
+                        builder.setSelection(timeStamp);
+                    }
+
 
 
                     // 设置输入模式
@@ -493,7 +489,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             Date date = new Date(selection);
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                             String dateString = sdf.format(date);
-                            Toast.makeText(activity, dateString, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(activity, dateString, Toast.LENGTH_SHORT).show();
                             updateData(dateString);
                         }
                     });
@@ -508,18 +504,21 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // 设置数据
             title.setText(item.getType().getStr());
             birth.setText(item.getContent());
+            this.item = item;
         }
 
         public void updateData(String content) {
             birth.setText(content);
             //改变UserInfoItem
-            //...
+            item.setContent(content);
+            ((EditUserInfoActivity) activity).updateLocalUserInfo(UserInfoItem.UserInfoType.BIRTH, content);
         }
     }
 
-    private class SignatureViewHolder extends RecyclerView.ViewHolder {
+    public class SignatureViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private TextView signature;
+        private UserInfoItem item;
 
         public SignatureViewHolder(View itemView) {
             super(itemView);
@@ -588,7 +587,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //                    });
 
                     // 默认显示个签
-                    editText.setText(signature.getText());
+                    editText.setText(item.getContent());
 
                     // 布局
                     editText.setLayoutParams(layoutParams);
@@ -604,6 +603,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            // 这里要加字数超限拒绝保存
                             updateData(editText.getText().toString());
                         }
                     });
@@ -639,11 +639,13 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // 设置数据
             title.setText(item.getType().getStr());
             signature.setText(item.getContent());
+            this.item = item;
         }
 
         public void updateData(String content) {
             signature.setText(content);
-            //
+            item.setContent(content);
+            ((EditUserInfoActivity) activity).updateLocalUserInfo(UserInfoItem.UserInfoType.SIGNATURE, content);
         }
     }
 }

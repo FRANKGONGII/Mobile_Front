@@ -45,7 +45,7 @@ public class Record implements Serializable {
         }
     }
 
-    public static int id_counter = 3;
+    public static int id_counter = 0;
 
     public int id;
     RecordType recordType;
@@ -61,6 +61,8 @@ public class Record implements Serializable {
 
     public List<Double> longitudeList;
 
+    public long userId;
+
     public Record(RecordType recordType, Date startTime, Date endTime, double dist, int duration, List<LatLng> latLngList){
         this.recordType = recordType;
         this.startTime = startTime;
@@ -68,6 +70,8 @@ public class Record implements Serializable {
         this.distance = dist;
         this.duration = duration;
         this.latLngList = latLngList;
+        this.userId = 0;
+        this.id_counter =
         this.id = ++id_counter;
     }
 
@@ -78,6 +82,7 @@ public class Record implements Serializable {
         this.distance = dist;
         this.duration = duration;
         this.latLngList = null;
+        this.userId = 0;
         this.id = ++id_counter;
     }
 
@@ -99,20 +104,20 @@ public class Record implements Serializable {
     public String getRecordTime(){
         // 仅用于HistoryActivity中，获取用于展示的时间
         Date d = getStartTime();
-        DateFormat format=new SimpleDateFormat("EEE, MMM dd HH:mm");
+        DateFormat format=new SimpleDateFormat("EEE, MMM dd HH:mm",Locale.ENGLISH);
         format.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
         return format.format(d);
     }
     public String getStartTimeByStr(){
         Date d = getStartTime();
-        DateFormat format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+        DateFormat format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz",Locale.ENGLISH);
         format.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
         return format.format(d);
     }
 
     public String getEndTimeByStr(){
         Date d = getEndTime();
-        DateFormat format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+        DateFormat format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz",Locale.ENGLISH);
         format.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
         return format.format(d);
     }
@@ -149,7 +154,13 @@ public class Record implements Serializable {
         return String.format("%.1f",1.036*distance*WEIGHT);
     }
 
-    public String parse_duration(int duration){
+    public static String getCalorie(int dis){
+        int WEIGHT = 60;
+        return String.format("%.1f",1.036*dis*WEIGHT);
+    }
+
+
+    public static String parse_duration(int duration){
         int h = duration / 3600;
         int min = duration % 3600 / 60;
         int s = duration % 60;

@@ -52,7 +52,6 @@
                         android:layout_height="80dp"
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="56dp"
-                        android:src="@drawable/user_bkg_test"
                         app:civ_border_width="2dp"
                         app:civ_border_color="@color/white"/>
 
@@ -64,9 +63,10 @@
                         android:layout_alignTop="@+id/userAvatar"
                         android:layout_marginTop="10dp"
                         android:layout_marginStart="10dp"
-                        android:text="朝阳冬泳怪鸽"
                         android:textColor="@color/white"
                         android:textSize="20sp"
+                        android:maxLines="1"
+                        android:maxLength="10"
                         android:textStyle="bold"/>
 
                     <ImageButton
@@ -193,7 +193,8 @@
                 android:layout_alignEnd="@id/t1"
                 android:layout_centerHorizontal="true"
                 android:clipToPadding="false"
-                android:paddingBottom="8dp"/>
+                android:paddingBottom="8dp"
+                android:background="@color/transparent"/>
 
 
             <TextView
@@ -220,6 +221,18 @@
                 app:cardMaxElevation="20dp"
                 app:layout_anchorGravity="top|center"
                 app:strokeColor="@android:color/transparent">
+
+
+<!--                <com.jjoe64.graphview.GraphView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:id="@+id/graph" />-->
+
+                <ImageView
+                    android:layout_width="150sp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/statistic_background"
+                    android:id="@+id/statistic"/>
 
             </com.google.android.material.card.MaterialCardView>
 

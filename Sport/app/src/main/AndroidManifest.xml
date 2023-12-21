@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <!-- 用于访问网络，网络定位需要上网 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 用于写入缓存数据到扩展存储卡 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 用于申请调用A-GPS模块 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 用于进行网络定位 -->
@@ -28,29 +29,31 @@
         android:theme="@style/Theme.MyApplication"
         android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="31">
+
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+        </activity>
+
         <activity
             android:name=".ResultActivity"
             android:exported="false"
             android:label="@string/title_activity_result"
             android:theme="@style/Theme.MyApplication" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".RecordingActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -73,6 +76,12 @@
             android:exported="true">
         </activity>
 
+
+        <activity
+            android:name=".RegistActivity"
+            android:exported="true">
+        </activity>
+
         <activity
             android:name=".PhotoActivity"
             android:exported="true">
@@ -92,8 +101,11 @@
 
 
         <activity
-            android:name=".TestActivity"
-            android:exported="true">
+            android:name=".TestActivity">
+        </activity>
+
+        <activity
+            android:name=".StatisticActivity">
         </activity>
 
         <meta-data

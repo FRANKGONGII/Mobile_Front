@@ -201,10 +201,10 @@ public class RecordingActivity extends AppCompatActivity {
                 endTime = System.currentTimeMillis();
                 Log.d("SAVE_TEST",String.valueOf(new Date(startTime)));
                 Log.d("SAVE_TEST",String.valueOf(new Date(endTime)));
-                if(false && (distance<0.1||latLngList.size()<3)){
+                if(false&&(distance<0.1||latLngList.size()<4)){
                     //TODO:时间太短的结束可能还要完善一下
                     ToastUtils.show("运动时间或距离太短啦");
-                    //Log.d("SAVE_TEST",String.valueOf(ToastUtils.isInit()));
+                    Log.d("SAVE_TEST",latLngList+" ");
                     finish();
                 } else{
                     ifStart = false;
@@ -416,7 +416,10 @@ public class RecordingActivity extends AppCompatActivity {
 
         Record record = new Record(Record.RecordType.getValue(sport_type),new Date(startTime),new Date(endTime),distance,seconds,latLngList);
 
-        if(!dataService.updateRecord(record)){
+
+        long newId = dataService.updateRecord(record);
+
+        if(newId==-1){
             ToastUtils.show("Update timeout (errNo:408)");
             // TODO: Of course you can jump to other pages,
         }
@@ -424,7 +427,8 @@ public class RecordingActivity extends AppCompatActivity {
             ToastUtils.show("运动记录已上传");
         }
 
-        Log.d("ID_TEST","new re:"+String.valueOf(record.getId()));
+
+        Log.d("URL_TEST","new record id:"+newId);
         
 
         Intent intent2 = new Intent(this, ResultActivity.class);
@@ -438,8 +442,10 @@ public class RecordingActivity extends AppCompatActivity {
 //            index++;
 //        }
 //        intent2.putExtra("latitude",array1);
-        intent2.putExtra("passId",record.getId());
+
+        intent2.putExtra("passId",newId);
         intent2.putExtra("formActivity","record");
+
         startActivity(intent2);
     }
 

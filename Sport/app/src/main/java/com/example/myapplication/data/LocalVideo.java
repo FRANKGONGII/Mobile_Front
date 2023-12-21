@@ -12,39 +12,38 @@ public class LocalVideo implements VideoService {
 
     //封面图片
     public static String[][] mVideoThumbs = {{
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526158872907&di=410c4c0fdc85f768e6b4fb8a8b6cf208&imgtype=0&src=http%3A%2F%2F09.imgmini.eastday.com%2Fmobile%2F20180506%2F20180506234300_a1330efaec84d2361efd72e3976ee181_2.jpeg",
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526158872907&di=410c4c0fdc85f768e6b4fb8a8b6cf208&imgtype=0&src=http%3A%2F%2F09.imgmini.eastday.com%2Fmobile%2F20180506%2F20180506234300_a1330efaec84d2361efd72e3976ee181_2.jpeg",
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526158872907&di=410c4c0fdc85f768e6b4fb8a8b6cf208&imgtype=0&src=http%3A%2F%2F09.imgmini.eastday.com%2Fmobile%2F20180506%2F20180506234300_a1330efaec84d2361efd72e3976ee181_2.jpeg",
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526158872907&di=410c4c0fdc85f768e6b4fb8a8b6cf208&imgtype=0&src=http%3A%2F%2F09.imgmini.eastday.com%2Fmobile%2F20180506%2F20180506234300_a1330efaec84d2361efd72e3976ee181_2.jpeg",
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526158872907&di=410c4c0fdc85f768e6b4fb8a8b6cf208&imgtype=0&src=http%3A%2F%2F09.imgmini.eastday.com%2Fmobile%2F20180506%2F20180506234300_a1330efaec84d2361efd72e3976ee181_2.jpeg"
-    },
-    };
+            "https://s1.wzznft.com/i/2023/12/19/nah4t4.jpg",
+            "https://s1.wzznft.com/i/2023/12/19/6hlb4np.jpg",
+            "https://s1.wzznft.com/i/2023/12/19/n5ng7h.jpg",
+            "https://s1.wzznft.com/i/2023/12/19/ncxlj6.jpg",
+            "https://s1.wzznft.com/i/2023/12/19/n93vwv.jpg"
+    }};
 
     //标题
     public static String[][] mVideoTitles = {{
-            "test5",
-            "test2",
-            "test2",
-            "test4",
-            "test6"
+            "新手健走训练",
+            "21天新手10K完赛",
+            "14天速效减脂",
+            "山地耐力骑行训练",
+            "21天新手20K完赛",
     },
     };
 
     public static String[][] mVideoTypes = {{
-            "running",
-            "running",
-            "swimming",
-            "hiking",
-            "cycling"
+            "健走",
+            "跑步",
+            "减脂",
+            "骑行",
+            "跑步"
     },
     };
 
     public static String[][] mVideoTags = {{
-            "senior",
-            "senior",
-            "primary",
-            "primary",
-            "senior"
+            "初级",
+            "初级",
+            "高级",
+            "高级",
+            "中级"
     },
     };
 
