@@ -53,93 +53,93 @@ public class ResultActivity extends AppCompatActivity {
     Button chat_btn;
 
 
-    private LineChart chart;
-
-
-
-
-
-    private void setData(List<Record> records) {
-
-        ArrayList<Entry> values = new ArrayList<>();
-        int count = records.size();
-
-        for (int i = 0; i < count; i++) {
-
-            float val = (float) records.get(i).getDistance();
-            //这里的star可以替换为你自己项目的图标
-            values.add(new Entry(i, val));
-        }
-
-        LineDataSet set1;
-
-        if (chart.getData() != null &&
-                chart.getData().getDataSetCount() > 0) {
-            set1 = (LineDataSet) chart.getData().getDataSetByIndex(0);
-            set1.setValues(values);
-            set1.notifyDataSetChanged();
-            chart.getData().notifyDataChanged();
-            chart.notifyDataSetChanged();
-        } else {
-            // create a dataset and give it a type
-            set1 = new LineDataSet(values, "DataSet 1");
-
-            set1.setDrawIcons(false);
-
-            // draw dashed line
-            set1.enableDashedLine(10f, 5f, 0f);
-
-            // black lines and points
-            set1.setColor(Color.BLACK);
-            set1.setCircleColor(Color.BLACK);
-
-            // line thickness and point size
-            set1.setLineWidth(1f);
-            set1.setCircleRadius(3f);
-
-            // draw points as solid circles
-            set1.setDrawCircleHole(false);
-
-            // customize legend entry
-            set1.setFormLineWidth(1f);
-            set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-            set1.setFormSize(15.f);
-
-            // text size of values
-            set1.setValueTextSize(9f);
-
-            // draw selection line as dashed
-            set1.enableDashedHighlightLine(10f, 5f, 0f);
-
-            // set the filled area
-            set1.setDrawFilled(true);
-            set1.setFillFormatter(new IFillFormatter() {
-                @Override
-                public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
-                    return chart.getAxisLeft().getAxisMinimum();
-                }
-            });
-
-            // set color of filled area
-            if (Utils.getSDKInt() >= 18) {
-                // drawables only supported on api level 18 and above
-
-                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.baseline_male_blue_24);
-                set1.setFillDrawable(drawable);
-            } else {
-                set1.setFillColor(Color.BLACK);
-            }
-
-            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-            dataSets.add(set1); // add the data sets
-
-            // create a data object with the data sets
-            LineData data = new LineData(dataSets);
-
-            // set data
-            chart.setData(data);
-        }
-    }
+//    private LineChart chart;
+//
+//
+//
+//
+//
+//    private void setData(List<Record> records) {
+//
+//        ArrayList<Entry> values = new ArrayList<>();
+//        int count = records.size();
+//
+//        for (int i = 0; i < count; i++) {
+//
+//            float val = (float) records.get(i).getDistance();
+//            //这里的star可以替换为你自己项目的图标
+//            values.add(new Entry(i, val));
+//        }
+//
+//        LineDataSet set1;
+//
+//        if (chart.getData() != null &&
+//                chart.getData().getDataSetCount() > 0) {
+//            set1 = (LineDataSet) chart.getData().getDataSetByIndex(0);
+//            set1.setValues(values);
+//            set1.notifyDataSetChanged();
+//            chart.getData().notifyDataChanged();
+//            chart.notifyDataSetChanged();
+//        } else {
+//            // create a dataset and give it a type
+//            set1 = new LineDataSet(values, "DataSet 1");
+//
+//            set1.setDrawIcons(false);
+//
+//            // draw dashed line
+//            set1.enableDashedLine(10f, 5f, 0f);
+//
+//            // black lines and points
+//            set1.setColor(Color.BLACK);
+//            set1.setCircleColor(Color.BLACK);
+//
+//            // line thickness and point size
+//            set1.setLineWidth(1f);
+//            set1.setCircleRadius(3f);
+//
+//            // draw points as solid circles
+//            set1.setDrawCircleHole(false);
+//
+//            // customize legend entry
+//            set1.setFormLineWidth(1f);
+//            set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+//            set1.setFormSize(15.f);
+//
+//            // text size of values
+//            set1.setValueTextSize(9f);
+//
+//            // draw selection line as dashed
+//            set1.enableDashedHighlightLine(10f, 5f, 0f);
+//
+//            // set the filled area
+//            set1.setDrawFilled(true);
+//            set1.setFillFormatter(new IFillFormatter() {
+//                @Override
+//                public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
+//                    return chart.getAxisLeft().getAxisMinimum();
+//                }
+//            });
+//
+//            // set color of filled area
+//            if (Utils.getSDKInt() >= 18) {
+//                // drawables only supported on api level 18 and above
+//
+//                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.baseline_male_blue_24);
+//                set1.setFillDrawable(drawable);
+//            } else {
+//                set1.setFillColor(Color.BLACK);
+//            }
+//
+//            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+//            dataSets.add(set1); // add the data sets
+//
+//            // create a data object with the data sets
+//            LineData data = new LineData(dataSets);
+//
+//            // set data
+//            chart.setData(data);
+//        }
+//    }
 
 
 
@@ -163,7 +163,7 @@ public class ResultActivity extends AppCompatActivity {
         }
 
 
-        setData(dataService.getAllRecords());
+        //setData(dataService.getAllRecords());
 
 
         ImageView back = findViewById(R.id.re_back);

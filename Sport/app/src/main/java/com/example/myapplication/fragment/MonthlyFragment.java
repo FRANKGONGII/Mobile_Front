@@ -517,7 +517,4 @@ public class MonthlyFragment extends Fragment {
 
     }
 
-
-
-
 }
