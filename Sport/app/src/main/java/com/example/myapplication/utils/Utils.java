@@ -227,4 +227,31 @@ public class Utils {
         return sdf.format(date);
     }
 
+    public static void reSet2Array(double[][] array){
+        for(int i = 0;i<array.length;i++){
+            for(int j = 0;j<array[0].length;j++){
+                array[i][j] = 0;
+            }
+        }
+    }
+
+    public static String getDayInWeek(int i){
+        if(i==0){
+            return "周一";
+        } else if (i==1) {
+            return "周二";
+        } else if(i==2){
+            return "周三";
+        } else if(i==3){
+            return "周四";
+        }else if(i==4){
+            return "周五";
+        }else if(i==5){
+            return "周六";
+        }else if(i==6){
+            return "周日";
+        }
+        return "日期错误";
+    }
+
 }

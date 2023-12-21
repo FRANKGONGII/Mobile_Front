@@ -22,6 +22,9 @@ public class WeekRangeView extends LinearLayout {
     public ImageButton prevWeekButton;
     public ImageButton nextWeekButton;
 
+    public Date startDate;
+    public Date endDate;
+
     public Calendar currentStartDate;
 
     public WeekRangeView(Context context) {
@@ -94,8 +97,8 @@ public class WeekRangeView extends LinearLayout {
         Calendar currentEndDate = (Calendar) currentStartDate.clone();
         currentEndDate.add(Calendar.DAY_OF_MONTH, 6);
 
-        Date startDate = currentStartDate.getTime();
-        Date endDate = currentEndDate.getTime();
+        startDate = currentStartDate.getTime();
+        endDate = currentEndDate.getTime();
 
         String weekRangeText = dateFormat.format(startDate) + " - " + dateFormat.format(endDate);
         weekRangeTextView.setText(weekRangeText);

@@ -8,10 +8,9 @@
     <!-- 上一周按钮 -->
     <ImageButton
         android:id="@+id/prevWeekButton"
-        android:layout_width="40sp"
-        android:layout_height="40sp"
-        android:src="@drawable/baseline_arrow_back_24"
-        android:textSize="15sp"/>
+        android:layout_width="26sp"
+        android:layout_height="26sp"
+        android:src="@drawable/baseline_arrow_back_24" />
 
     <!-- 周范围文本 -->
     <TextView
@@ -22,15 +21,16 @@
         android:gravity="center"
         android:layout_gravity="center_vertical"
         android:text="Week Range"
-        android:layout_marginLeft="5sp"
-        android:layout_marginRight="5sp"/>
+        android:layout_marginLeft="3sp"
+        android:layout_marginRight="3sp"
+        android:textSize="10sp"/>
 
     <!-- 下一周按钮 -->
     <!-- 上一周按钮 -->
     <ImageButton
         android:id="@+id/nextWeekButton"
-        android:layout_width="40sp"
-        android:layout_height="40sp"
+        android:layout_width="26sp"
+        android:layout_height="26sp"
         android:src="@drawable/baseline_arrow_forward_24"
-        android:textSize="15sp"/>
+        />
 </LinearLayout>

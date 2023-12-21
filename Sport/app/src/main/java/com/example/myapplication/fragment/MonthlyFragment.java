@@ -383,12 +383,6 @@ public class MonthlyFragment extends Fragment {
             axisValues.add(new AxisValue(i).setLabel((i+1)+"日"));
         }
 
-
-
-
-
-
-
         ColumnChartData data = new ColumnChartData();
         data.setColumns(columns);
 
