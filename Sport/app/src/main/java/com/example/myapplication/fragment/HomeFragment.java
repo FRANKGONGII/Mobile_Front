@@ -80,9 +80,6 @@ public class HomeFragment extends Fragment {
     private CircleImageView avatarView;
     private TextView nicknameView;
     private ImageButton editUserInfoBtn;
-
-    private DataService dataService;
-
     private String[] sportType = {"跑步","骑行","游泳","快走"};
 
     private SharedPreferences pref;
@@ -95,7 +92,6 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = (AppCompatActivity) getActivity();
-        dataService = DataServiceFactory.getInstance();
         window = activity.getWindow();
         pref = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         editor = pref.edit();
@@ -318,7 +314,7 @@ public class HomeFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 
-        // 从数据库加载运动记录
+        // 从数据库加载最近一次运动记录
 
         List<Record> runningRecords = dataService.queryRecordByBoth(Record.RecordType.RUNNING,null,null);
         List<Record> ridingRecords = dataService.queryRecordByBoth(Record.RecordType.RIDING, null, null);
