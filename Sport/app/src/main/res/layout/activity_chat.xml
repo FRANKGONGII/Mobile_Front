@@ -26,11 +26,12 @@
             android:layout_weight="1"
             android:gravity="center"
             android:background="@color/blue_5"
-            android:text="运动助手"
+            android:text="智能运动助手"
 
             android:textColor="@android:color/white"
             android:textSize="20sp" />
 
+<!-- 占位用，令文字在中间，记得将宽度与返回键一致-->
         <View
             android:id="@+id/chat_fill_bar"
             android:layout_width="30dp"
