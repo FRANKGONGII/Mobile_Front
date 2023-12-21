@@ -172,6 +172,9 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // 读取base64Str转为bitmap设置头像
             if (!item.getContent().equals("")) {
                 avatar.setImageBitmap(PhotoUtil.base64Str2Bitmap(item.getContent()));
+            } else {
+                // 设置默认头像
+                avatar.setImageResource(R.drawable.user_bkg_test);
             }
 
             this.item = item;
