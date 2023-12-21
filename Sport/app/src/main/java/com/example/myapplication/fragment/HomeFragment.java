@@ -43,6 +43,9 @@ import com.example.myapplication.R;
 import com.example.myapplication.StatisticActivity;
 import com.example.myapplication.adapter.SportDataAdapter;
 import com.example.myapplication.bean.Record;
+import com.example.myapplication.data.DataService;
+import com.example.myapplication.data.DataServiceFactory;
+import com.example.myapplication.data.LocalData;
 import com.example.myapplication.utils.PhotoUtil;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
@@ -77,13 +80,11 @@ public class HomeFragment extends Fragment {
     private CircleImageView avatarView;
     private TextView nicknameView;
     private ImageButton editUserInfoBtn;
-
-    private DataService dataService;
-
     private String[] sportType = {"跑步","骑行","游泳","快走"};
 
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
+    private DataService dataService;
 
 
 
@@ -91,10 +92,10 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = (AppCompatActivity) getActivity();
-        dataService = DataServiceFactory.getInstance();
         window = activity.getWindow();
         pref = getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         editor = pref.edit();
+        dataService = DataServiceFactory.getInstance();
     }
 
 
@@ -312,18 +313,30 @@ public class HomeFragment extends Fragment {
     public void onSportCardInit() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        Record runningRecord = new Record(Record.RecordType.RUNNING, sdf.parse("2021-10-01 08:00:00"), sdf.parse("2021-10-01 08:30:00"), 5.2, 1800);
-        Record ridingRecord = new Record(Record.RecordType.RIDING, sdf.parse("2021-10-02 10:00:00"), sdf.parse("2021-10-02 11:30:00"), 12.7, 5400);
-        Record walkingRecord = new Record(Record.RecordType.WALKING, sdf.parse("2021-10-03 15:30:00"), sdf.parse("2021-10-03 16:00:00"), 3.1, 1800);
-        Record swimmingRecord = new Record(Record.RecordType.SWIMMING, sdf.parse("2021-10-04 18:00:00"), sdf.parse("2021-10-04 19:30:00"), 0, 5400);
+
+        // 从数据库加载最近一次运动记录
+
+        List<Record> runningRecords = dataService.queryRecordByBoth(Record.RecordType.RUNNING,null,null);
+        List<Record> ridingRecords = dataService.queryRecordByBoth(Record.RecordType.RIDING, null, null);
+        List<Record> walkingRecords = dataService.queryRecordByBoth(Record.RecordType.WALKING, null, null);
+        List<Record> swimmingRecords = dataService.queryRecordByBoth(Record.RecordType.SWIMMING, null, null);
+
+        Record runningRecord = runningRecords.isEmpty() ? new Record(Record.RecordType.RUNNING, null, null, 0.0, 0) : runningRecords.get(runningRecords.size()-1);
+        Record ridingRecord = ridingRecords.isEmpty() ? new Record(Record.RecordType.RIDING, null, null, 0.0, 0) : ridingRecords.get(ridingRecords.size()-1);
+        Record walkingRecord = walkingRecords.isEmpty() ? new Record(Record.RecordType.WALKING, null, null, 0.0, 0) : walkingRecords.get(walkingRecords.size()-1);
+        Record swimmingRecord = swimmingRecords.isEmpty() ? new Record(Record.RecordType.SWIMMING, null, null, 0.0, 0) :swimmingRecords.get(swimmingRecords.size()-1);
+
+//        Record runningRecord = new Record(Record.RecordType.RUNNING, sdf.parse("2021-10-01 08:00:00"), sdf.parse("2021-10-01 08:30:00"), 5.2, 1800);
+//        Record ridingRecord = new Record(Record.RecordType.RIDING, sdf.parse("2021-10-02 10:00:00"), sdf.parse("2021-10-02 11:30:00"), 12.7, 5400);
+//        Record walkingRecord = new Record(Record.RecordType.WALKING, sdf.parse("2021-10-03 15:30:00"), sdf.parse("2021-10-03 16:00:00"), 3.1, 1800);
+//        Record swimmingRecord = new Record(Record.RecordType.SWIMMING, sdf.parse("2021-10-04 18:00:00"), sdf.parse("2021-10-04 19:30:00"), 0, 5400);
         List<Record> recordList = new ArrayList<>();
         recordList.add(runningRecord);
         recordList.add(ridingRecord);
         recordList.add(walkingRecord);
         recordList.add(swimmingRecord);
 
-
-
+        
         //利用RecyclerView加载
         SportDataAdapter adapter = new SportDataAdapter(recordList);
         recyclerView = view.findViewById(R.id.sportCardRecyclerView);
@@ -365,7 +378,7 @@ public class HomeFragment extends Fragment {
 
         if (avatarBase64Str.equals("")) {
             // 设置默认头像
-            avatarView.setImageResource(R.drawable.user_bkg_test);
+            avatarView.setImageResource(R.drawable.baseline_avatar_default1);
         } else {
             // 转化为bitmap
             avatarView.setImageBitmap(PhotoUtil.base64Str2Bitmap(avatarBase64Str));

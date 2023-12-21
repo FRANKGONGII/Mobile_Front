@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -203,10 +204,13 @@ public class EditUserInfoActivity extends AppCompatActivity {
 
 
     public void onAvatarEdit(View view) {
-        TextView camera = view.findViewById(R.id.choose_camera);
-        TextView photo = view.findViewById(R.id.choose_photo);
-        TextView random = view.findViewById(R.id.choose_random);
+//        TextView camera = view.findViewById(R.id.choose_camera);
+//        TextView photo = view.findViewById(R.id.choose_photo);
+//        TextView random = view.findViewById(R.id.choose_random);
 
+        RadioButton camera = view.findViewById(R.id.choose_camera);
+        RadioButton photo = view.findViewById(R.id.choose_photo);
+        RadioButton random = view.findViewById(R.id.choose_random);
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -233,7 +237,9 @@ public class EditUserInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Log.d("EDIT", "onClick: random");
-                Toast.makeText(EditUserInfoActivity.this, "choose random", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(EditUserInfoActivity.this, "choose random", Toast.LENGTH_SHORT).show();
+                avatarViewHolder.updateData("");
+                bottomSheet.dismiss();
             }
         });
     }
