@@ -111,7 +111,6 @@ public class HomeFragment extends Fragment {
         editUserInfoBtn = view.findViewById((R.id.editUserInfoButton));
 
 
-
         //跳转统计数据
         ImageView statistic = view.findViewById(R.id.home_icon1);
         statistic.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +130,10 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+
+
+
 
 
 
