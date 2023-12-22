@@ -248,7 +248,7 @@ public class TestActivity extends AppCompatActivity {
             TextView duration = findViewById(R.id.history_show_duration);
             duration.setText(newDuration);
 
-            String newCalorie = getSumTime(records);
+            String newCalorie = getCalorie();
             TextView calorie = findViewById(R.id.history_show_calorie);
             calorie.setText(newCalorie);
 

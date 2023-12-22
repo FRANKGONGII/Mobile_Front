@@ -5,12 +5,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -216,13 +223,14 @@ public class HomeFragment extends Fragment {
         });
 
         // 初始化运动卡片
-        try {
-            onSportCardInit();
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            onSportCardInit();
+//        } catch (ParseException e) {
+//            throw new RuntimeException(e);
+//        }
         
-        
+
+        onTotalSportCardInit();
 
 
 
@@ -256,22 +264,6 @@ public class HomeFragment extends Fragment {
         return true;
     }
 
-    // 计算状态栏颜色的中间值
-    public int calculateStatusBarColor(int startColor, int endColor, float ratio) {
-        int startRed = Color.red(startColor);
-        int startGreen = Color.green(startColor);
-        int startBlue = Color.blue(startColor);
-
-        int endRed = Color.red(endColor);
-        int endGreen = Color.green(endColor);
-        int endBlue = Color.blue(endColor);
-
-        int currentRed = (int) (startRed + (endRed - startRed) * ratio);
-        int currentGreen = (int) (startGreen + (endGreen - startGreen) * ratio);
-        int currentBlue = (int) (startBlue + (endBlue - startBlue) * ratio);
-
-        return Color.rgb(currentRed, currentGreen, currentBlue);
-    }
 
     public void setSysWinColor(int color, int alpha) {
         if (Build.VERSION.SDK_INT >= 21) {
@@ -305,6 +297,25 @@ public class HomeFragment extends Fragment {
 //        });
 //    }
 
+
+    public void onTotalSportCardInit() {
+        List<Record> recordList = dataService.getAllRecords();
+
+        int totalMin = 0;
+        for (Record record : recordList) {
+            totalMin += record.getDuration();
+        }
+        String totalMinStr = String.valueOf(totalMin);
+
+        SpannableString spannableString = new SpannableString(totalMinStr+" 分钟");
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, totalMinStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new AbsoluteSizeSpan(18, true), 0, totalMinStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.BLACK), 0, totalMinStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        TextView textView = view.findViewById(R.id.minutes);
+        textView.setText(spannableString);
+    }
+
     private RecyclerView recyclerView;
 
     public void onSportCardInit() throws ParseException {
@@ -336,7 +347,7 @@ public class HomeFragment extends Fragment {
         
         //利用RecyclerView加载
         SportDataAdapter adapter = new SportDataAdapter(recordList);
-        recyclerView = view.findViewById(R.id.sportCardRecyclerView);
+//        recyclerView = view.findViewById(R.id.sportCardRecyclerView);
 //        int columnCount = 2; // 每行的列数
 //        int itemCount = adapter.getItemCount(); // item 的数量
 //        int rowCount = (int) Math.ceil((double) itemCount / columnCount); // 计算行数
