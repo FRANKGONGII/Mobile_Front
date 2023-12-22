@@ -31,7 +31,7 @@
             android:textColor="@android:color/white"
             android:textSize="20sp" />
 
-<!-- 占位用，令文字在中间，记得将宽度与返回键一致-->
+<!-- 占位用，令文字在中间，记得将宽度与返回键设为一致-->
         <View
             android:id="@+id/chat_fill_bar"
             android:layout_width="30dp"
@@ -62,7 +62,7 @@
             android:layout_width="fill_parent"
             android:layout_height="65dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/blue_5">
+            android:background="#fbfbfb">
             <android.widget.Button
                 android:id="@+id/btn_send"
                 android:layout_width="60dp"
