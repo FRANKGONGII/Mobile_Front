@@ -75,5 +75,8 @@
         <color name="tabSelectedColor">#000000</color>
         <color name="tabIndicatorColor">#FF0000</color>
 
+        <color name="button_border_color">#808080</color>
+        <color name="button_fill_color">#FFFFFF</color>
+
 
 </resources>

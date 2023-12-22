@@ -106,7 +106,12 @@
 <!--                        android:layout_marginTop="15dp"-->
 <!--                        android:text="关注"-->
 <!--                        android:textStyle="bold"/>-->
+
+
+
+
                 </RelativeLayout>
+
 
 
                 <androidx.appcompat.widget.Toolbar
@@ -144,72 +149,29 @@
         app:layout_anchorGravity="center"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:orientation="vertical"
             android:id="@+id/home_relative1">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/t1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-
-                android:orientation="horizontal">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="总运动"
-                        android:textColor="@color/black"
-                        android:drawableEnd="@drawable/baseline_photo_24" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-
-                        android:text="test"/>
-
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="大象"
-                        android:textColor="@color/black"/>
-                </com.google.android.material.card.MaterialCardView>
-
-            </LinearLayout>
-
-<!--            <TextView-->
-<!--                android:id="@+id/t1"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="50dp"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:text="运动数据"-->
-<!--                android:textSize="@dimen/fifteen" />-->
+                android:layout_marginStart="50dp"
+                android:layout_centerHorizontal="true"
+                android:text="运动数据"
+                android:textSize="@dimen/fifteen" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/sportCardRecyclerView"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_below="@id/t1"
+                android:layout_alignStart="@id/t1"
+                android:layout_alignEnd="@id/t1"
+                android:layout_centerHorizontal="true"
                 android:clipToPadding="false"
                 android:paddingBottom="8dp"
                 android:background="@color/transparent"/>
@@ -227,10 +189,28 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/other"
                 android:layout_width="match_parent"
                 android:layout_height="85dp"
+                android:layout_below="@+id/sportCardRecyclerView"
+                android:layout_alignStart="@id/sportCardRecyclerView"
+                android:layout_alignEnd="@id/sportCardRecyclerView"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:theme="@style/Theme.MaterialComponents.Light"
                 app:cardCornerRadius="10dp"
@@ -297,11 +277,13 @@
                         android:id="@+id/text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="运动记录"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif"
+                        android:text="运动统计"
+                        android:textStyle="italic"
                         app:layout_constraintEnd_toStartOf="@id/guideline1"
                         app:layout_constraintStart_toStartOf="@+id/guideline0"
-                        app:layout_constraintTop_toBottomOf="@+id/home_icon1"
-                        android:layout_marginTop="5dp"/>
+                        app:layout_constraintTop_toBottomOf="@+id/home_icon1" />
 
                     <!-- 第二组图片和文字 -->
                     <ImageView
@@ -320,6 +302,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="运动等级"
+                        android:textStyle="italic"
                         app:layout_constraintEnd_toStartOf="@id/guideline2"
                         app:layout_constraintStart_toStartOf="@+id/guideline1"
                         app:layout_constraintTop_toBottomOf="@+id/home_icon2"
@@ -342,6 +325,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="AI助手"
+                        android:textStyle="italic"
                         app:layout_constraintEnd_toStartOf="@id/guideline3"
                         app:layout_constraintStart_toStartOf="@+id/guideline2"
                         app:layout_constraintTop_toBottomOf="@+id/home_icon3"
@@ -364,6 +348,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="身体状况"
+                        android:textStyle="italic"
                         app:layout_constraintEnd_toStartOf="@id/guideline4"
                         app:layout_constraintStart_toStartOf="@+id/guideline3"
                         app:layout_constraintTop_toBottomOf="@+id/home_icon4"
@@ -384,32 +369,24 @@
             </com.google.android.material.card.MaterialCardView>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--            <TextView-->
-<!--                android:id="@+id/t3"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@id/other"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:text="运动日历"-->
-<!--                android:textSize="@dimen/fifteen"-->
-<!--                android:layout_marginStart="50dp"/>-->
+            <TextView
+                android:id="@+id/t3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/other"
+                android:layout_centerHorizontal="true"
+                android:text="运动日历"
+                android:textSize="@dimen/fifteen"
+                android:layout_marginStart="50dp"/>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/calendar"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:layout_below="@id/t3"
+                android:layout_alignStart="@id/sportCardRecyclerView"
+                android:layout_alignEnd="@id/sportCardRecyclerView"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:theme="@style/Theme.MaterialComponents.Light"
                 app:cardCornerRadius="4dp"
@@ -456,56 +433,204 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/shoe"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@id/calendar"
+                android:layout_alignStart="@id/sportCardRecyclerView"
+                android:layout_alignEnd="@id/sportCardRecyclerView"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardCornerRadius="10dp"
+                app:cardMaxElevation="20dp"
+                app:layout_anchorGravity="top|center"
+                app:strokeColor="@android:color/transparent">
 
 
 
-        </LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/home_con2">
+
+                    <!-- 左上角的 TextView -->
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/icon_line"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        app:layout_constraintTop_toTopOf="@+id/home_con2"
+                        app:layout_constraintStart_toStartOf="@+id/home_con2"
+                        android:id="@+id/home_icon_line1"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/textViewEquip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="装备"
+                        android:textSize="15dp"
+                        app:layout_constraintTop_toTopOf="@+id/home_con2"
+                        app:layout_constraintStart_toEndOf="@+id/home_icon_line1"
+                        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
+                        />
+
+                    <!-- 更多装备按钮 -->
+                    <android.widget.Button
+                        android:id="@+id/buttonMoreEquip"
+                        android:layout_width="70sp"
+                        android:layout_height="30sp"
+                        android:text="更多装备"
+                        android:textSize="12dp"
+                        android:textColor="@color/gray1"
+                        android:background="@drawable/btn_border"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintStart_toEndOf="@+id/guidelineVertical"
+
+                        app:layout_constraintTop_toTopOf="@+id/home_con2"
+                        app:layout_constraintEnd_toEndOf="@+id/home_con2"
+                        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
+                        />
+
+                    <!-- 水平分割线 -->
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guidelineHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.25" />
+
+                    <!-- 垂直分割线 -->
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guidelineVertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.75" />
+
+
+                    <!-- Card1 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintTop_toBottomOf="@+id/guidelineHorizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="2dp"
+
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <!-- Card1 上方 TextView -->
+                            <TextView
+                                android:id="@+id/textViewCard1Top"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="跑鞋名字"
+                                android:gravity="center"
+                                />
+
+                            <!-- Card1 中间图片 -->
+                            <ImageView
+                                android:id="@+id/imageViewCard1"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/icon_ai"
+                                android:layout_below="@+id/textViewCard1Top"
+                                android:layout_alignParentRight="true"
+                                />
+
+                            <!-- Card1 左下角 TextView -->
+                            <TextView
+                                android:id="@+id/textViewCard1Bottom"
+                                android:layout_width="80dp"
+                                android:layout_height="40dp"
+                                android:text="3.00km"
+                                android:gravity="center"
+
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentBottom="true"
+                                />
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Card2 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card2"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintTop_toBottomOf="@+id/guidelineHorizontal"
+                        app:layout_constraintStart_toEndOf="@+id/guidelineVertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="2dp"
+                        app:cardBackgroundColor="@color/gray5"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <!-- Card2 中心 ImageButton -->
+                            <ImageButton
+                                android:id="@+id/imageButtonCard2"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/baseline_add_24"
+                                android:layout_centerInParent="true"
+                                android:background="@color/gray5"
+                                />
+
+<!--                            &lt;!&ndash; Card2 下方 TextView &ndash;&gt;-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/textViewCard2Bottom"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="添加"-->
+<!--                                android:layout_below="@+id/imageButtonCard2"-->
+<!--                                android:layout_centerHorizontal="true"-->
+<!--                                />-->
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+
+        </RelativeLayout>
 
 
     </androidx.core.widget.NestedScrollView>
-
-    <!--        <com.google.android.material.card.MaterialCardView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="173dp"-->
-<!--            android:theme="@style/Theme.MaterialComponents.Light"-->
-<!--            app:cardCornerRadius="15dp"-->
-<!--            app:cardMaxElevation="0dp"-->
-<!--            app:strokeColor="@android:color/transparent"-->
-<!--            app:layout_anchor="@+id/nestedScrollView"-->
-<!--            app:layout_anchorGravity="top|center">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/infoText"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="adadddddddaaaa" />-->
-<!--        </com.google.android.material.card.MaterialCardView>-->
-
-
-
-<!--    <FrameLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
-
-<!--        <androidx.appcompat.widget.Toolbar-->
-<!--            android:id="@+id/toolbar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="60dp"-->
-<!--            android:background="@android:color/transparent"-->
-<!--            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
-<!--            android:fitsSystemWindows="true"-->
-<!--            app:showTitle="false"-->
-<!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-<!--            app:layout_collapseMode="pin" />-->
-
-<!--    </FrameLayout>-->
-
-<!--    <com.google.android.material.navigation.NavigationView-->
-<!--        android:id="@+id/nav_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_gravity="start"-->
-<!--        app:menu="@menu/nav_menu" />-->
 
 
 
