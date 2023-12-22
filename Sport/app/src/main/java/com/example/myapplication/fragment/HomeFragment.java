@@ -31,9 +31,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.ColorUtils;
 import androidx.core.view.GravityCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -79,6 +82,7 @@ public class HomeFragment extends Fragment {
     private Window window;
     private DrawerLayout drawerLayout;
     private AppBarLayout appBarLayout;
+    private NestedScrollView nestedScrollView;
     private Toolbar toolbar;
     private CircleImageView avatarView;
     private TextView nicknameView;
@@ -108,6 +112,7 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(layout, container, false);
         appBarLayout = view.findViewById(R.id.appBar);
         toolbar = view.findViewById(R.id.toolbar);
+        nestedScrollView = view.findViewById(R.id.nestedScrollView);
         avatarView = view.findViewById(R.id.userAvatar);
         nicknameView = view.findViewById(R.id.userNickname);
         editUserInfoBtn = view.findViewById((R.id.editUserInfoButton));
@@ -122,6 +127,13 @@ public class HomeFragment extends Fragment {
         // 设置渐变色背景
         appBarLayout.setBackground(gradientDrawable);
 
+//        GradientDrawable gradientDrawable2 = new GradientDrawable(
+//                GradientDrawable.Orientation.TOP_BOTTOM, // 渐变方向，这里设置为从上到下
+//                new int[] {Color.parseColor("#87CEEB"), Color.parseColor("#F5F5F5")} // 渐变色数组
+//        );
+//
+//        // 设置渐变色背景
+//        nestedScrollView.setBackground(gradientDrawable2);
 
         //跳转统计数据
         ImageView statistic = view.findViewById(R.id.home_icon1);
@@ -154,7 +166,8 @@ public class HomeFragment extends Fragment {
 
         // 设置系统状态栏为toolbar颜色
         int toolbarColor = ((ColorDrawable)toolbar.getBackground()).getColor();
-        setSysWinColor(toolbarColor);
+        setSysWinColor(Color.WHITE, 1);
+
 
         // 用toolbar取代actionBar
         activity.setSupportActionBar(toolbar);
@@ -174,6 +187,11 @@ public class HomeFragment extends Fragment {
 
                 relativeLayout.setAlpha(alpha);
                 toolbar.setAlpha(alpha_toolbar);
+
+                // 根据alpha_toolbar的值来设置状态栏颜色
+                int sysWinAlpha = (int) (alpha_toolbar * 255);
+                setSysWinColor(Color.WHITE, sysWinAlpha);
+//                window.setStatusBarColor();
             }
         });
 
@@ -238,11 +256,29 @@ public class HomeFragment extends Fragment {
         return true;
     }
 
-    public void setSysWinColor(int color) {
+    // 计算状态栏颜色的中间值
+    public int calculateStatusBarColor(int startColor, int endColor, float ratio) {
+        int startRed = Color.red(startColor);
+        int startGreen = Color.green(startColor);
+        int startBlue = Color.blue(startColor);
+
+        int endRed = Color.red(endColor);
+        int endGreen = Color.green(endColor);
+        int endBlue = Color.blue(endColor);
+
+        int currentRed = (int) (startRed + (endRed - startRed) * ratio);
+        int currentGreen = (int) (startGreen + (endGreen - startGreen) * ratio);
+        int currentBlue = (int) (startBlue + (endBlue - startBlue) * ratio);
+
+        return Color.rgb(currentRed, currentGreen, currentBlue);
+    }
+
+    public void setSysWinColor(int color, int alpha) {
         if (Build.VERSION.SDK_INT >= 21) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(color);
+//            window.setStatusBarColor(color);
+            window.setStatusBarColor(ColorUtils.setAlphaComponent(color, alpha));
         }
     }
 
