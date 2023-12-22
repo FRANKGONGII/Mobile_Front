@@ -151,29 +151,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
-
-
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="我的数据"-->
-<!--                android:textSize="@dimen/fifteen"-->
-<!--                android:layout_marginStart="30dp"/>-->
-
-<!--            <GridView-->
-<!--                android:id="@+id/sportCardGridView"-->
-<!--                android:layout_width="350dp"-->
-<!--                android:layout_height="250dp"-->
-<!--                android:layout_gravity="center_horizontal"-->
-<!--                android:columnWidth="140dp"-->
-<!--                android:gravity="center"-->
-<!--                android:horizontalSpacing="10dp"-->
-<!--                android:numColumns="2"-->
-<!--                android:stretchMode="columnWidth"-->
-<!--                android:verticalSpacing="10dp"-->
-<!--                android:scrollbars="none"-->
-<!--                android:scrollingCache="false"/>-->
+            android:layout_marginTop="30dp"
+            android:id="@+id/home_relative1">
 
             <TextView
                 android:id="@+id/t1"
@@ -197,44 +176,205 @@
                 android:background="@color/transparent"/>
 
 
-            <TextView
-                android:id="@+id/t2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/sportCardRecyclerView"
-                android:layout_centerHorizontal="true"
-                android:text="其它数据"
-                android:textSize="@dimen/fifteen"
-                android:layout_marginStart="50dp"/>
+<!--            <TextView-->
+<!--                android:id="@+id/t2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@id/sportCardRecyclerView"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:text="其它数据"-->
+<!--                android:textSize="@dimen/fifteen"-->
+<!--                android:layout_marginStart="50dp"/>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/other"
-                android:layout_width="300dp"
-                android:layout_height="150dp"
-                android:layout_below="@id/t2"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_below="@+id/sportCardRecyclerView"
                 android:layout_alignStart="@id/sportCardRecyclerView"
                 android:layout_alignEnd="@id/sportCardRecyclerView"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:theme="@style/Theme.MaterialComponents.Light"
-                app:cardCornerRadius="4dp"
+                app:cardCornerRadius="10dp"
                 app:cardMaxElevation="20dp"
                 app:layout_anchorGravity="top|center"
                 app:strokeColor="@android:color/transparent">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-<!--                <com.jjoe64.graphview.GraphView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:id="@+id/graph" />-->
+                    <!-- Guideline 用于平分宽度 -->
 
-                <ImageView
-                    android:layout_width="150sp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/statistic_background"
-                    android:id="@+id/statistic"/>
+                    <!-- 定义第一个垂直分割线 -->
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0" />
+
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.25" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.75" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="1" />
+
+                    <!-- 第一组图片和文字 -->
+                    <ImageView
+                        android:id="@+id/home_icon1"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icon_statistic"
+                        app:layout_constraintEnd_toStartOf="@id/guideline1"
+                        app:layout_constraintStart_toStartOf="@+id/guideline0"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="10dp"/>
+
+                    <TextView
+                        android:id="@+id/text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="运动记录"
+                        app:layout_constraintEnd_toStartOf="@id/guideline1"
+                        app:layout_constraintStart_toStartOf="@+id/guideline0"
+                        app:layout_constraintTop_toBottomOf="@+id/home_icon1"
+                        android:layout_marginTop="5dp"/>
+
+                    <!-- 第二组图片和文字 -->
+                    <ImageView
+                        android:id="@+id/home_icon2"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icon_reward"
+                        app:layout_constraintEnd_toStartOf="@id/guideline2"
+                        app:layout_constraintStart_toStartOf="@+id/guideline1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="10dp"/>
+
+                    <TextView
+                        android:id="@+id/text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="运动等级"
+                        app:layout_constraintEnd_toStartOf="@id/guideline2"
+                        app:layout_constraintStart_toStartOf="@+id/guideline1"
+                        app:layout_constraintTop_toBottomOf="@+id/home_icon2"
+                        android:layout_marginTop="5dp"/>
+
+                    <!-- 第三组图片和文字 -->
+                    <ImageView
+                        android:id="@+id/home_icon3"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icon_ai"
+                        app:layout_constraintEnd_toStartOf="@id/guideline3"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="10dp"/>
+
+                    <TextView
+                        android:id="@+id/text3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AI助手"
+                        app:layout_constraintEnd_toStartOf="@id/guideline3"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toBottomOf="@+id/home_icon3"
+                        android:layout_marginTop="5dp"/>
+
+                    <!-- 第四组图片和文字 -->
+                    <ImageView
+                        android:id="@+id/home_icon4"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icon_body"
+                        app:layout_constraintEnd_toStartOf="@id/guideline4"
+                        app:layout_constraintStart_toStartOf="@+id/guideline3"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="10dp"/>
+
+                    <TextView
+                        android:id="@+id/text4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="身体状况"
+                        app:layout_constraintEnd_toStartOf="@id/guideline4"
+                        app:layout_constraintStart_toStartOf="@+id/guideline3"
+                        app:layout_constraintTop_toBottomOf="@+id/home_icon4"
+                        android:layout_marginTop="5dp"/>
+
+
+
+
+
+
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <TextView
                 android:id="@+id/t3"

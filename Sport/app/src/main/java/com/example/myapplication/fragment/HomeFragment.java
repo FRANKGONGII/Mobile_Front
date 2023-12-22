@@ -38,6 +38,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.ChatActivity;
 import com.example.myapplication.EditUserInfoActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.StatisticActivity;
@@ -111,14 +112,30 @@ public class HomeFragment extends Fragment {
 
 
 
-        ImageView imageView = view.findViewById(R.id.statistic);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        //跳转统计数据
+        ImageView statistic = view.findViewById(R.id.home_icon1);
+        statistic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent  = new Intent(getActivity(), StatisticActivity.class);
                 startActivity(intent);
             }
         });
+
+        //跳转ai助手
+        ImageView assistant = view.findViewById(R.id.home_icon3);
+        assistant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(getActivity(), ChatActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
 
 
 
@@ -172,78 +189,8 @@ public class HomeFragment extends Fragment {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-
-        List<Record> records = dataService.getAllRecords();
-        if(records==null){
-            Toast.makeText(getActivity(), "获取历史运动记录失败", Toast.LENGTH_SHORT).show();
-        }else{
-            //设置图表
-//            GraphView graph = (GraphView) view.findViewById(R.id.graph);
-//           DataPoint[] dataPointArray = new DataPoint[4];//默认按照类型显示
-//            int[] cnt = new int[4];
-//            for(Record record:records){
-//                Record.RecordType recordType = record.getRecordType();
-//                if(recordType== Record.RecordType.RUNNING){
-//                    cnt[0]++;
-//                }else if(recordType== Record.RecordType.RIDING){
-//                    cnt[1]++;
-//                }else if(recordType== Record.RecordType.SWIMMING){
-//                    cnt[2]++;
-//                }else if(recordType== Record.RecordType.WALKING){
-//                    cnt[3]++;
-//                }
-//            }
-////
-//            for(int i = 0;i<4;i++){
-//                dataPointArray[i] = new DataPoint(i,cnt[i]);
-//            }
-////
-////            BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(dataPointArray);
-////            graph.addSeries(series);
-//
-//
-//
-//            GraphView graph = (GraphView) view.findViewById(R.id.graph);
-//            BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPointArray);
-//            graph.addSeries(series);
-//
-//
-//            series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-//                @Override
-//                public int get(DataPoint data) {
-//                    return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
-//                }
-//            });
-//
-//            series.setSpacing(50);
-//
-//
-//            //series.setDrawValuesOnTop(true);
-//            //series.setValuesOnTopColor(Color.RED);
-//
-//
-//            graph.getGridLabelRenderer().setNumHorizontalLabels(4);
-//
-//
-//
-//            graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
-//                @Override
-//                public String formatLabel(double value, boolean isValueX) {
-//                    if (isValueX) {
-//                        Log.d("NUM_TEST",value+"");
-//                       if(0<=value&&value<=3){
-//                           return sportType[(int) value];
-//                       }
-//                        return super.formatLabel(value, isValueX);
-//
-//                    } else {
-//                        // show currency for y values
-//                        return super.formatLabel(value, isValueX)+"次";
-//                    }
-//
-//                }
-//            });
-        }
+        
+        
 
 
 
