@@ -52,6 +52,7 @@
                         android:layout_height="80dp"
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="56dp"
+                        android:background="@color/transparent"
                         app:civ_border_width="2dp"
                         app:civ_border_color="@color/white"/>
 
@@ -105,19 +106,14 @@
 <!--                        android:layout_marginTop="15dp"-->
 <!--                        android:text="关注"-->
 <!--                        android:textStyle="bold"/>-->
-
-
-
-
                 </RelativeLayout>
-
 
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?actionBarSize"
-                    android:background="@color/blue_5"
+                    android:background="@color/white"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     android:fitsSystemWindows="false"
                     app:title=""
@@ -165,7 +161,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/sportCardRecyclerView"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/t1"
                 android:layout_alignStart="@id/t1"
@@ -438,6 +434,7 @@
 
 
             </com.google.android.material.card.MaterialCardView>
+
 
 
 

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.ChatActivity;
@@ -111,6 +113,15 @@ public class HomeFragment extends Fragment {
         editUserInfoBtn = view.findViewById((R.id.editUserInfoButton));
 
 
+        // 创建一个渐变色的Drawable对象
+        GradientDrawable gradientDrawable = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM, // 渐变方向，这里设置为从上到下
+                new int[] {Color.parseColor("#2196F3"), Color.parseColor("#F5F5F5")} // 渐变色数组
+        );
+
+        // 设置渐变色背景
+        appBarLayout.setBackground(gradientDrawable);
+
 
         //跳转统计数据
         ImageView statistic = view.findViewById(R.id.home_icon1);
@@ -148,6 +159,9 @@ public class HomeFragment extends Fragment {
         // 用toolbar取代actionBar
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        View customToolbar = getLayoutInflater().inflate(R.layout.custom_toolbar, toolbar, false);
+        toolbar.addView(customToolbar);
 
         // AppBar向上滑动渐变透明，同时toolbar逐渐显现
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -287,10 +301,17 @@ public class HomeFragment extends Fragment {
         //利用RecyclerView加载
         SportDataAdapter adapter = new SportDataAdapter(recordList);
         recyclerView = view.findViewById(R.id.sportCardRecyclerView);
-        int columnCount = 2; // 每行的列数
-        int itemCount = adapter.getItemCount(); // item 的数量
-        int rowCount = (int) Math.ceil((double) itemCount / columnCount); // 计算行数
-        GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2, RecyclerView.VERTICAL, false) {
+//        int columnCount = 2; // 每行的列数
+//        int itemCount = adapter.getItemCount(); // item 的数量
+//        int rowCount = (int) Math.ceil((double) itemCount / columnCount); // 计算行数
+//        GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2, RecyclerView.VERTICAL, false) {
+//            @Override
+//            public boolean canScrollVertically() {
+//                return false;
+//            }
+//        };
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -299,6 +320,9 @@ public class HomeFragment extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setFocusable(false);
 
         //利用GridView加载
 //        GridView sportCardGridView = view.findViewById(R.id.sportCardGridView);
