@@ -10,25 +10,34 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:orientation="horizontal"
-        android:background="@color/blue_5">
+        android:background="@android:color/white">
 
         <android.widget.Button
             android:id="@+id/btn_back"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:layout_marginLeft="10sp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/baseline_arrow_back_ios_white_24"/>
 
         <TextView
             android:id="@+id/chat_top_bar"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="45dp"
+            android:layout_weight="1"
             android:gravity="center"
-            android:background="@color/blue_5"
-            android:text="运动助手"
+            android:background="@android:color/white"
+            android:text="智能运动助手"
 
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="20sp" />
+
+<!-- 占位用，令文字在中间，记得将宽度与返回键设为一致-->
+        <View
+            android:id="@+id/chat_fill_bar"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/white"/>
 
     </LinearLayout>
 
@@ -43,16 +52,17 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_above="@+id/rl_bottom"
-            android:cacheColorHint="@android:color/black"
+            android:cacheColorHint="@android:color/transparent"
             android:divider="@null"
-            android:listSelector="@null"
+            android:listSelector="@android:color/transparent"
             android:transcriptMode="alwaysScroll" />
+
         <RelativeLayout
             android:id="@+id/rl_bottom"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="65dp"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/bottom_bg">
+            android:background="#fbfbfb">
             <android.widget.Button
                 android:id="@+id/btn_send"
                 android:layout_width="60dp"

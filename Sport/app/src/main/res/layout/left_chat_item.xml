@@ -4,14 +4,15 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:padding="6dp">
-    <ImageView
+
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_head"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="5dp"
-        android:background="@drawable/robot_head"
+        android:src="@drawable/robot_head"
         android:focusable="false" />
     <TextView
         android:id="@+id/tv_chat_content"
