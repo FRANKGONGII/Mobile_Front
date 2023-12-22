@@ -25,7 +25,7 @@ public class Record implements Serializable {
         private static final HashMap<RecordType,String> mp = new HashMap<RecordType,String>(){{
             put(RUNNING,"跑步");
             put(RIDING,"骑行");
-            put(WALKING,"健走");
+            put(WALKING,"快走");
             put(SWIMMING,"游泳");
         }};
 
