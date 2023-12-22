@@ -71,5 +71,9 @@
         <color name="btn_green_p">#49B557</color>
         <color name="btn_green_n">#01BF71</color>
 
+        <color name="tabUnselectedColor">#808080</color>
+        <color name="tabSelectedColor">#000000</color>
+        <color name="tabIndicatorColor">#FF0000</color>
+
 
 </resources>

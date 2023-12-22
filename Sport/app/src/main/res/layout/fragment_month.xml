@@ -75,34 +75,48 @@
             </LinearLayout>
 
             <!-- 横向的三选框 -->
-            <RadioGroup
-                android:id="@+id/radioGroupOptions"
+<!--            <RadioGroup-->
+<!--                android:id="@+id/radioGroupOptions"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_marginTop="16sp"-->
+<!--                android:layout_marginEnd="10sp">-->
+
+<!--                <RadioButton-->
+<!--                    android:id="@+id/radioButtonDistance"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="里程" />-->
+
+<!--                <RadioButton-->
+<!--                    android:id="@+id/radioButtonDays"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="次数" />-->
+
+<!--                <RadioButton-->
+<!--                    android:id="@+id/radioButtonDuration"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="时长" />-->
+<!--            </RadioGroup>-->
+
+
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:tabGravity="fill"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:orientation="horizontal"
                 android:layout_marginTop="16sp"
-                android:layout_marginEnd="10sp">
-
-                <RadioButton
-                    android:id="@+id/radioButtonDistance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="里程" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonDays"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="次数" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonDuration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="时长" />
-            </RadioGroup>
+                android:layout_marginEnd="10sp"
+                app:tabMode="fixed"
+                android:isScrollContainer="false"/>
 
             <lecho.lib.hellocharts.view.ColumnChartView
                 android:id="@+id/chart"

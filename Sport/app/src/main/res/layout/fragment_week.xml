@@ -83,35 +83,69 @@
                     android:text="累计跑步" />
             </LinearLayout>
 
-            <!-- 横向的三选框 -->
-            <RadioGroup
-                android:id="@+id/radioGroupOptions2"
+
+<!--            <RadioGroup-->
+<!--                android:id="@+id/radioGroupOptions2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_marginTop="16sp"-->
+<!--                android:layout_marginEnd="10sp">-->
+
+<!--                <RadioButton-->
+<!--                    android:id="@+id/radioButtonDistance2"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="里程" />-->
+
+<!--                <RadioButton-->
+<!--                    android:id="@+id/radioButtonDays2"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="次数" />-->
+
+<!--                <RadioButton-->
+<!--                    android:id="@+id/radioButtonDuration2"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="时长" />-->
+<!--            </RadioGroup>-->
+
+            <!-- TabLayout用于显示选项卡 -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:tabGravity="fill"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:orientation="horizontal"
                 android:layout_marginTop="16sp"
-                android:layout_marginEnd="10sp">
+                android:layout_marginEnd="10sp"
+                app:tabMode="fixed"
+                android:isScrollContainer="false"/>
 
-                <RadioButton
-                    android:id="@+id/radioButtonDistance2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="里程" />
+<!--            <com.google.android.material.tabs.TabLayout-->
+<!--                android:id="@+id/tabLayout1"-->
+<!--                android:layout_width="80sp"-->
+<!--                android:layout_height="30sp"-->
+<!--                app:tabMode="fixed"-->
+<!--                app:tabGravity="fill"-->
+<!--                app:tabTextAppearance="?attr/tabTextAppearance"-->
+<!--                app:tabTextColor="@color/tabUnselectedColor"-->
+<!--                app:tabSelectedTextColor="@color/tabSelectedColor"-->
+<!--                app:tabIndicatorColor="@color/tabIndicatorColor"-->
+<!--                app:tabIndicatorHeight="2dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_marginTop="16sp"-->
+<!--                android:layout_marginEnd="10sp"-->
+<!--                app:tabBackground="@android:color/transparent">-->
+<!--            </com.google.android.material.tabs.TabLayout>-->
 
-                <RadioButton
-                    android:id="@+id/radioButtonDays2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="次数" />
 
-                <RadioButton
-                    android:id="@+id/radioButtonDuration2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="时长" />
-            </RadioGroup>
 
             <lecho.lib.hellocharts.view.ColumnChartView
                 android:id="@+id/chart"

@@ -20,6 +20,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.bean.Record;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 import org.w3c.dom.Text;
@@ -194,45 +195,107 @@ public class MonthlyFragment extends Fragment {
         });
 
 
-        //选择器
-        RadioGroup radioGroupOptions = view.findViewById(R.id.radioGroupOptions);
-        // 设置 RadioGroup 监听
-        radioGroupOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//        //选择器
+//        RadioGroup radioGroupOptions = view.findViewById(R.id.radioGroupOptions);
+//        // 设置 RadioGroup 监听
+//        radioGroupOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                List<Record> result = dataService.queryRecordByBoth(Record.RecordType.valueOf(sportTypesEn[chosen_type]),
+//                        get_this_month(),get_next_month(get_this_month()));
+//                // 处理选中变化的逻辑
+//                if(result==null){
+//                    Toast.makeText(getContext(),"获取数据错误",Toast.LENGTH_LONG);
+//                    return;
+//                }
+//                generateData(result);
+//                if (checkedId == R.id.radioButtonDistance) {
+//                    // 选中了里程
+//                    Log.d("RADIO_TEST","distance");
+//                    // 处理相关逻辑
+//                    radio = 0;
+//                    drawChartDis(distance[chosen_type]);
+//                } else if (checkedId == R.id.radioButtonDays) {
+//                    // 选中了次数
+//                    radio = 1;
+//                    Log.d("RADIO_TEST","days");
+//                    drawChartDis(frequency[chosen_type]);
+//                } else if (checkedId == R.id.radioButtonDuration) {
+//                    // 选中了时长
+//                    radio = 2;
+//                    drawChartTime(duration[chosen_type]);
+//                }
+//                changePanelData();
+//
+//
+//            }
+//        });
+//
+//        //默认选中里程
+//        RadioButton radioButtonDistance = view.findViewById(R.id.radioButtonDistance);
+//        radioButtonDistance.setChecked(true);
+
+
+        //尝试另一个写法
+        TabLayout tabLayout = view.findViewById(R.id.tabLayout3);
+
+        // 添加选项卡
+        tabLayout.addTab(tabLayout.newTab().setText("里程"));
+        tabLayout.addTab(tabLayout.newTab().setText("次数"));
+        tabLayout.addTab(tabLayout.newTab().setText("时长"));
+
+        // 设置指示器高度和颜色
+        tabLayout.setSelectedTabIndicatorHeight(getResources().getDimensionPixelSize(R.dimen.tab_indicator_height));
+        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
+
+        // 设置选项卡选择监听器
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                List<Record> result = dataService.queryRecordByBoth(Record.RecordType.valueOf(sportTypesEn[chosen_type]),
+            public void onTabSelected(TabLayout.Tab tab) {
+                // 选中时的操作
+                List<Record> results = dataService.queryRecordByBoth(Record.RecordType.valueOf(sportTypesEn[chosen_type]),
                         get_this_month(),get_next_month(get_this_month()));
-                // 处理选中变化的逻辑
-                if(result==null){
+                if(results==null){
                     Toast.makeText(getContext(),"获取数据错误",Toast.LENGTH_LONG);
                     return;
                 }
-                generateData(result);
-                if (checkedId == R.id.radioButtonDistance) {
-                    // 选中了里程
-                    Log.d("RADIO_TEST","distance");
-                    // 处理相关逻辑
-                    radio = 0;
-                    drawChartDis(distance[chosen_type]);
-                } else if (checkedId == R.id.radioButtonDays) {
-                    // 选中了次数
-                    radio = 1;
-                    Log.d("RADIO_TEST","days");
-                    drawChartDis(frequency[chosen_type]);
-                } else if (checkedId == R.id.radioButtonDuration) {
-                    // 选中了时长
-                    radio = 2;
-                    drawChartTime(duration[chosen_type]);
+                generateData(results);
+                switch (tab.getPosition()) {
+                    case 0:
+                        // 处理"里程"选项卡被选中的情况
+                        radio = 0;
+                        drawChartDis(distance[chosen_type]);
+                        Log.d("RADIO3_TEST","distance");
+                        break;
+                    case 1:
+                        // 处理"次数"选项卡被选中的情况
+                        radio = 1;
+                        drawChartDis(frequency[chosen_type]);
+                        Log.d("RADIO3_TEST","days");
+                        break;
+                    case 2:
+                        // 处理"时长"选项卡被选中的情况
+                        radio = 2;
+                        drawChartTime(duration[chosen_type]);
+                        Log.d("RADIO3_TEST","time");
+                        break;
+                    default:
+                        break;
                 }
                 changePanelData();
 
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // 未选中时的操作
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // 再次选中时的操作
             }
         });
-
-        //默认选中里程
-        RadioButton radioButtonDistance = view.findViewById(R.id.radioButtonDistance);
-        radioButtonDistance.setChecked(true);
 
         return view;
     }

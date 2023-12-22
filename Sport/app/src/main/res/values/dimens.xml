@@ -18,6 +18,7 @@
     <dimen name="cut_line_height">0.7dp</dimen>
     <dimen name="button_height">45dp</dimen>
     <dimen name="item_height">48dp</dimen>
+    <dimen name="tab_indicator_height">2dp</dimen>
 
     <!--边距-->
     <dimen name="cardPicRadius">4dp</dimen>
