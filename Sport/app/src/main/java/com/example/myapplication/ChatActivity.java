@@ -135,6 +135,7 @@ public class ChatActivity extends AppCompatActivity{
         promptList.add(message);
         roleList.add("user");
         chatBeanList.add(request);
+        adapter.notifyDataSetChanged();
 
         LLM_Post();
     }
