@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,10 +16,25 @@ import com.example.myapplication.R;
 import com.example.myapplication.ResultActivity;
 import com.example.myapplication.bean.Record;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder> {
     private List<Record> recordList;
+
+    public static final List<Integer> uriList = new ArrayList<Integer>(){{
+        add(R.drawable.rank_s);
+        add(R.drawable.rank_a);
+        add(R.drawable.rank_b);
+        add(R.drawable.rank_c);
+    }};
+
+    public static final List<String> rankList = new ArrayList<String>(){{
+        add("Excellent!");
+        add("Well Done!");
+        add("Not Bad!");
+        add("Come On!");
+    }};
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         View recordView;//存储解析到的view
@@ -31,6 +47,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
 
         TextView record_type;
 //        Button chat_btn;
+        ImageView rank_img;
+        TextView rank_text;
 
         int record_id;
 
@@ -42,6 +60,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
             duration = view.findViewById(R.id.duration);
             record_type = view.findViewById(R.id.record_type);
 //            chat_btn = view.findViewById(R.id.btn_chat);
+            rank_img = view.findViewById(R.id.rankImg);
+            rank_text = view.findViewById(R.id.rankText);
         }
     }
 
@@ -95,11 +115,20 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         holder.distance.setText(record_bean.getDistanceByStr());
         holder.record_type.setText(record_bean.getRecordTypeByStr());
         holder.record_id = record_bean.getId();
+
+
+        int rank_num = getRank();
+        holder.rank_img.setImageResource(uriList.get(rank_num));
+        holder.rank_text.setText(rankList.get(rank_num));
     }
 
     @Override
     public int getItemCount() {
         return recordList.size();
+    }
+
+    public int getRank(){
+        return 3;
     }
 
 }
