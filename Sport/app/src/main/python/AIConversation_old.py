@@ -23,7 +23,6 @@ def conversation(role_msg, prompt_msg):
             model="ChatGLM3-6B",
             messages=message,
             stream=False,
-            timeout=60,
         )
         return reply.choices[0].message.content
     except:
@@ -33,8 +32,8 @@ def conversation(role_msg, prompt_msg):
 
 
 if __name__ == "__main__":
-    role = "user#assistant#user#assistant#user"
-    prompt = "aaaaa#bbbbb#ccccc#ddddd#eeeee"
-    # role = "assistant#user"
-    # prompt = "Hello, I'm ChatGLM3-6B, can I help you?#please tell me about yourself"
+    # role = "user#assistant#user#assistant"
+    # prompt = "aaaaa#bbbbb#ccccc#ddddd"
+    role = "assistant#user"
+    prompt = "Hello, I'm ChatGLM3-6B, can I help you?#please tell me about yourself"
     print(conversation(role, prompt))
