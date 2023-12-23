@@ -8,103 +8,176 @@
         app:cardElevation="5dp"
         android:layout_margin="8dp">
 
-
-
-        <LinearLayout
-            android:id="@+id/item_activity_linear1"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/typeImg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="@id/guideline_hor_1"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_hor_2"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/robot_head" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_hor_1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.3" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_hor_2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.7" />
+
+<!--            <androidx.constraintlayout.widget.Guideline-->
+<!--                android:id="@+id/guideline"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:orientation="vertical"-->
+<!--                app:layout_constraintGuide_percent="0.2" />-->
+
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/item_activity_linear1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/typeImg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
-                <TextView
-                    android:id = "@+id/record_time"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="3dp"
-                    android:text="10月15日"
-                    android:textColor="#40000000"
-                    android:textSize="15sp" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id = "@+id/record_type"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id = "@+id/record_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:text="10月15日"
+                        android:textColor="#40000000"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id = "@+id/record_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:text="跑步"
+                        android:textColor="#40000000"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:padding="0dp"
+                        android:text="8.8"
+                        android:textColor="#000000"
+                        android:textSize="50dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:text="km"
+                        android:textColor="#000000"
+                        android:textSize="15dp"
+                        android:layout_toRightOf="@+id/distance"
+                        android:layout_alignBottom="@+id/distance"/>
+
+                    <!--                <android.widget.Button-->
+                    <!--                    android:id="@+id/btn_chat"-->
+                    <!--                    android:layout_width="62dp"-->
+                    <!--                    android:layout_height="35dp"-->
+                    <!--                    android:layout_alignParentEnd="true"-->
+                    <!--                    android:layout_centerVertical="true"-->
+                    <!--                    android:layout_marginEnd="10dp"-->
+                    <!--                    android:background="@drawable/btn_send_selector"-->
+                    <!--                    android:text="智能分析"-->
+                    <!--                    android:textColor="#000000"-->
+                    <!--                    android:textSize="12sp" />-->
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/distance"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="10dp">
+
+                        <ImageView
+                            android:id="@+id/rankImg"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/rank_s"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/rankText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/rankImg"
+                            android:text="Excellent!"
+                            android:textStyle="bold"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="3dp"
-                    android:text="跑步"
-                    android:textColor="#40000000"
-                    android:textSize="15sp" />
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25sp"
+                        android:layout_height="match_parent"
+                        android:padding="3sp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/time" />
+
+                    <TextView
+                        android:id = "@+id/duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3sp"
+                        android:text="00:15:24"
+                        android:textColor="#80000000"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <!--            <ImageView-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="1sp"-->
+                <!--                android:background="@android:color/black">-->
+
+                <!--            </ImageView>-->
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id = "@+id/distance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="0dp"
-                    android:text="8.8"
-                    android:textColor="#000000"
-                    android:textSize="50dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp"
-                    android:text="km"
-                    android:textColor="#000000"
-                    android:textSize="15dp"
-                    android:layout_toRightOf="@+id/distance"
-                    android:layout_alignBottom="@+id/distance"/>
-
-<!--                <android.widget.Button-->
-<!--                    android:id="@+id/btn_chat"-->
-<!--                    android:layout_width="62dp"-->
-<!--                    android:layout_height="35dp"-->
-<!--                    android:layout_alignParentEnd="true"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_marginEnd="10dp"-->
-<!--                    android:background="@drawable/btn_send_selector"-->
-<!--                    android:text="智能分析"-->
-<!--                    android:textColor="#000000"-->
-<!--                    android:textSize="12sp" />-->
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="25sp"
-                    android:layout_height="match_parent"
-                    android:padding="3sp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/time" />
-
-                <TextView
-                    android:id = "@+id/duration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3sp"
-                    android:text="00:15:24"
-                    android:textColor="#80000000"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-<!--            <ImageView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="1sp"-->
-<!--                android:background="@android:color/black">-->
-
-<!--            </ImageView>-->
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

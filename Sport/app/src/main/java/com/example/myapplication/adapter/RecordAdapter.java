@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,10 +16,34 @@ import com.example.myapplication.R;
 import com.example.myapplication.ResultActivity;
 import com.example.myapplication.bean.Record;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder> {
     private List<Record> recordList;
+
+    public static final List<Integer> rankUriList = new ArrayList<Integer>(){{
+        add(R.drawable.rank_s);
+        add(R.drawable.rank_a);
+        add(R.drawable.rank_b);
+        add(R.drawable.rank_c);
+    }};
+
+    public static final HashMap<Record.RecordType, Integer> typeUriMap = new HashMap<Record.RecordType, Integer>(){{
+        put(Record.RecordType.RUNNING, R.drawable.record_type_running);
+        put(Record.RecordType.RIDING, R.drawable.record_type_riding);
+        put(Record.RecordType.WALKING, R.drawable.record_type_walking);
+        put(Record.RecordType.SWIMMING, R.drawable.record_type_swimming);
+    }};
+
+    public static final List<String> rankList = new ArrayList<String>(){{
+        add("Excellent!");
+        add("Well Done!");
+        add("Not Bad!");
+        add("Come On!");
+    }};
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         View recordView;//存储解析到的view
@@ -31,8 +56,11 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
 
         TextView record_type;
 //        Button chat_btn;
+        ImageView type_img;
+        ImageView rank_img;
+        TextView rank_text;
 
-        int record_id;
+        long record_id;
 
         public ViewHolder(View view) {
             super(view);
@@ -42,6 +70,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
             duration = view.findViewById(R.id.duration);
             record_type = view.findViewById(R.id.record_type);
 //            chat_btn = view.findViewById(R.id.btn_chat);
+            type_img = view.findViewById(R.id.typeImg);
+            rank_img = view.findViewById(R.id.rankImg);
+            rank_text = view.findViewById(R.id.rankText);
         }
     }
 
@@ -58,7 +89,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         viewHolder.recordView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int id = viewHolder.record_id;
+                long id = viewHolder.record_id;
 
                 Intent intent = new Intent(view.getContext(), ResultActivity.class);
                 intent.putExtra("passId",id);
@@ -95,11 +126,51 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         holder.distance.setText(record_bean.getDistanceByStr());
         holder.record_type.setText(record_bean.getRecordTypeByStr());
         holder.record_id = record_bean.getId();
+
+        holder.type_img.setImageResource(typeUriMap.get(record_bean.getRecordType()));
+        int rank_num = getRank(record_bean);
+        holder.rank_img.setImageResource(rankUriList.get(rank_num));
+        holder.rank_text.setText(rankList.get(rank_num));
     }
 
     @Override
     public int getItemCount() {
         return recordList.size();
+    }
+
+    public int getRank(Record record){
+        HashMap<Record.RecordType, Double> distRateMap = new HashMap<Record.RecordType, Double>(){{
+            put(Record.RecordType.RUNNING, 1.0);
+            put(Record.RecordType.RIDING, 3.0);
+            put(Record.RecordType.WALKING, 1.2);
+            put(Record.RecordType.SWIMMING, 0.4);
+        }};
+
+        HashMap<Record.RecordType, Double> speedRateMap = distRateMap;
+
+        HashMap<Double, Integer> distRankMap = new HashMap<Double, Integer>(){{
+            put(3.0, 0);
+            put(2.4, 1);
+            put(1.5, 2);
+        }};
+
+        HashMap<Double, Integer> speedRankMap = new HashMap<Double, Integer>(){{
+            put(4.76, 0);
+            put(3.7, 1);
+            put(3.03, 2);
+        }};
+
+        int distRank = searchRankTable(distRankMap, record.getDistance() * distRateMap.get(record.getRecordType()));
+        double speed = record.getDistance() / record.getDuration() * 1000;
+        int speedRank = searchRankTable(speedRankMap, speed * speedRateMap.get(record.getRecordType()));
+        return (distRank + speedRank + 1) / 2;
+    }
+
+    public int searchRankTable(HashMap<Double, Integer> table, double value){
+        for(Map.Entry<Double, Integer> entry : table.entrySet()){
+            if(value >= entry.getKey()) return entry.getValue();
+        }
+        return 3;
     }
 
 }
