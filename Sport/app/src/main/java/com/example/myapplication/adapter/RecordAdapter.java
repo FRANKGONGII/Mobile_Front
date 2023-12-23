@@ -60,7 +60,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         ImageView rank_img;
         TextView rank_text;
 
-        int record_id;
+        long record_id;
 
         public ViewHolder(View view) {
             super(view);
