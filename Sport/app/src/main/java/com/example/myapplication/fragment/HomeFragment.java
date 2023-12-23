@@ -39,6 +39,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
@@ -52,6 +53,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.ChatActivity;
 import com.example.myapplication.EditUserInfoActivity;
+import com.example.myapplication.MedalActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.StatisticActivity;
 import com.example.myapplication.adapter.SportDataAdapter;
@@ -141,6 +143,23 @@ public class HomeFragment extends Fragment {
 //
 //        // 设置渐变色背景
 //        nestedScrollView.setBackground(gradientDrawable2);
+
+
+
+
+        //TODO:检查一下有没有获得奖章--
+        //奖章默认1个，也就是注册会给一个
+        //跳转奖章
+        CardView cardViewMedal = view.findViewById(R.id.home_medal);
+        cardViewMedal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MedalActivity.class));
+            }
+        });
+
+
+
 
         //跳转统计数据
         ImageView statistic = view.findViewById(R.id.home_icon1);
