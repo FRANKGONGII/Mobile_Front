@@ -17,7 +17,9 @@ import com.example.myapplication.ResultActivity;
 import com.example.myapplication.bean.Record;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder> {
     private List<Record> recordList;
@@ -117,7 +119,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         holder.record_id = record_bean.getId();
 
 
-        int rank_num = getRank();
+        int rank_num = getRank(record_bean);
         holder.rank_img.setImageResource(uriList.get(rank_num));
         holder.rank_text.setText(rankList.get(rank_num));
     }
@@ -127,7 +129,38 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         return recordList.size();
     }
 
-    public int getRank(){
+    public int getRank(Record record){
+        HashMap<Record.RecordType, Double> distRateMap = new HashMap<Record.RecordType, Double>(){{
+            put(Record.RecordType.RUNNING, 1.0);
+            put(Record.RecordType.RIDING, 3.0);
+            put(Record.RecordType.WALKING, 1.2);
+            put(Record.RecordType.SWIMMING, 0.4);
+        }};
+
+        HashMap<Record.RecordType, Double> speedRateMap = distRateMap;
+
+        HashMap<Double, Integer> distRankMap = new HashMap<Double, Integer>(){{
+            put(3.0, 0);
+            put(2.4, 1);
+            put(1.5, 2);
+        }};
+
+        HashMap<Double, Integer> speedRankMap = new HashMap<Double, Integer>(){{
+            put(4.76, 0);
+            put(3.7, 1);
+            put(3.03, 2);
+        }};
+
+        int distRank = searchRankTable(distRankMap, record.getDistance() * distRateMap.get(record.getRecordType()));
+        double speed = record.getDistance() / record.getDuration() * 1000;
+        int speedRank = searchRankTable(speedRankMap, speed * speedRateMap.get(record.getRecordType()));
+        return (distRank + speedRank + 1) / 2;
+    }
+
+    public int searchRankTable(HashMap<Double, Integer> table, double value){
+        for(Map.Entry<Double, Integer> entry : table.entrySet()){
+            if(value >= entry.getKey()) return entry.getValue();
+        }
         return 3;
     }
 
