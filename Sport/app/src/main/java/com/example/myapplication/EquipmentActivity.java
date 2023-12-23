@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,15 @@ public class EquipmentActivity extends AppCompatActivity {
         adapter = new ThirdPartyAdapter(contentList, this);
         listView = findViewById(R.id.equipment_listView);
         listView.setAdapter(adapter);
+
+        View Backbtn = findViewById(R.id.equipment_ivBack);
+        Backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =  new Intent(EquipmentActivity.this,HomeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         setConstantList();
     }
