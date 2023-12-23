@@ -40,12 +40,12 @@ public class EquipmentActivity extends AppCompatActivity {
         listView = findViewById(R.id.equipment_listView);
         listView.setAdapter(adapter);
 
+
         View Backbtn = findViewById(R.id.equipment_ivBack);
         Backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(EquipmentActivity.this,HomeActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -78,4 +78,6 @@ public class EquipmentActivity extends AppCompatActivity {
     public void undoneClick(View view){
         Toast.makeText(view.getContext(), "功能开发中....", Toast.LENGTH_SHORT).show();
     }
+
+
 }

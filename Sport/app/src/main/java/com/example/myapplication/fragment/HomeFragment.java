@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -203,6 +204,14 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent  = new Intent(getActivity(), EquipmentActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button buttonMoreEquip = view.findViewById(R.id.buttonMoreEquip);
+        buttonMoreEquip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), "功能开发中....", Toast.LENGTH_SHORT).show();
             }
         });
 
