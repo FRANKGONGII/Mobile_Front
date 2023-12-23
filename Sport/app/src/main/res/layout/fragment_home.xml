@@ -24,22 +24,21 @@
                 android:id="@+id/collapsingToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 android:fitsSystemWindows="true"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:contentScrim="@color/transparent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/userBkgImg"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:src="@drawable/user_bkg_test"-->
-<!--                    android:scaleType="centerCrop"-->
-<!--                    android:background="@color/colorPrimary"-->
-<!--                    app:layout_collapseMode="parallax"-->
-<!--                    android:fitsSystemWindows="true" />-->
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/userBkgImg"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:src="@drawable/user_bkg_test"-->
+                <!--                    android:scaleType="centerCrop"-->
+                <!--                    android:background="@color/colorPrimary"-->
+                <!--                    app:layout_collapseMode="parallax"-->
+                <!--                    android:fitsSystemWindows="true" />-->
                 <RelativeLayout
                     android:id="@+id/head"
                     android:layout_width="match_parent"
@@ -53,32 +52,32 @@
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="56dp"
                         android:background="@color/transparent"
-                        app:civ_border_width="2dp"
-                        app:civ_border_color="@color/white"/>
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="2dp" />
 
                     <TextView
                         android:id="@+id/userNickname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/userAvatar"
                         android:layout_alignTop="@+id/userAvatar"
-                        android:layout_marginTop="10dp"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@id/userAvatar"
+                        android:maxLength="10"
+                        android:maxLines="1"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        android:maxLines="1"
-                        android:maxLength="10"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <ImageButton
                         android:id="@+id/editUserInfoButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/transparent"
-                        android:src="@drawable/baseline_edit_note_24"
-                        android:layout_toEndOf="@id/userNickname"
                         android:layout_alignTop="@id/userNickname"
-                        android:layout_marginStart="2dp"/>
+                        android:layout_marginStart="2dp"
+                        android:layout_toEndOf="@id/userNickname"
+                        android:background="@color/transparent"
+                        android:src="@drawable/baseline_edit_note_24" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -86,32 +85,29 @@
                         android:layout_below="@id/userNickname"
                         android:layout_alignStart="@id/userNickname"
                         android:text="专业跑者"
-                        android:textStyle="italic"/>
+                        android:textStyle="italic" />
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_alignStart="@id/userAvatar"-->
-<!--                        android:layout_below="@id/userAvatar"-->
-<!--                        android:layout_marginTop="15dp"-->
-<!--                        android:layout_marginStart="40dp"-->
-<!--                        android:text="动态"-->
-<!--                        android:textStyle="bold"/>-->
+                    <!--                    <TextView-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_alignStart="@id/userAvatar"-->
+                    <!--                        android:layout_below="@id/userAvatar"-->
+                    <!--                        android:layout_marginTop="15dp"-->
+                    <!--                        android:layout_marginStart="40dp"-->
+                    <!--                        android:text="动态"-->
+                    <!--                        android:textStyle="bold"/>-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_centerHorizontal="true"-->
-<!--                        android:layout_below="@id/userAvatar"-->
-<!--                        android:layout_marginTop="15dp"-->
-<!--                        android:text="关注"-->
-<!--                        android:textStyle="bold"/>-->
-
-
+                    <!--                    <TextView-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_centerHorizontal="true"-->
+                    <!--                        android:layout_below="@id/userAvatar"-->
+                    <!--                        android:layout_marginTop="15dp"-->
+                    <!--                        android:text="关注"-->
+                    <!--                        android:textStyle="bold"/>-->
 
 
                 </RelativeLayout>
-
 
 
                 <androidx.appcompat.widget.Toolbar
@@ -119,22 +115,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="?actionBarSize"
                     android:background="@color/white"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     android:fitsSystemWindows="false"
-                    app:title=""
-                    app:showTitle="false"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:layout_collapseMode="pin" />
+                    app:showTitle="false"
+                    app:title="" />
 
 
-<!--                <androidx.appcompat.widget.Toolbar-->
-<!--                    android:id="@+id/toolbar"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="0dp"-->
-<!--                    android:background="@android:color/transparent"-->
-<!--                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
-<!--                    app:layout_collapseMode="pin"-->
-<!--                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
+                <!--                <androidx.appcompat.widget.Toolbar-->
+                <!--                    android:id="@+id/toolbar"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="0dp"-->
+                <!--                    android:background="@android:color/transparent"-->
+                <!--                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+                <!--                    app:layout_collapseMode="pin"-->
+                <!--                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -167,7 +163,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/totalCard"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="10dp"
@@ -222,7 +218,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     app:cardCornerRadius="10dp"
                     app:cardMaxElevation="2dp"

@@ -4,9 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:ignore="MissingClass">
 
     <!--NavHost-->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <fragment
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -18,17 +24,33 @@
 
     <!--底部导航-->
     <!--底部导航-->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        app:elevation="0dp"
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/bottom_navigation"-->
+<!--        app:elevation="0dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:background="@color/white"-->
+<!--        app:itemIconTint="@drawable/menu_item_selected"-->
+<!--        app:itemTextColor="@drawable/menu_item_selected"-->
+<!--        app:labelVisibilityMode="labeled"-->
+<!--        app:itemRippleColor="@color/white"-->
+<!--        app:menu="@menu/button_menu" />-->
+
+
+    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+        android:id="@+id/expandable_bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="65dp"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        app:itemIconTint="@drawable/menu_item_selected"
-        app:itemTextColor="@drawable/menu_item_selected"
-        app:labelVisibilityMode="labeled"
-        app:itemRippleColor="@color/white"
-        app:menu="@menu/button_menu" />
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        app:exb_transitionDuration="1"
+        app:exb_backgroundCornerRadius="10dp"
+        app:exb_backgroundColor="@color/white"
+        app:exb_itemInactiveColor="@color/gray"
+        app:exb_items="@menu/button_menu"
+        app:exb_itemStyle="outline" />
 
 </RelativeLayout>

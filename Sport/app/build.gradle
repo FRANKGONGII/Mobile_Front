@@ -102,6 +102,8 @@ dependencies {
     implementation 'com.jjoe64:graphview:4.2.2'
 
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
+
+    implementation 'com.github.st235:expandablebottombar:1.5.3'
 }
 
 
