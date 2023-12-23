@@ -24,11 +24,18 @@ import java.util.Map;
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder> {
     private List<Record> recordList;
 
-    public static final List<Integer> uriList = new ArrayList<Integer>(){{
+    public static final List<Integer> rankUriList = new ArrayList<Integer>(){{
         add(R.drawable.rank_s);
         add(R.drawable.rank_a);
         add(R.drawable.rank_b);
         add(R.drawable.rank_c);
+    }};
+
+    public static final HashMap<Record.RecordType, Integer> typeUriMap = new HashMap<Record.RecordType, Integer>(){{
+        put(Record.RecordType.RUNNING, R.drawable.record_type_running);
+        put(Record.RecordType.RIDING, R.drawable.record_type_riding);
+        put(Record.RecordType.WALKING, R.drawable.record_type_walking);
+        put(Record.RecordType.SWIMMING, R.drawable.record_type_swimming);
     }};
 
     public static final List<String> rankList = new ArrayList<String>(){{
@@ -49,6 +56,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
 
         TextView record_type;
 //        Button chat_btn;
+        ImageView type_img;
         ImageView rank_img;
         TextView rank_text;
 
@@ -62,6 +70,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
             duration = view.findViewById(R.id.duration);
             record_type = view.findViewById(R.id.record_type);
 //            chat_btn = view.findViewById(R.id.btn_chat);
+            type_img = view.findViewById(R.id.typeImg);
             rank_img = view.findViewById(R.id.rankImg);
             rank_text = view.findViewById(R.id.rankText);
         }
@@ -80,7 +89,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         viewHolder.recordView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int id = viewHolder.record_id;
+                long id = viewHolder.record_id;
 
                 Intent intent = new Intent(view.getContext(), ResultActivity.class);
                 intent.putExtra("passId",id);
@@ -118,9 +127,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         holder.record_type.setText(record_bean.getRecordTypeByStr());
         holder.record_id = record_bean.getId();
 
-
+        holder.type_img.setImageResource(typeUriMap.get(record_bean.getRecordType()));
         int rank_num = getRank(record_bean);
-        holder.rank_img.setImageResource(uriList.get(rank_num));
+        holder.rank_img.setImageResource(rankUriList.get(rank_num));
         holder.rank_text.setText(rankList.get(rank_num));
     }
 
