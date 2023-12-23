@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Top Bar -->
+    <RelativeLayout
+        android:id="@+id/equipment_topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+
+        <!-- 返回键 -->
+        <ImageView
+            android:id="@+id/equipment_ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/baseline_arrow_back_ios_new_24" />
+
+        <!-- 文字标题 -->
+        <TextView
+            android:id="@+id/equipment_tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:text="添加装备"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <!-- 第一个小标题和卡片 -->
+    <LinearLayout
+        android:id="@+id/equipment_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/equipment_topBar"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 文字小标题 -->
+        <TextView
+            android:id="@+id/equipment_tvSubtitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="绑定智能设备"
+            android:textSize="16sp" />
+
+        <!-- 水平布局包裹两个卡片 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- 卡片1 -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/equipment_card1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:onClick="undoneClick">
+
+                <!-- 卡片内容 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <!-- Guideline to separate left and right parts (4:6 ratio) -->
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.4" />
+
+                    <!-- ImageView -->
+                    <ImageView
+                        android:id="@+id/CardImageView1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/equipment_qr" />
+
+                    <!-- First TextView -->
+                    <TextView
+                        android:id="@+id/CardTextViewTop1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="扫一扫"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/guideline1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Second TextView -->
+                    <TextView
+                        android:id="@+id/CardTextViewBottom1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="扫码绑定"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/guideline1"
+                        app:layout_constraintTop_toBottomOf="@+id/CardTextViewTop1" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 卡片2 -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/equipment_card2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:onClick="undoneClick">
+
+                <!-- 卡片内容 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <!-- Guideline to separate left and right parts (4:6 ratio) -->
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline2"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.4" />
+
+                    <!-- ImageView -->
+                    <ImageView
+                        android:id="@+id/CardImageView2"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/equipment_bluetooth" />
+
+                    <!-- First TextView -->
+                    <TextView
+                        android:id="@+id/CardTextViewTop2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="蓝牙搜索"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/guideline2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Second TextView -->
+                    <TextView
+                        android:id="@+id/CardTextViewBottom2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="搜索绑定"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/guideline2"
+                        app:layout_constraintTop_toBottomOf="@+id/CardTextViewTop2" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 第二个小标题和卡片 -->
+    <LinearLayout
+        android:id="@+id/equipment_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/equipment_layout1"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 文字小标题 -->
+        <TextView
+            android:id="@+id/equipment_tvSubtitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加跑鞋"
+            android:textSize="16sp" />
+
+        <!-- 卡片3 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/equipment_card3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:onClick="undoneClick">
+
+            <!-- 卡片内容 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <!-- Guideline to separate left and right parts-->
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.2" />
+
+                <!-- ImageView -->
+                <ImageView
+                    android:id="@+id/CardImageView3"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/equipment_shoe" />
+
+                <!-- First TextView -->
+                <TextView
+                    android:id="@+id/CardTextViewTop3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="添加跑鞋"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_end1"
+                    app:layout_constraintStart_toEndOf="@+id/guideline3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Second TextView -->
+                <TextView
+                    android:id="@+id/CardTextViewBottom3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="去鞋柜添加"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_end1"
+                    app:layout_constraintStart_toEndOf="@+id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@+id/CardTextViewTop3" />
+
+                <!-- Guideline to mark the end, and set the right half empty-->
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_end1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <!-- 第三个小标题和ListView -->
+    <LinearLayout
+        android:id="@+id/equipment_layout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/equipment_layout2"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 文字小标题 -->
+        <TextView
+            android:id="@+id/equipment_tvSubtitle3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关联第三方应用"
+            android:textSize="16sp" />
+
+        <!-- ListView -->
+        <ListView
+            android:id="@+id/equipment_listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+        </ListView>
+
+    </LinearLayout>
+
+</RelativeLayout>
