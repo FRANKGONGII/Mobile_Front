@@ -87,6 +87,11 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".DataCenterActivity"
+            android:exported="true">
+        </activity>
+
         <!-- 配置拍照需要的FileProvider -->
         <provider
             android:name="androidx.core.content.FileProvider"

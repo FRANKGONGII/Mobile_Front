@@ -51,6 +51,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.ChatActivity;
+import com.example.myapplication.DataCenterActivity;
 import com.example.myapplication.EditUserInfoActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.StatisticActivity;
@@ -63,12 +64,13 @@ import com.example.myapplication.utils.PhotoUtil;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
 import com.google.android.material.appbar.AppBarLayout;
-import com.jjoe64.graphview.DefaultLabelFormatter;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.ValueDependentColor;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
+import com.google.android.material.card.MaterialCardView;
+//import com.jjoe64.graphview.DefaultLabelFormatter;
+//import com.jjoe64.graphview.GraphView;
+//import com.jjoe64.graphview.ValueDependentColor;
+//import com.jjoe64.graphview.series.BarGraphSeries;
+//import com.jjoe64.graphview.series.DataPoint;
+//import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -228,10 +230,19 @@ public class HomeFragment extends Fragment {
 //        } catch (ParseException e) {
 //            throw new RuntimeException(e);
 //        }
-        
+
 
         onTotalSportCardInit();
 
+        MaterialCardView cardView = view.findViewById(R.id.totalCard);
+
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DataCenterActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -305,7 +316,7 @@ public class HomeFragment extends Fragment {
         for (Record record : recordList) {
             totalMin += record.getDuration();
         }
-        String totalMinStr = String.valueOf(totalMin);
+        String totalMinStr = String.valueOf((int)(totalMin/60));
 
         SpannableString spannableString = new SpannableString(totalMinStr+" 分钟");
         spannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, totalMinStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -314,6 +325,9 @@ public class HomeFragment extends Fragment {
 
         TextView textView = view.findViewById(R.id.minutes);
         textView.setText(spannableString);
+
+
+
     }
 
     private RecyclerView recyclerView;
