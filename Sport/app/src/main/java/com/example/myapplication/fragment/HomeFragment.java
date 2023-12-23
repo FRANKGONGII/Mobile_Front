@@ -52,6 +52,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.ChatActivity;
 import com.example.myapplication.EditUserInfoActivity;
+import com.example.myapplication.EquipmentActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.StatisticActivity;
 import com.example.myapplication.adapter.SportDataAdapter;
@@ -158,6 +159,30 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent  = new Intent(getActivity(), ChatActivity.class);
+                intent.putExtra("TaskType", "NormalChat");
+                startActivity(intent);
+            }
+        });
+
+
+        ImageView example_shoes = view.findViewById(R.id.imageViewCard1);
+        example_shoes.setImageResource(R.drawable.shoes_example);
+        TextView example_shoes_name = view.findViewById(R.id.textViewCard1Top);
+        example_shoes_name.setText("Li-Ning Crazy Run X 减震跑鞋");
+        TextView example_shoes_dist_text = view.findViewById(R.id.textViewCard1Bottom);
+        List<Record> running_record_list = dataService.queryRecordByType(Record.RecordType.RUNNING);
+        double example_shoes_dist = 0;
+        for(Record record : running_record_list){
+            example_shoes_dist += record.getDistance();
+        }
+        String dist_shoes = String.valueOf(example_shoes_dist) + "km";
+        example_shoes_dist_text.setText(dist_shoes);
+
+        View equipmentCard = view.findViewById(R.id.card2);
+        equipmentCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  = new Intent(getActivity(), EquipmentActivity.class);
                 startActivity(intent);
             }
         });
