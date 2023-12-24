@@ -28,14 +28,14 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.3" />
+                app:layout_constraintGuide_percent="0.2" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_hor_2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.7" />
+                app:layout_constraintGuide_percent="0.8" />
 
 <!--            <androidx.constraintlayout.widget.Guideline-->
 <!--                android:id="@+id/guideline"-->
@@ -68,7 +68,7 @@
                         android:padding="3dp"
                         android:text="10月15日"
                         android:textColor="#40000000"
-                        android:textSize="15sp" />
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id = "@+id/record_type"
@@ -77,7 +77,7 @@
                         android:padding="3dp"
                         android:text="跑步"
                         android:textColor="#40000000"
-                        android:textSize="15sp" />
+                        android:textSize="12dp" />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -92,7 +92,7 @@
                         android:padding="0dp"
                         android:text="8.8"
                         android:textColor="#000000"
-                        android:textSize="50dp" />
+                        android:textSize="35dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
                         android:padding="3dp"
                         android:text="km"
                         android:textColor="#000000"
-                        android:textSize="15dp"
+                        android:textSize="12dp"
                         android:layout_toRightOf="@+id/distance"
                         android:layout_alignBottom="@+id/distance"/>
 
@@ -121,13 +121,13 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignTop="@id/distance"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="6dp"
                         android:layout_marginEnd="10dp">
 
                         <ImageView
                             android:id="@+id/rankImg"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
                             android:src="@drawable/rank_s"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -141,7 +141,8 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/rankImg"
                             android:text="Excellent!"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            android:textSize="13dp"/>
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -153,7 +154,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="25sp"
+                        android:layout_width="14dp"
                         android:layout_height="match_parent"
                         android:padding="3sp"
                         android:scaleType="centerCrop"
@@ -166,7 +167,7 @@
                         android:padding="3sp"
                         android:text="00:15:24"
                         android:textColor="#80000000"
-                        android:textSize="15sp" />
+                        android:textSize="12dp" />
                 </LinearLayout>
 
                 <!--            <ImageView-->

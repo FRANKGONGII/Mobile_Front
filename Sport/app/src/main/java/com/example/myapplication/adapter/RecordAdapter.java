@@ -1,5 +1,6 @@
 package com.example.myapplication.adapter;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,13 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         add("Well Done!");
         add("Not Bad!");
         add("Come On!");
+    }};
+
+    public static final List<Integer> rankColorList = new ArrayList<Integer>(){{
+        add(Color.parseColor("#DB0E0E"));
+        add(Color.parseColor("#FD9735"));
+        add(Color.parseColor("#38618F"));
+        add(Color.parseColor("#C7C5B8"));
     }};
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -131,6 +139,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         int rank_num = getRank(record_bean);
         holder.rank_img.setImageResource(rankUriList.get(rank_num));
         holder.rank_text.setText(rankList.get(rank_num));
+        holder.rank_text.setTextColor(rankColorList.get(rank_num));
     }
 
     @Override
