@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:contentScrim="@color/transparent"
+                app:contentScrim="@color/white"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
@@ -571,18 +571,6 @@
                         app:week_start_with="mon"
                         app:month_view="com.example.myapplication.ui.calendar.CustomMonthView"
                         app:week_view="com.example.myapplication.ui.calendar.CustomWeekView"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="This is text">
-
-                        </TextView>
-                    </LinearLayout>
 
                 </com.haibin.calendarview.CalendarLayout>
 

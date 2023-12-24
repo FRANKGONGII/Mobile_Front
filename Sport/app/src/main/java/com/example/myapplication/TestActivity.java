@@ -5,9 +5,18 @@ import static androidx.core.content.ContentProviderCompat.requireContext;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.util.TypedValue;
 
@@ -17,13 +26,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 
 import androidx.annotation.MenuRes;
@@ -32,6 +45,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.ListPopupWindow;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.ColorUtils;
 import androidx.core.util.Pair;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,8 +59,11 @@ import com.example.myapplication.bean.Record;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.DataServiceFactory;
 import com.example.myapplication.utils.Utils;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -68,13 +88,16 @@ public class TestActivity extends AppCompatActivity {
 
     private double nowDistance = 0;
 
-
+    private CoordinatorLayout coordinatorLayout;
+    private AppBarLayout appBarLayout;
+    private Toolbar toolbar;
+    private View customToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_test2);
 
         //列表初始化
         dataService = DataServiceFactory.getInstance();
@@ -83,6 +106,67 @@ public class TestActivity extends AppCompatActivity {
             Toast.makeText(this, "network error: 408", Toast.LENGTH_SHORT).show();
             recordList = new ArrayList<>();
         }
+
+        coordinatorLayout = findViewById(R.id.root_layout);
+        appBarLayout = findViewById(R.id.appBar);
+        // 用toolbar取代actionBar
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        customToolbar = getLayoutInflater().inflate(R.layout.custom_toolbar2, toolbar, false);
+        toolbar.addView(customToolbar);
+
+
+        TextView textView = customToolbar.findViewById(R.id.title);
+        ImageButton imageButton = findViewById(R.id.history_back_button);
+        Drawable drawable = imageButton.getDrawable();
+
+        setSysWinColor(Color.WHITE, 1);
+
+        // AppBar向上滑动渐变透明，同时toolbar逐渐显现
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                LinearLayout linearLayout = findViewById(R.id.head);
+
+                float alpha_toolbar = (float) Math.abs(verticalOffset) / appBarLayout.getTotalScrollRange();
+                float alpha = 1 - alpha_toolbar;
+
+                linearLayout.setAlpha(alpha);
+                if (alpha < alpha_toolbar) {
+                    coordinatorLayout.setBackgroundColor(Color.WHITE);
+                    toolbar.setBackgroundColor(Color.WHITE);
+//                    TextView textView = customToolbar.findViewById(R.id.title);
+                    textView.setTextColor(ContextCompat.getColor(TestActivity.this, R.color.black));
+//                    ImageButton imageButton = findViewById(R.id.history_back_button);
+//                    Drawable drawable = imageButton.getDrawable();
+                    drawable.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_IN);
+
+                } else {
+                    coordinatorLayout.setBackgroundColor(Color.parseColor("#87CEEB"));
+                    toolbar.setBackgroundColor(Color.parseColor("#87CEEB"));
+//                    TextView textView = customToolbar.findViewById(R.id.title);
+                    textView.setTextColor(ContextCompat.getColor(TestActivity.this, R.color.white));
+//                    ImageButton imageButton = findViewById(R.id.history_back_button);
+//                    Drawable drawable = imageButton.getDrawable();
+                    drawable.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
+
+                }
+
+//                customToolbar.setAlpha(alpha);
+
+                // 根据alpha_toolbar的值来设置状态栏颜色
+                int sysWinAlpha = (int) (alpha_toolbar * 255);
+                setSysWinColor(Color.WHITE, sysWinAlpha);
+//                window.setStatusBarColor();
+            }
+        });
+
+
+
+
+
 
         Log.d("CHECK","1");
 
@@ -110,7 +194,7 @@ public class TestActivity extends AppCompatActivity {
         Log.d("CHECK","3");
 
         //时间选择按钮
-        ImageButton sortByTime = findViewById(R.id.history_sort_by_time);
+        Button sortByTime = findViewById(R.id.history_time);
         sortByTime.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
@@ -138,7 +222,7 @@ public class TestActivity extends AppCompatActivity {
 
         Log.d("CHECK","4");
 
-        ImageButton sortByDis = findViewById(R.id.history_sort_by_distance);
+        Button sortByDis = findViewById(R.id.history_distance);
         sortByDis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +232,7 @@ public class TestActivity extends AppCompatActivity {
         Log.d("CHECK","5");
 
         //返回按钮
-        ImageButton backButton  =  findViewById(R.id.history_back_button);
+        ImageButton backButton  =  customToolbar.findViewById(R.id.history_back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,6 +242,15 @@ public class TestActivity extends AppCompatActivity {
         });
         Log.d("CHECK","6");
 
+    }
+
+    public void setSysWinColor(int color, int alpha) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            window.setStatusBarColor(color);
+            getWindow().setStatusBarColor(ColorUtils.setAlphaComponent(color, alpha));
+        }
     }
 
     @Override
@@ -241,16 +334,30 @@ public class TestActivity extends AppCompatActivity {
 
             //修改长度
             String newSumDistance = getSumDistance(records);
+            SpannableString spannableString = new SpannableString("累计里程\n"+ newSumDistance + "公里");
+            spannableString.setSpan(new StyleSpan(Typeface.BOLD), 5, 5+newSumDistance.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new AbsoluteSizeSpan(40, true), 5, 5+newSumDistance.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new ForegroundColorSpan(Color.WHITE), 5, 5+newSumDistance.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             TextView distance = findViewById(R.id.history_show_distance);
-            distance.setText(newSumDistance);
+            distance.setText(spannableString);
+
+
 
             String newDuration = getSumTime(records);
+            SpannableString spannableString2 = new SpannableString("累计时间\n"+ newDuration + "小时");
+            spannableString2.setSpan(new StyleSpan(Typeface.BOLD), 5, 5+newDuration.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString2.setSpan(new AbsoluteSizeSpan(40, true), 5, 5+newDuration.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString2.setSpan(new ForegroundColorSpan(Color.WHITE), 5, 5+newDuration.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             TextView duration = findViewById(R.id.history_show_duration);
-            duration.setText(newDuration);
+            duration.setText(spannableString2);
 
-            String newCalorie = getCalorie();
-            TextView calorie = findViewById(R.id.history_show_calorie);
-            calorie.setText(newCalorie);
+//            String newCalorie = getCalorie();
+//            SpannableString spannableString3 = new SpannableString("累计消耗\n"+ newCalorie + "千卡");
+//            spannableString3.setSpan(new StyleSpan(Typeface.BOLD), 5, 5+newCalorie.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//            spannableString3.setSpan(new AbsoluteSizeSpan(30, true), 5, 5+newCalorie.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//            spannableString3.setSpan(new ForegroundColorSpan(Color.WHITE), 5, 5+newCalorie.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//            TextView calorie = findViewById(R.id.history_show_calorie);
+//            calorie.setText(spannableString3);
 
 
         }
