@@ -535,54 +535,13 @@
 <!--                android:textSize="@dimen/fifteen"-->
 <!--                android:layout_marginStart="50dp"/>-->
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/calendar"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_below="@id/other"
-                android:layout_alignStart="@id/l1"
-                android:layout_alignEnd="@id/l1"
-                android:layout_marginTop="20dp"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:theme="@style/Theme.MaterialComponents.Light"
-                app:cardCornerRadius="4dp"
-                app:cardMaxElevation="20dp"
-                app:layout_anchorGravity="top|center"
-                app:strokeColor="@android:color/transparent">
 
-                <com.haibin.calendarview.CalendarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerHorizontal="true"
-                    android:orientation="vertical"
-                    app:default_status="shrink"
-                    app:calendar_show_mode="only_week_view">
-
-                    <com.haibin.calendarview.CalendarView
-                        android:id="@+id/calendarView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        app:calendar_height="50dp"
-                        app:current_month_text_color="#333333"
-                        app:current_day_lunar_text_color="#CFCFCF"
-                        app:min_year="2004"
-                        app:week_start_with="mon"
-                        app:month_view="com.example.myapplication.ui.calendar.CustomMonthView"
-                        app:week_view="com.example.myapplication.ui.calendar.CustomWeekView"/>
-
-                </com.haibin.calendarview.CalendarLayout>
-
-
-
-            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/shoe"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_below="@id/calendar"
+                android:layout_below="@id/other"
                 android:layout_alignStart="@id/l1"
                 android:layout_alignEnd="@id/l1"
                 android:layout_marginTop="20dp"
@@ -770,6 +729,48 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/shoe"
+                android:layout_alignStart="@id/l1"
+                android:layout_alignEnd="@id/l1"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardCornerRadius="4dp"
+                app:cardMaxElevation="20dp"
+                app:layout_anchorGravity="top|center"
+                app:strokeColor="@android:color/transparent">
+
+                <com.haibin.calendarview.CalendarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical"
+                    app:default_status="shrink"
+                    app:calendar_show_mode="only_week_view">
+
+                    <com.haibin.calendarview.CalendarView
+                        android:id="@+id/calendarView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        app:calendar_height="50dp"
+                        app:current_month_text_color="#333333"
+                        app:current_day_lunar_text_color="#CFCFCF"
+                        app:min_year="2004"
+                        app:week_start_with="mon"
+                        app:month_view="com.example.myapplication.ui.calendar.CustomMonthView"
+                        app:week_view="com.example.myapplication.ui.calendar.CustomWeekView"/>
+
+                </com.haibin.calendarview.CalendarLayout>
+
+
+
+            </com.google.android.material.card.MaterialCardView>
 
 
 

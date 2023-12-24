@@ -140,7 +140,7 @@ public class HomeFragment extends Fragment {
         // 创建一个渐变色的Drawable对象
         GradientDrawable gradientDrawable = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM, // 渐变方向，这里设置为从上到下
-                new int[] {Color.parseColor("#2196F3"), Color.parseColor("#F5F5F5")} // 渐变色数组
+                new int[] {Color.parseColor("#87CEEB"), Color.parseColor("#F5F5F5")} // 渐变色数组
         );
 
         // 设置渐变色背景
@@ -233,7 +233,7 @@ public class HomeFragment extends Fragment {
 
 
         // 设置系统状态栏为toolbar颜色
-        int toolbarColor = ((ColorDrawable)toolbar.getBackground()).getColor();
+//        int toolbarColor = ((ColorDrawable)toolbar.getBackground()).getColor();
         setSysWinColor(Color.WHITE, 1);
 
 

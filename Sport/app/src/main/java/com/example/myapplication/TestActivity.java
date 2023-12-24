@@ -142,6 +142,9 @@ public class TestActivity extends AppCompatActivity {
 //                    ImageButton imageButton = findViewById(R.id.history_back_button);
 //                    Drawable drawable = imageButton.getDrawable();
                     drawable.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_IN);
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    getWindow().setStatusBarColor(Color.WHITE);
 
                 } else {
                     coordinatorLayout.setBackgroundColor(Color.parseColor("#87CEEB"));
@@ -151,14 +154,14 @@ public class TestActivity extends AppCompatActivity {
 //                    ImageButton imageButton = findViewById(R.id.history_back_button);
 //                    Drawable drawable = imageButton.getDrawable();
                     drawable.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
-
+                    setSysWinColor(Color.WHITE, 1);
                 }
 
 //                customToolbar.setAlpha(alpha);
 
                 // 根据alpha_toolbar的值来设置状态栏颜色
                 int sysWinAlpha = (int) (alpha_toolbar * 255);
-                setSysWinColor(Color.WHITE, sysWinAlpha);
+//                setSysWinColor(Color.WHITE, sysWinAlpha);
 //                window.setStatusBarColor();
             }
         });
