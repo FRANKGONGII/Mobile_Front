@@ -1,254 +1,275 @@
-<!-- fragment_fragment1.xml -->
+    <!-- fragment_fragment1.xml -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TextView -->
-    <TextView
-        android:id="@+id/titleTextView"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="动起来！"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:cardCornerRadius="10dp"
+        app:cardMaxElevation="2dp">
 
-    <!-- 可横向拖动的区域 -->
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titleTextView"
-        android:layout_marginTop="10dp"
-        android:id="@+id/Scroll1">
 
-        <LinearLayout
-            android:id="@+id/itemContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
 
-            <!-- 第一个Item -->
-            <RelativeLayout
-                android:layout_width="wrap_content"
+            <!-- TextView -->
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="30dp">
+                android:text="动起来！"
+                android:gravity="center"
+                android:textColor="#31525B"
 
-                <ImageView
-                    android:id="@+id/itemImage1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:textSize="15sp"/>
 
-                    android:src="@drawable/medal_1"/>
-
-                <TextView
-                    android:id="@+id/itemText1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemImage1"
-                    android:layout_marginTop="5dp"
-                    android:text="初次跑步"/>
-
-                <TextView
-                    android:id="@+id/itemText1_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemText1"
-                    android:padding="1dp"
-                    android:text="未获得~"/>
-            </RelativeLayout>
-
-            <!-- 第二个Item -->
-            <RelativeLayout
-                android:layout_width="wrap_content"
+            <!-- 可横向拖动的区域 -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="30dp">
+                android:layout_below="@id/titleTextView"
+                android:layout_marginTop="10dp"
+                android:id="@+id/Scroll1">
 
-                <ImageView
-                    android:id="@+id/itemImage2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
 
-                    android:src="@drawable/medal_2"/>
 
-                <TextView
-                    android:id="@+id/itemText2"
+                <LinearLayout
+                    android:id="@+id/itemContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/itemImage2"
-                    android:layout_marginTop="5dp"
-                    android:text="初次骑行"/>
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/itemText2_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemText2"
-                    android:padding="1dp"
-                    android:text="未获得~"/>
-            </RelativeLayout>
+                    <!-- 第一个Item -->
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="30dp">
 
-            <!-- 第二个Item -->
-            <RelativeLayout
-                android:layout_width="wrap_content"
+                        <ImageView
+                            android:id="@+id/itemImage1"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+
+                            android:src="@drawable/medal_1"/>
+
+                        <TextView
+                            android:id="@+id/itemText1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/itemImage1"
+                            android:layout_marginTop="5dp"
+                            android:text="初次跑步"/>
+
+                        <TextView
+                            android:id="@+id/itemText1_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/itemText1"
+                            android:padding="1dp"
+                            android:text="未获得~"/>
+                    </RelativeLayout>
+
+                    <!-- 第二个Item -->
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="30dp">
+
+                        <ImageView
+                            android:id="@+id/itemImage2"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+
+                            android:src="@drawable/medal_2"/>
+
+                        <TextView
+                            android:id="@+id/itemText2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/itemImage2"
+                            android:layout_marginTop="5dp"
+                            android:text="初次骑行"/>
+
+                        <TextView
+                            android:id="@+id/itemText2_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/itemText2"
+                            android:padding="1dp"
+                            android:text="未获得~"/>
+                    </RelativeLayout>
+
+                    <!-- 第二个Item -->
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="30dp">
+
+                        <ImageView
+                            android:id="@+id/itemImage3"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+
+                            android:src="@drawable/medal_3"/>
+
+                        <TextView
+                            android:id="@+id/itemText3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/itemImage3"
+                            android:layout_marginTop="5dp"
+                            android:text="初次游泳"/>
+
+                        <TextView
+                            android:id="@+id/itemText3_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/itemText3"
+                            android:padding="1dp"
+                            android:text="未获得~"/>
+                    </RelativeLayout>
+
+                    <!-- 第二个Item -->
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="30dp">
+
+                        <ImageView
+                            android:id="@+id/itemImage4"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+
+                            android:src="@drawable/medal_4" />
+
+                        <TextView
+                            android:id="@+id/itemText4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/itemImage4"
+                            android:layout_marginTop="5dp"
+                            android:text="初次健走"/>
+
+                        <TextView
+                            android:id="@+id/itemText4_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/itemText4"
+                            android:padding="1dp"
+                            android:text="未获得~"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="30dp">
+
+                        <ImageView
+                            android:id="@+id/itemImage5"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+
+                            android:src="@drawable/medal_come" />
+
+                        <TextView
+                            android:id="@+id/itemText5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/itemImage5"
+                            android:layout_marginTop="5dp"
+                            android:text="初来乍到"/>
+
+                        <TextView
+                            android:id="@+id/itemText5_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/itemText5"
+                            android:padding="1dp"
+                            android:text="未获得~"/>
+                    </RelativeLayout>
+
+                    <!-- 添加更多Item... -->
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+
+            <!-- TextView -->
+            <TextView
+                android:id="@+id/titleTextView1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="30dp">
+                android:text="成为高手！"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:textSize="15sp"
+                android:textColor="#31525B"
+                android:layout_below="@id/Scroll1"
+                />
 
-                <ImageView
-                    android:id="@+id/itemImage3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-
-                    android:src="@drawable/medal_3"/>
-
-                <TextView
-                    android:id="@+id/itemText3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemImage3"
-                    android:layout_marginTop="5dp"
-                    android:text="初次游泳"/>
-
-                <TextView
-                    android:id="@+id/itemText3_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemText3"
-                    android:padding="1dp"
-                    android:text="未获得~"/>
-            </RelativeLayout>
-
-            <!-- 第二个Item -->
-            <RelativeLayout
-                android:layout_width="wrap_content"
+            <!-- 可横向拖动的区域 -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="30dp">
+                android:layout_below="@id/titleTextView1"
+                android:layout_marginTop="10dp"
+                android:id="@+id/Scroll2">
 
-                <ImageView
-                    android:id="@+id/itemImage4"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-
-                    android:src="@drawable/medal_4" />
-
-                <TextView
-                    android:id="@+id/itemText4"
+                <LinearLayout
+                    android:id="@+id/itemContainer1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/itemImage4"
-                    android:layout_marginTop="5dp"
-                    android:text="初次健走"/>
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/itemText4_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemText4"
-                    android:padding="1dp"
-                    android:text="未获得~"/>
-            </RelativeLayout>
+                    <!-- 第一个Item -->
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="30dp">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="30dp">
+                        <ImageView
+                            android:id="@+id/itemImage6"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/trophy_1"/>
 
-                <ImageView
-                    android:id="@+id/itemImage5"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                        <TextView
+                            android:id="@+id/itemText6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/itemImage6"
+                            android:layout_marginTop="5dp"
+                            android:text="马拉松！"/>
 
-                    android:src="@drawable/medal_come" />
+                        <TextView
+                            android:id="@+id/itemText6_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/itemText6"
+                            android:padding="1dp"
+                            android:text="未获得~"/>
+                    </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/itemText5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemImage5"
-                    android:layout_marginTop="5dp"
-                    android:text="初来乍到"/>
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/itemText5_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemText5"
-                    android:padding="1dp"
-                    android:text="未获得~"/>
-            </RelativeLayout>
+            </HorizontalScrollView>
 
-            <!-- 添加更多Item... -->
+        </RelativeLayout>
 
-        </LinearLayout>
-    </HorizontalScrollView>
-
-
-    <!-- TextView -->
-    <TextView
-        android:id="@+id/titleTextView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="成为高手！"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        android:textSize="18sp"
-        android:layout_below="@id/Scroll1"
-        />
-
-    <!-- 可横向拖动的区域 -->
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titleTextView1"
-        android:layout_marginTop="10dp"
-        android:id="@+id/Scroll2">
-
-        <LinearLayout
-            android:id="@+id/itemContainer1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <!-- 第一个Item -->
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="30dp">
-
-                <ImageView
-                    android:id="@+id/itemImage6"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/trophy_1"/>
-
-                <TextView
-                    android:id="@+id/itemText6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemImage6"
-                    android:layout_marginTop="5dp"
-                    android:text="马拉松！"/>
-
-                <TextView
-                    android:id="@+id/itemText6_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/itemText6"
-                    android:padding="1dp"
-                    android:text="未获得~"/>
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
-
+    </com.google.android.material.card.MaterialCardView>
 
 
 </RelativeLayout>
