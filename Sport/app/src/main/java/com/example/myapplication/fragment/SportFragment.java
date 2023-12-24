@@ -2,12 +2,15 @@ package com.example.myapplication.fragment;
 
 import static java.lang.Thread.sleep;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -16,6 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,8 +28,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
 
 import com.amap.api.location.AMapLocationClient;
@@ -60,8 +67,12 @@ public class SportFragment extends Fragment {
 
     AMap aMap = null;
 
+
     Bundle bundle = null;
 
+    Activity activity;
+    Window window;
+    @SuppressLint("ResourceAsColor")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,6 +86,12 @@ public class SportFragment extends Fragment {
 
         //TODO：这里应该要去获取上面面板的数据
 
+        activity = (AppCompatActivity)getActivity();
+        window = activity.getWindow();
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(Color.parseColor("#FFB3DEE5"));
 
         return mView;
     }
@@ -95,6 +112,8 @@ public class SportFragment extends Fragment {
             textView.setText(getSumDistance(list));
         }
         v = view;
+
+
 
     }
 

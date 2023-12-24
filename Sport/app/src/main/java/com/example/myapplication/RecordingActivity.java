@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Chronometer;
@@ -188,6 +189,15 @@ public class RecordingActivity extends AppCompatActivity {
         ToastUtils.init(this.getApplication());
 
         dataService = DataServiceFactory.getInstance();
+
+
+
+
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().setStatusBarColor(Color.parseColor("#00CCFF"));
+
 
 
         LongClickProgressView lcpv = findViewById(R.id.tv0);
