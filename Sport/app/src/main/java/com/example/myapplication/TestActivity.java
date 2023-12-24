@@ -165,7 +165,7 @@ public class TestActivity extends AppCompatActivity {
         super.onStart();
         Bundle bundle = getIntent().getExtras();
 
-        Record.RecordType recordType = Record.RecordType.RUNNING;
+        Record.RecordType recordType = null;
         if(bundle!=null){
             recordType = (Record.RecordType) bundle.getSerializable("activity_type");
         }
