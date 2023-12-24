@@ -198,71 +198,71 @@ public class ResultActivity extends AppCompatActivity {
 
 
          //TODO:暂时不用这个，我想要测试图表
-//        MapView mapView = (MapView) findViewById(R.id.mapView);
-//        mapView.onCreate(savedInstanceState);// 此方法必须重写
-//        aMap = mapView.getMap();
-//
-//        tvDistance = findViewById(R.id.tvDistance);
-//        tvDuration = findViewById(R.id.tvDuration);
-//        tvSpeed = findViewById(R.id.tvSpeed);
-//        tvDistribution = findViewById(R.id.tvDistribution);
-//        tvCalorie = findViewById(R.id.tvCalorie);
-//        chat_btn = findViewById(R.id.btn_chat);
-//
-//        tvDistance.setText(record.getDistanceByStr());
-//        tvDuration.setText(record.getDurationByStr());
-//        tvSpeed.setText(record.getSpeed1());
-//        tvDistribution.setText(record.getSpeed2());
-//        tvCalorie.setText(record.getCalorie());
-//
-//        String type_name = record.getRecordTypeByStr();
-//
-//        chat_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(view.getContext(), ChatActivity.class);
-//                intent.putExtra("TaskType", "EvalRecord");
-//                String data = "我进行了一次" + type_name + "运动，总距离为" +
-//                        tvDistance.getText() + "公里， 用时" + tvDuration.getText() +
-//                        "。请你根据上述数据对我本次运动的表现给出意见。";
-//
-//                intent.putExtra("RecordData", data);
-//
-//                view.getContext().startActivity(intent);
-//            }
-//        });
-//
-//
-//
-//        if(list!=null){
-//            CameraPosition cameraPosition = new CameraPosition(list.get(0), 64, 0, 0);
-//            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-//            aMap.moveCamera(cameraUpdate);
-//
-//            for(int i = 3;i<list.size();i++){
-//                LatLng l1 = list.get(i-1);
-//                LatLng l2 = list.get(i);
-//                double speed = AMapUtils.calculateLineDistance(l1,l2);
-//                speed = speed*3600/1000;
-//
-//                PolylineOptions options = new PolylineOptions();
-//                options.add(l1);
-//                options.add(l2);
-//
-//                if(speed>6) {
-//                    aMap.addPolyline(options.width(10).color(Color.argb(255, 204, 0, 51)));
-//                } else if(speed<=6&&speed>=4){
-//                    aMap.addPolyline(options.width(10).color(Color.argb(255, 255, 255, 0)));
-//                }else{
-//                    aMap.addPolyline(options.width(10).color(Color.argb(255, 36, 164, 255)));
-//                }
-//            }
-//
-//            Marker marker1 = aMap.addMarker(new MarkerOptions().
-//                    position(list.get(2)).title("北京").snippet("DefaultMarker"));
-//            Marker marker2 = aMap.addMarker(new MarkerOptions().
-//                    position(list.get(list.size()-1)).title("北京").snippet("DefaultMarker"));
-//        }
+        MapView mapView = (MapView) findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);// 此方法必须重写
+        aMap = mapView.getMap();
+
+        tvDistance = findViewById(R.id.tvDistance);
+        tvDuration = findViewById(R.id.tvDuration);
+        tvSpeed = findViewById(R.id.tvSpeed);
+        tvDistribution = findViewById(R.id.tvDistribution);
+        tvCalorie = findViewById(R.id.tvCalorie);
+        chat_btn = findViewById(R.id.btn_chat);
+
+        tvDistance.setText(record.getDistanceByStr());
+        tvDuration.setText(record.getDurationByStr());
+        tvSpeed.setText(record.getSpeed1());
+        tvDistribution.setText(record.getSpeed2());
+        tvCalorie.setText(record.getCalorie());
+
+        String type_name = record.getRecordTypeByStr();
+
+        chat_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ChatActivity.class);
+                intent.putExtra("TaskType", "EvalRecord");
+                String data = "我进行了一次" + type_name + "运动，总距离为" +
+                        tvDistance.getText() + "公里， 用时" + tvDuration.getText() +
+                        "。请你根据上述数据对我本次运动的表现给出意见。";
+
+                intent.putExtra("RecordData", data);
+
+                view.getContext().startActivity(intent);
+            }
+        });
+
+
+
+        if(list!=null){
+            CameraPosition cameraPosition = new CameraPosition(list.get(0), 64, 0, 0);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+            aMap.moveCamera(cameraUpdate);
+
+            for(int i = 3;i<list.size();i++){
+                LatLng l1 = list.get(i-1);
+                LatLng l2 = list.get(i);
+                double speed = AMapUtils.calculateLineDistance(l1,l2);
+                speed = speed*3600/1000;
+
+                PolylineOptions options = new PolylineOptions();
+                options.add(l1);
+                options.add(l2);
+
+                if(speed>6) {
+                    aMap.addPolyline(options.width(10).color(Color.argb(255, 204, 0, 51)));
+                } else if(speed<=6&&speed>=4){
+                    aMap.addPolyline(options.width(10).color(Color.argb(255, 255, 255, 0)));
+                }else{
+                    aMap.addPolyline(options.width(10).color(Color.argb(255, 36, 164, 255)));
+                }
+            }
+
+            Marker marker1 = aMap.addMarker(new MarkerOptions().
+                    position(list.get(2)).title("北京").snippet("DefaultMarker"));
+            Marker marker2 = aMap.addMarker(new MarkerOptions().
+                    position(list.get(list.size()-1)).title("北京").snippet("DefaultMarker"));
+        }
 
 
     }
