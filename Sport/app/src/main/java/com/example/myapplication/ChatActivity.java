@@ -67,7 +67,7 @@ public class ChatActivity extends AppCompatActivity{
             if(taskType.equals("NormalChat")){
                 promptList.add("你是一个运动智能问答机器人，你需要与用户对话，并以尽量专业的内容进行回答。被问到你的身份时，请称自己为‘智能运动助手’");
                 roleList.add("system");
-                ChatBean initChat = new ChatBean(1, "你好，我是你的智能运动助手，有什么需要我帮助的吗？");
+                ChatBean initChat = new ChatBean(1, "你好，我是你的专属智能运动助手，请问有什么需要我帮助的吗？");
                 chatBeanList.add(initChat);
             }
             else if(taskType.equals("EvalRecord")){
@@ -89,6 +89,11 @@ public class ChatActivity extends AppCompatActivity{
                     promptList.add(data);
                     roleList.add("user");
                     LLM_Post();
+//                    if (!chatBeanList.get(chatBeanList.size() - 1).equals("网络错误，请检查网络连接，并退出重试")) {
+//                        ChatBean next = new ChatBean(1, "如果您还有疑问或需要进一步建议，请随时向我提出");
+//                        chatBeanList.add(next);
+//                        adapter.notifyDataSetChanged();
+//                    }
                 }
             }
             else{
