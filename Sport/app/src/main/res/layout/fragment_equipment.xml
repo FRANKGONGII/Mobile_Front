@@ -4,14 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray5">
+    android:background="@color/gray4">
 
     <!-- Top Bar -->
     <RelativeLayout
         android:id="@+id/equipment_topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray5">
+        android:background="@color/gray4">
 
         <!-- 返回键 -->
         <ImageView
