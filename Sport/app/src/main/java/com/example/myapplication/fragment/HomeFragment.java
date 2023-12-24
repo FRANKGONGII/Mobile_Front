@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -76,6 +77,8 @@ import com.google.android.material.card.MaterialCardView;
 //import com.jjoe64.graphview.series.DataPoint;
 //import com.jjoe64.graphview.series.LineGraphSeries;
 
+import org.w3c.dom.Text;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -97,8 +100,10 @@ public class HomeFragment extends Fragment {
     private AppBarLayout appBarLayout;
     private NestedScrollView nestedScrollView;
     private Toolbar toolbar;
+    private View customToolbar;
     private CircleImageView avatarView;
     private TextView nicknameView;
+    private TextView sigView;
     private ImageButton editUserInfoBtn;
     private String[] sportType = {"跑步","骑行","游泳","快走"};
 
@@ -128,6 +133,7 @@ public class HomeFragment extends Fragment {
         nestedScrollView = view.findViewById(R.id.nestedScrollView);
         avatarView = view.findViewById(R.id.userAvatar);
         nicknameView = view.findViewById(R.id.userNickname);
+        sigView = view.findViewById(R.id.userSig);
         editUserInfoBtn = view.findViewById((R.id.editUserInfoButton));
 
 
@@ -235,7 +241,7 @@ public class HomeFragment extends Fragment {
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        View customToolbar = getLayoutInflater().inflate(R.layout.custom_toolbar, toolbar, false);
+        customToolbar = getLayoutInflater().inflate(R.layout.custom_toolbar, toolbar, false);
         toolbar.addView(customToolbar);
 
         // AppBar向上滑动渐变透明，同时toolbar逐渐显现
@@ -459,16 +465,26 @@ public class HomeFragment extends Fragment {
 
     public void refreshUserCard() {
         String avatarBase64Str = pref.getString("avatar", "");
-        String nickname = pref.getString("nickname", "Runner");
+        String nickname = pref.getString("nickname", "人机交互");
+        String signature = pref.getString("signature", "这个人很有个性，但没有签名");
+
+        CircleImageView toolbarAvatar = customToolbar.findViewById(R.id.toolbarAvatar);
+        TextView toolbarNickname = customToolbar.findViewById(R.id.toolbarNickname);
 
         if (avatarBase64Str.equals("")) {
             // 设置默认头像
             avatarView.setImageResource(R.drawable.baseline_avatar_default1);
+            toolbarAvatar.setImageResource(R.drawable.baseline_avatar_default1);
         } else {
             // 转化为bitmap
-            avatarView.setImageBitmap(PhotoUtil.base64Str2Bitmap(avatarBase64Str));
+            Bitmap bitmap = PhotoUtil.base64Str2Bitmap(avatarBase64Str);
+            avatarView.setImageBitmap(bitmap);
+            toolbarAvatar.setImageBitmap(bitmap);
         }
 
         nicknameView.setText(nickname);
+        toolbarNickname.setText(nickname);
+
+        sigView.setText(signature);
     }
 }

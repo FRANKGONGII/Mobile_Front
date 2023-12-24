@@ -5,28 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+<!--    <ImageButton-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        />-->
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/avatar"
+        android:id="@+id/toolbarAvatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="70dp"
-        android:src="@drawable/baseline_account_circle_24"
+        android:layout_marginStart="60dp"
+        android:src="@drawable/baseline_avatar_default1"
         tools:ignore="RtlSymmetry" />
 
     <TextView
-        android:id="@+id/nickname"
+        android:id="@+id/toolbarNickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="10dp"
-        android:text="TEST"/>
+        android:text="人机交互"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
 
 
 </LinearLayout>

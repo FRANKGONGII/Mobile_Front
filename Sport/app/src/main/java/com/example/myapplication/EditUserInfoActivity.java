@@ -113,10 +113,10 @@ public class EditUserInfoActivity extends AppCompatActivity {
 
 
          String avatar = pref.getString("avatar", "");
-         String nickname = pref.getString("nickname", "Runner");
+         String nickname = pref.getString("nickname", "人机交互");
          String gender = pref.getString("gender", "");
          String birth = pref.getString("birth", "");
-         String signature = pref.getString("signature", "");
+         String signature = pref.getString("signature", "这个人很有个性，但没有签名");
 
          UserInfoItem avatarItem = new UserInfoItem(UserInfoItem.UserInfoType.AVATAR, avatar);
          UserInfoItem nicknameItem = new UserInfoItem(UserInfoItem.UserInfoType.NICKNAME, nickname);
