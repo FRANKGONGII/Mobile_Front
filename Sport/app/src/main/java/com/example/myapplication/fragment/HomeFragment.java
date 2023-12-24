@@ -310,14 +310,9 @@ public class HomeFragment extends Fragment {
 
 
     @Override
-    public void onStart() {
-        super.onStart();
-        refreshUserCard();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
+        refreshUserCard();
     }
 
     @Override
@@ -355,18 +350,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-//    public void onMenuItemClick() {
-//        NavigationView navView = view.findViewById(R.id.nav_view);
-//        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                //后续添加处理逻辑
-//                drawerLayout.closeDrawers();
-//                return true;
-//            }
-//        });
-//    }
-
 
     public void onTotalSportCardInit() {
         List<Record> recordList = dataService.getAllRecords();
@@ -384,8 +367,6 @@ public class HomeFragment extends Fragment {
 
         TextView textView = view.findViewById(R.id.minutes);
         textView.setText(spannableString);
-
-
 
     }
 

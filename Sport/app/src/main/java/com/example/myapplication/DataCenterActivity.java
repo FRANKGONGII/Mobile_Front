@@ -17,7 +17,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.util.Pair;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +33,8 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,6 +45,12 @@ public class DataCenterActivity extends AppCompatActivity {
 
     private DataService dataService;
 
+    private Toolbar toolbar;
+    private TextView nav1;
+    private TextView run;
+    private TextView ride;
+    private TextView walk;
+    private TextView swim;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,7 +60,31 @@ public class DataCenterActivity extends AppCompatActivity {
 
         dataService = DataServiceFactory.getInstance();
 
-//        onHistoryInit();
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        nav1 = findViewById(R.id.min_day);
+        nav1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DataCenterActivity.this, StatisticActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        run = findViewById(R.id.run);
+        ride = findViewById(R.id.ride);
+        walk = findViewById(R.id.walk);
+        swim = findViewById(R.id.swim);
+
+        onHistoryInit();
+
+        onDataInit();
 
         onCardClick();
     }
@@ -90,7 +124,13 @@ public class DataCenterActivity extends AppCompatActivity {
         // 获取今日凌晨的时间
         Date todayMidnight = calendar.getTime();
 
-        List<Record> todayRecords = dataService.queryRecordByBoth(null, todayMidnight, null);
+        Calendar nextDay = Calendar.getInstance();
+
+        nextDay.setTime(todayMidnight);
+        nextDay.add(Calendar.DAY_OF_MONTH,1);
+
+
+        List<Record> todayRecords = dataService.queryRecordByBoth(null, todayMidnight, nextDay.getTime());
 
         for (Record record : todayRecords) {
             todaySec += record.getDuration();
@@ -108,17 +148,65 @@ public class DataCenterActivity extends AppCompatActivity {
         textView2.setText(spannableString2);
 
         SpannableString spannableString3 = new SpannableString("运动消耗\n" + todayKa + " 千卡");
-        spannableString3.setSpan(new StyleSpan(Typeface.BOLD), 5, todayKaStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString3.setSpan(new AbsoluteSizeSpan(20, true), 0, todayKaStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString3.setSpan(new ForegroundColorSpan(Color.BLACK), 0, todayKaStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString3.setSpan(new StyleSpan(Typeface.BOLD), 5, 5+todayKaStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString3.setSpan(new AbsoluteSizeSpan(20, true), 5, 5+todayKaStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString3.setSpan(new ForegroundColorSpan(Color.BLACK), 5, 5+todayKaStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         TextView textView3 = findViewById(R.id.today_ka);
-        textView3.setText(spannableString);
+        textView3.setText(spannableString3);
 
     }
 
-    public void onDataInit() {
 
+
+    public void onDataInit() {
+        List<Record> runList = dataService.queryRecordByBoth(Record.RecordType.RUNNING, null, null);
+        String runDistStr = String.valueOf(sumDistance(runList));
+        SpannableString str1 = new SpannableString(runDistStr + "公里");
+        str1.setSpan(new StyleSpan(Typeface.BOLD), 0, runDistStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str1.setSpan(new AbsoluteSizeSpan(15, true), 0, runDistStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str1.setSpan(new ForegroundColorSpan(Color.BLACK), 0, runDistStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        run.setText(str1);
+
+        List<Record> rideList = dataService.queryRecordByBoth(Record.RecordType.RIDING, null, null);
+        String rideDistStr = String.valueOf(sumDistance(rideList));
+        SpannableString str2 = new SpannableString(rideDistStr + "公里");
+        str2.setSpan(new StyleSpan(Typeface.BOLD), 0, rideDistStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str2.setSpan(new AbsoluteSizeSpan(15, true), 0, rideDistStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str2.setSpan(new ForegroundColorSpan(Color.BLACK), 0, rideDistStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ride.setText(str2);
+
+        List<Record> walkList = dataService.queryRecordByBoth(Record.RecordType.WALKING, null, null);
+        String walkDistStr = String.valueOf(sumDistance(walkList));
+        SpannableString str3 = new SpannableString(walkDistStr + "公里");
+        str3.setSpan(new StyleSpan(Typeface.BOLD), 0, walkDistStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str3.setSpan(new AbsoluteSizeSpan(15, true), 0, walkDistStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str3.setSpan(new ForegroundColorSpan(Color.BLACK), 0, walkDistStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        walk.setText(str3);
+
+        List<Record> swimList = dataService.queryRecordByBoth(Record.RecordType.SWIMMING, null, null);
+        String swimDurStr = String.valueOf((int)(sumDurationBySec(swimList) / 60));
+        SpannableString str4 = new SpannableString(swimDurStr + "分钟");
+        str4.setSpan(new StyleSpan(Typeface.BOLD), 0, swimDurStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str4.setSpan(new AbsoluteSizeSpan(15, true), 0, swimDurStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str4.setSpan(new ForegroundColorSpan(Color.BLACK), 0, swimDurStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        swim.setText(str4);
+    }
+
+    public double sumDistance(List<Record> recordList) {
+        double sum = 0;
+        for (Record record : recordList) {
+            sum += record.getDistance();
+        }
+        return sum;
+    }
+
+    public int sumDurationBySec(List<Record> recordList) {
+        int sum = 0;
+        for (Record record : recordList) {
+            sum += record.getDuration();
+        }
+        return sum;
     }
 
     public void onCardClick() {

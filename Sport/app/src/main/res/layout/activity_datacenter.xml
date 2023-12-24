@@ -13,9 +13,10 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/pink_sakura"
+        android:background="@color/blue_sky"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:fitsSystemWindows="false"
+        app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
         app:title="数据中心"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_collapseMode="pin" />
@@ -33,6 +34,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout
@@ -70,8 +72,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:text="今日运动"
-                        android:textColor="@color/green0"
-                        android:drawableEnd="@drawable/baseline_arrow_forward_ios_24" />
+                        android:textColor="@color/green0" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -152,6 +153,7 @@
                                     android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"/>
 
                                 <TextView
+                                    android:id="@+id/run"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:paddingHorizontal="5dp"
@@ -185,6 +187,7 @@
                                     android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"/>
 
                                 <TextView
+                                    android:id="@+id/ride"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:paddingHorizontal="5dp"
@@ -227,6 +230,7 @@
                                     android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"/>
 
                                 <TextView
+                                    android:id="@+id/walk"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:paddingHorizontal="5dp"
@@ -260,6 +264,7 @@
                                     android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"/>
 
                                 <TextView
+                                    android:id="@+id/swim"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:paddingHorizontal="5dp"
