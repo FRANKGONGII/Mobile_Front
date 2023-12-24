@@ -18,7 +18,7 @@
         android:fitsSystemWindows="true"
         app:title="账号资料"
         app:titleTextColor="@color/white"
-        app:navigationIcon="@drawable/baseline_arrow_back_24">
+        app:navigationIcon="@drawable/baseline_arrow_back_ios_24">
 
 
     </androidx.appcompat.widget.Toolbar>
