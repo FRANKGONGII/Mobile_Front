@@ -4,24 +4,24 @@
     style="@style/Widget.Design.BottomNavigationView">
 
     <item
-        android:id="@+id/home_fragment"
-        android:icon="@drawable/baseline_account_circle_24"
-        android:title="我的"
-        app:exb_color="@color/blue_sky"/>
+        android:id="@+id/course_fragment"
+        android:icon="@drawable/baseline_school_24"
+        android:title="课程"
+        app:exb_color="#31525B"/>
     <item
         android:id="@+id/sport_fragment"
         android:icon="@drawable/baseline_directions_run_24"
         android:title="运动"
-        app:exb_color="@color/blue_sky"/>
+        app:exb_color="#FFA101"/>
     <item
         android:id="@+id/community_fragment"
         android:icon="@drawable/baseline_chat_24"
         android:title="助手"
-        app:exb_color="@color/blue_sky"/>
+        app:exb_color="#B3DEE5"/>
     <item
-        android:id="@+id/course_fragment"
-        android:icon="@drawable/baseline_school_24"
-        android:title="课程"
-        app:exb_color="@color/blue_sky"/>
+        android:id="@+id/home_fragment"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:title="我的"
+        app:exb_color="#FAE6B1"/>
 
 </menu>

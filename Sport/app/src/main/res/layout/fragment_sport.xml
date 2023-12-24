@@ -1,54 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back_fragment_sport"
     android:elevation="25dp"
+    android:fitsSystemWindows="true"
+    android:theme="@style/SportFragmentTheme"
     >
 
+    <RelativeLayout
+        android:id="@+id/sMap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="120dp"-->
-<!--        android:layout_margin="@dimen/margin_edge_20"-->
-<!--        android:layout_marginTop="16dp"-->
+        <com.amap.api.maps2d.MapView
+            android:id="@+id/map2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
 
-<!--        android:background="@drawable/frame"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="@dimen/margin_edge"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        tools:ignore="MissingConstraints"-->
-<!--        >-->
+        </com.amap.api.maps2d.MapView>
+    </RelativeLayout>
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="center_vertical"-->
-<!--            android:text="运动方法"-->
-<!--            android:textColor="@color/text_color_1"-->
-<!--            android:textSize="@dimen/textsize_4" />-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/start_sport_bg"
+        android:fitsSystemWindows="true">
+    </RelativeLayout>
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="@dimen/margin_edge"-->
-<!--            android:lineSpacingExtra="@dimen/lineSpacingExtra"-->
-<!--            android:text="1.请保持40分钟以上的运动时间"-->
-<!--            android:textColor="@color/text_color_2"-->
-<!--            android:textSize="@dimen/textsize_2" />-->
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="@dimen/item_edge"-->
-<!--            android:lineSpacingExtra="@dimen/lineSpacingExtra"-->
-<!--            android:text="2.不要剧烈运动，心率保持在140~160之间"-->
-<!--            android:textColor="@color/text_color_2"-->
-<!--            android:textSize="@dimen/textsize_2" />-->
 
-<!--    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,7 +40,8 @@
         android:layout_marginTop="20sp"
         app:layout_constraintTop_toTopOf="parent"
         android:paddingHorizontal="20dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:fitsSystemWindows="true">
 
 
         <LinearLayout
@@ -75,8 +60,8 @@
                 android:padding="5dp"
                 android:text="累计跑步"
                 android:textStyle="bold"
-                android:textColor="@color/text_color_2"
-                android:textSize="35sp" />
+                android:textColor="@color/text_color_3"
+                android:textSize="25sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -87,114 +72,74 @@
                     android:id="@+id/sum_distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed-medium"
                     android:padding="3dp"
                     android:text="0.00"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_color_2"
-                    android:textSize="50dp" />
+                    android:textColor="@color/text_color_3"
+                    android:textSize="50dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed-medium"
                     android:padding="3dp"
                     android:text="km > "
-                    android:textStyle="bold"
-                    android:textColor="@color/text_color_2"
-                    android:textSize="40sp" />
+                    android:textColor="@color/text_color_3"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
-
-<!--        <Space-->
-<!--            android:layout_width="10dp"-->
-<!--            android:layout_height="match_parent"/>-->
-<!--        <LinearLayout-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical"-->
-<!--            android:paddingLeft="5dp"-->
-<!--            android:paddingBottom="5dp">-->
-<!--            &lt;!&ndash;android:background="@drawable/frame"&ndash;&gt;-->
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:padding="5dp"-->
-<!--                android:text="本周运动："-->
-<!--                android:textColor="@color/text_color_2"-->
-<!--                android:textSize="25dp" />-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal">-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/week_distance"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:padding="3dp"-->
-<!--                    android:text="2.8"-->
-<!--                    android:textColor="@color/text_color_2"-->
-<!--                    android:textSize="50dp" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:padding="3dp"-->
-<!--                    android:text="km"-->
-<!--                    android:textColor="@color/text_color_2"-->
-<!--                    android:textSize="30sp" />-->
-<!--            </LinearLayout>-->
-<!--        </LinearLayout>-->
     </LinearLayout>
 
     <!--        注意，这里选择的按钮要找个图片-->
 
     <android.widget.Button
         android:id="@+id/ButtonGo"
-        android:layout_width="170dp"
-        android:layout_height="170dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="456dp"
-        android:background="@drawable/button_circle"
+        android:background="@drawable/button_rectangle"
         android:ellipsize="end"
+        android:layout_centerHorizontal="true"
+
 
 
         android:maxHeight="0dp"
         android:maxLines="2"
         android:minHeight="0dp"
 
-        android:outlineProvider="none"
         android:text="@string/button_go"
-        android:textColor="@color/white"
+        android:textColor="#31525B"
         android:textIsSelectable="false"
         android:textSize="50sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
         tools:ignore="MissingConstraints" />
 
     <android.widget.Button
         android:id="@+id/ButtonChooseType"
-        android:layout_width="75dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="644dp"
-        android:background="@drawable/button_rectangle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
 
+
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/button_rectangle"
         android:ellipsize="end"
         android:maxHeight="0dp"
         android:maxLines="1"
         android:minHeight="0dp"
-        android:outlineProvider="none"
         android:singleLine="true"
-        android:text="跑步>"
-        android:textColor="@color/white"
+
+        android:text="跑步"
+        android:textStyle="bold"
+        android:textColor="#31525B"
         android:textIsSelectable="false"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="18sp"
+
+        android:layout_below="@+id/ButtonGo"
         tools:ignore="MissingConstraints" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

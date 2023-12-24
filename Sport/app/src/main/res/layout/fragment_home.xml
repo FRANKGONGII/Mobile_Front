@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:contentScrim="@color/transparent"
+                app:contentScrim="@color/white"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
@@ -60,8 +60,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/userAvatar"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
                         android:layout_toEndOf="@id/userAvatar"
                         android:maxLength="10"
                         android:maxLines="1"
@@ -80,12 +80,23 @@
                         android:src="@drawable/baseline_edit_note_24" />
 
                     <TextView
+                        android:id="@+id/userHonor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/userNickname"
                         android:layout_alignStart="@id/userNickname"
-                        android:text="专业跑者"
-                        android:textStyle="italic" />
+                        android:text="⭐⭐⭐"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:id="@+id/userSig"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@id/userNickname"
+                        android:layout_below="@id/userHonor"
+                        android:layout_marginEnd="30dp"
+                        android:textStyle="italic"
+                        android:maxLines="2"/>
 
                     <!--                    <TextView-->
                     <!--                        android:layout_width="wrap_content"-->
@@ -524,66 +535,13 @@
 <!--                android:textSize="@dimen/fifteen"-->
 <!--                android:layout_marginStart="50dp"/>-->
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/calendar"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_below="@id/other"
-                android:layout_alignStart="@id/l1"
-                android:layout_alignEnd="@id/l1"
-                android:layout_marginTop="20dp"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:theme="@style/Theme.MaterialComponents.Light"
-                app:cardCornerRadius="4dp"
-                app:cardMaxElevation="20dp"
-                app:layout_anchorGravity="top|center"
-                app:strokeColor="@android:color/transparent">
 
-                <com.haibin.calendarview.CalendarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerHorizontal="true"
-                    android:orientation="vertical"
-                    app:default_status="shrink"
-                    app:calendar_show_mode="only_week_view">
-
-                    <com.haibin.calendarview.CalendarView
-                        android:id="@+id/calendarView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        app:calendar_height="50dp"
-                        app:current_month_text_color="#333333"
-                        app:current_day_lunar_text_color="#CFCFCF"
-                        app:min_year="2004"
-                        app:week_start_with="mon"
-                        app:month_view="com.example.myapplication.ui.calendar.CustomMonthView"
-                        app:week_view="com.example.myapplication.ui.calendar.CustomWeekView"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="This is text">
-
-                        </TextView>
-                    </LinearLayout>
-
-                </com.haibin.calendarview.CalendarLayout>
-
-
-
-            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/shoe"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_below="@id/calendar"
+                android:layout_below="@id/other"
                 android:layout_alignStart="@id/l1"
                 android:layout_alignEnd="@id/l1"
                 android:layout_marginTop="20dp"
@@ -771,6 +729,48 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/shoe"
+                android:layout_alignStart="@id/l1"
+                android:layout_alignEnd="@id/l1"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardCornerRadius="4dp"
+                app:cardMaxElevation="20dp"
+                app:layout_anchorGravity="top|center"
+                app:strokeColor="@android:color/transparent">
+
+                <com.haibin.calendarview.CalendarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical"
+                    app:default_status="shrink"
+                    app:calendar_show_mode="only_week_view">
+
+                    <com.haibin.calendarview.CalendarView
+                        android:id="@+id/calendarView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        app:calendar_height="50dp"
+                        app:current_month_text_color="#333333"
+                        app:current_day_lunar_text_color="#CFCFCF"
+                        app:min_year="2004"
+                        app:week_start_with="mon"
+                        app:month_view="com.example.myapplication.ui.calendar.CustomMonthView"
+                        app:week_view="com.example.myapplication.ui.calendar.CustomWeekView"/>
+
+                </com.haibin.calendarview.CalendarLayout>
+
+
+
+            </com.google.android.material.card.MaterialCardView>
 
 
 

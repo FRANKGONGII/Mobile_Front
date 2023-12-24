@@ -12,7 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.ChatActivity;
+import com.example.myapplication.HistoryActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.TestActivity;
 import com.example.myapplication.data.DataService;
 import com.example.myapplication.data.RemoteData;
 
@@ -28,9 +30,9 @@ public class CommunityFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Intent intent = new Intent(getActivity(), ChatActivity.class);
+        Intent intent = new Intent(getActivity(), TestActivity.class);
         intent.putExtra("TaskType", "NormalChat");
         startActivity(intent);
-        getActivity().finish();
+        getActivity().finish(); //本句有用，不然返回会回到这里
     }
 }
