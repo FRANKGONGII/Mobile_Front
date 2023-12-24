@@ -33,6 +33,6 @@ public class CommunityFragment extends Fragment {
         Intent intent = new Intent(getActivity(), TestActivity.class);
         intent.putExtra("TaskType", "NormalChat");
         startActivity(intent);
-        getActivity().finish();
+        getActivity().finish(); //本句有用，不然返回会回到这里
     }
 }
