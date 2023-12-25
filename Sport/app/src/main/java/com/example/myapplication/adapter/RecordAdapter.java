@@ -19,6 +19,7 @@ import com.example.myapplication.bean.Record;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -157,13 +158,13 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
 
         HashMap<Record.RecordType, Double> speedRateMap = distRateMap;
 
-        HashMap<Double, Integer> distRankMap = new HashMap<Double, Integer>(){{
+        LinkedHashMap<Double, Integer> distRankMap = new LinkedHashMap<Double, Integer>(){{
             put(3.0, 0);
             put(2.4, 1);
             put(1.5, 2);
         }};
 
-        HashMap<Double, Integer> speedRankMap = new HashMap<Double, Integer>(){{
+        LinkedHashMap<Double, Integer> speedRankMap = new LinkedHashMap<Double, Integer>(){{
             put(4.76, 0);
             put(3.7, 1);
             put(3.03, 2);
