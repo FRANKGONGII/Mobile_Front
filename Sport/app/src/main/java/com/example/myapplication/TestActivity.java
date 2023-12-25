@@ -92,6 +92,8 @@ public class TestActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     private Toolbar toolbar;
     private View customToolbar;
+
+    //Record.RecordType recordType = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -261,10 +263,18 @@ public class TestActivity extends AppCompatActivity {
         super.onStart();
         Bundle bundle = getIntent().getExtras();
 
-        Record.RecordType recordType = null;
+
+
+        if(nowType!=null)Log.d("DATE_TEST",nowType.getStr());
+
         if(bundle!=null){
-            recordType = (Record.RecordType) bundle.getSerializable("activity_type");
+            Log.d("DATE_TEST","here!");
+            Record.RecordType recordType = (Record.RecordType) bundle.getSerializable("activity_type");
+            nowType = recordType == null ? nowType : recordType;
+
         }
+
+        if(nowType!=null)Log.d("DATE_TEST",nowType.getStr());
 //        String typeStr = intent.getStringExtra("activity_type");
 //        switch (typeStr) {
 //            case "RUNNING":
@@ -276,7 +286,12 @@ public class TestActivity extends AppCompatActivity {
 //        Button listPopupWindowButton = findViewById(R.id.history_popup_button);
 //        listPopupWindowButton.setText();
 
-        reFreshView(dataService.queryRecordByBoth(recordType, start, end));
+
+
+
+
+
+        reFreshView(dataService.queryRecordByBoth(nowType, start, end));
     }
 
     private Context requireContext() {
@@ -302,6 +317,8 @@ public class TestActivity extends AppCompatActivity {
                 button.setText(item.getTitle().subSequence(len-2,len));
                 if(id==R.id.option_1){
                     //搜索全部
+                    nowType=null;
+                    Log.d("DATE_TEST","change to null");
                     reFreshView(dataService.getAllRecords());
                 }else if(id==R.id.option_2){
                     nowType = Record.RecordType.RUNNING;
@@ -334,6 +351,8 @@ public class TestActivity extends AppCompatActivity {
             recordList = records;
             adapter = new RecordAdapter(recordList);
             recyclerView.setAdapter(adapter);
+            Button type = findViewById(R.id.history_popup_button);
+            type.setText(nowType==null?"全部":nowType.getStr());
 
             //修改长度
             String newSumDistance = getSumDistance(records);
