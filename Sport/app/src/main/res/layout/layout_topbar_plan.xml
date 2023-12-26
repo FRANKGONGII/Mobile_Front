@@ -7,7 +7,7 @@
     android:id="@+id/layout_top_statistic">
 
     <ImageButton
-        android:id="@+id/statistic_back_button"
+        android:id="@+id/plan_back_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="10dp"
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="运动数据统计"
+        android:text="计划总览"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -162,7 +162,7 @@
             android:layout_marginStart="25dp"
             android:gravity="center"
             android:text="完成"
-            android:textColor="@color/text_color_green"
+            android:textColor="@color/white"
             android:textSize="18sp" />
 
 <!--        <TextView-->
@@ -181,10 +181,10 @@
             android:layout_height="70dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/sport_white_round"
+            android:background="@drawable/sport_grey_round"
             android:gravity="center"
             android:text="暂停"
-            android:textColor="@color/text_color_green"
+            android:textColor="@color/white"
             android:textSize="18sp" />
 
         <TextView
@@ -194,10 +194,10 @@
             android:layout_toEndOf="@id/tv2"
             android:layout_centerVertical="true"
             android:layout_marginStart="50dp"
-            android:background="@drawable/sport_white_round"
+            android:background="@drawable/sport_green_round"
             android:gravity="center"
             android:text="继续"
-            android:textColor="@color/text_color_green"
+            android:textColor="@color/white"
             android:textSize="18sp" />
 
     </RelativeLayout>

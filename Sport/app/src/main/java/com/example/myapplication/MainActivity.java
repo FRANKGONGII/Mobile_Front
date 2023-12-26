@@ -12,14 +12,18 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.myapplication.bean.Schedule;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar;
 import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI;
 
 public class MainActivity extends AppCompatActivity {
+
+
 
     private ViewPager viewPager;
     private ArrayList<Fragment> fragments;

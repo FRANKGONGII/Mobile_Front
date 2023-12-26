@@ -1,0 +1,27 @@
+<!-- schedule_item.xml -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textViewScheduleTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="日程标题"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textViewScheduleTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="日程时间"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"/>
+
+    <!-- 在这里添加其他显示日程信息的视图元素，比如描述、重复信息等 -->
+
+</LinearLayout>

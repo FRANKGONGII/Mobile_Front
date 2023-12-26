@@ -100,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         String user = String.valueOf(etUsername.getText());
         String pwd = String.valueOf(etPsd.getText());
         int userId = userService.LoginByPwd(user,pwd);
+        Log.d("USER_TEST",user+" "+pwd);
         if(userId!=-1){
             Toast.makeText(this, "登陆成功", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);

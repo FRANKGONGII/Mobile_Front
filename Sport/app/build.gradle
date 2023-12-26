@@ -105,6 +105,8 @@ dependencies {
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
 
     implementation 'com.github.st235:expandablebottombar:1.5.3'
+
+    implementation 'com.github.airsaid:calendarview:1.0.3'
 }
 
 

@@ -58,6 +58,7 @@ import com.example.myapplication.DataCenterActivity;
 import com.example.myapplication.EditUserInfoActivity;
 import com.example.myapplication.MedalActivity;
 import com.example.myapplication.EquipmentActivity;
+import com.example.myapplication.PlanActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.StatisticActivity;
 import com.example.myapplication.adapter.SportDataAdapter;
@@ -188,6 +189,16 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent  = new Intent(getActivity(), ChatActivity.class);
                 intent.putExtra("TaskType", "NormalChat");
+                startActivity(intent);
+            }
+        });
+
+        //跳转ai助手
+        ImageView schedule = view.findViewById(R.id.home_icon2);
+        schedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(getActivity(), PlanActivity.class);
                 startActivity(intent);
             }
         });

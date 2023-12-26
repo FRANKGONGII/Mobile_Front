@@ -202,8 +202,8 @@ public class RecordingActivity extends AppCompatActivity {
 
         LongClickProgressView lcpv = findViewById(R.id.tv0);
         //
-        lcpv.setRingColor(Color.parseColor("#68477be5"));
-        lcpv.setCenterColor(Color.parseColor("#68FFFFFF"));
+        lcpv.setRingColor(Color.parseColor("#FF0000"));
+        lcpv.setCenterColor(Color.parseColor("#FF0000"));
         lcpv.setOnLongClickStateListener(new LongClickProgressView.OnLongClickStateListener() {
             @Override
             public void onFinish() throws JSONException {
