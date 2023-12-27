@@ -38,7 +38,7 @@ public class DetailPlanActivity extends AppCompatActivity {
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
 
-    private int index = -1;
+//    private int index = -1;
 
     private Schedule schedule;
 
@@ -47,7 +47,7 @@ public class DetailPlanActivity extends AppCompatActivity {
     String format;
 
     private int size = 0;
-
+    String key;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +55,7 @@ public class DetailPlanActivity extends AppCompatActivity {
 
         pref = getSharedPreferences("schedule", MODE_PRIVATE);
         editor = pref.edit();
-
+        key = getIntent().getStringExtra("key");
         back = findViewById(R.id.detail_plan_back_button);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +86,7 @@ public class DetailPlanActivity extends AppCompatActivity {
                 builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String key = getIntent().getStringExtra("key");
+
                         if (key != null) {
                             editor.putStringSet(key, null);
                             editor.apply();
@@ -101,18 +101,19 @@ public class DetailPlanActivity extends AppCompatActivity {
 
 
         // 获取从总览页面传递过来的日程数据
-        index = getIntent().getIntExtra("index",-1);
-        if(index==-1){
+//        index = getIntent().getIntExtra("index",-1);
+        String key = getIntent().getStringExtra("key");
+        Log.d("SET", "onCreate: "+key);
+        if(key==null){
             Toast.makeText(getApplicationContext(),"读取数据出错了",Toast.LENGTH_LONG);
         }else{
             schedule = new Schedule();
-            Set<String> set = pref.getStringSet("item"+index, null);
-            size = pref.getInt("item"+index+"Size",0);
+            Set<String> set = pref.getStringSet(key, null);
+            size = pref.getInt(key+"Size",0);
             if(set!=null){
                 // 初始化视图
-                schedule = Schedule.parseSet(set);
+                schedule = Schedule.newParseSet(set, key);
                 initView();
-
             }else{
                 Toast.makeText(getApplicationContext(),"读取数据出错了",Toast.LENGTH_LONG);
             }
@@ -190,8 +191,8 @@ public class DetailPlanActivity extends AppCompatActivity {
                     newDate.remove(format);
 
                     Set<String> set = new Schedule(schedule.getTitle(),
-                            schedule.getTime(),newDate).toSetString();
-                    editor.putStringSet("item"+index, set);
+                            schedule.getTime(),newDate, schedule.getKey()).toSetString();
+                    editor.putStringSet(key, set);
                     editor.apply();
 
                 }

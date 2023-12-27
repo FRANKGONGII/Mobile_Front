@@ -51,6 +51,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                 Log.d("SH_TEST",position+" ");
                 Intent intent = new Intent(v.getContext(), DetailPlanActivity.class);
                 intent.putExtra("index",position);
+                Log.d("SET", "onClick: "+schedule.getKey());
                 intent.putExtra("key", schedule.getKey());
                 v.getContext().startActivity(intent);
             }

@@ -3,24 +3,21 @@ package com.example.myapplication;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.adapter.ScheduleAdapter;
 import com.example.myapplication.bean.Schedule;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +29,7 @@ public class PlanActivity extends AppCompatActivity {
     private ImageButton buttonAddSchedule;
     private ImageButton buttonBack;
     private ImageButton buttonDel;
+    private Drawable drawable;
 
     private static List<Schedule> scheduleList;
     private ScheduleAdapter scheduleAdapter;
@@ -126,13 +124,23 @@ public class PlanActivity extends AppCompatActivity {
         for (int i = 0; i < numOfSets; ++i) {
             Set<String> set = pref.getStringSet("item"+i, null);
             if (set != null) {
+                Log.d("SET", "item"+i);
                 list.add(set);
                 keyList.add("item"+i);
             }
         }
         // 初始化日程列表
 //        initScheduleList(list);
-        newInitScheduleList(list, keyList);
+        refreshScheduleList(list, keyList);
+
+
+        if (list.isEmpty()) {
+            drawable.setColorFilter(ContextCompat.getColor(PlanActivity.this, R.color.gray3), PorterDuff.Mode.SRC_IN);
+            buttonDel.setClickable(false);
+        } else {
+            drawable.setColorFilter(ContextCompat.getColor(PlanActivity.this, R.color.red), PorterDuff.Mode.SRC_IN);
+            buttonDel.setClickable(true);
+        }
     }
 
 
@@ -146,6 +154,7 @@ public class PlanActivity extends AppCompatActivity {
         buttonAddSchedule = findViewById(R.id.plan_add_button);
         buttonBack = findViewById(R.id.plan_back_button);
         buttonDel = findViewById(R.id.plan_del_all_button);
+        drawable = buttonDel.getDrawable();
     }
 
     // 初始化日程列表数据
@@ -163,7 +172,7 @@ public class PlanActivity extends AppCompatActivity {
         recyclerViewScheduleList.setAdapter(scheduleAdapter);
     }
 
-    private void newInitScheduleList(List<Set<String>> list, List<String> keyList) {
+    private void refreshScheduleList(List<Set<String>> list, List<String> keyList) {
         // 创建虚拟的日程数据
         scheduleList = new ArrayList();
         int i;

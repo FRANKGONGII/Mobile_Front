@@ -208,10 +208,9 @@ public class AddPlanActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"成功添加计划",Toast.LENGTH_LONG).show();
                     int numOfSets = pref.getInt("numOfSets", 0);
                     Set<String> set = new Schedule(planName.getText().toString(),
-                            planDetail.getText().toString()+'。',calendarView.getSelectDate()).toSetString();
+                            planDetail.getText().toString()+'。',calendarView.getSelectDate(), "item"+numOfSets).toSetString();
                     editor.putStringSet("item"+numOfSets, set);
                     editor.putInt("numOfSets", numOfSets+1);
-
                     editor.putInt("item"+numOfSets+"Size", calendarView.getSelectDate().size());
                     editor.apply();
 

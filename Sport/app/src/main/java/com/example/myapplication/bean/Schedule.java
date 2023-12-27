@@ -73,7 +73,7 @@ public class Schedule {
 //        if(set==null)return null;
         Schedule ret = new Schedule();
         for(String s:set){
-            Log.d("SAVE_TEST",s);
+            Log.d("SET",s);
             if(s.matches("[0-9]+")){
                 Log.d("SAVE_TEST","here1");
                 ret.dates.add(s);
