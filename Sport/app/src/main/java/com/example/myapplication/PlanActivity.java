@@ -1,12 +1,16 @@
 package com.example.myapplication;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.adapter.ScheduleAdapter;
 import com.example.myapplication.bean.Schedule;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,9 +84,34 @@ public class PlanActivity extends AppCompatActivity {
         buttonDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.clear();
-                editor.apply();
-                onStart();
+
+                // 弹出编辑框
+
+                // 创建builder
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(PlanActivity.this);
+
+                // 设置builder属性
+//                builder.setTitle("修改昵称");
+                builder.setMessage("相信您一定可以坚持完成计划哦!\n确定要删除所有计划吗?");
+
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+
+                builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        editor.clear();
+                        editor.apply();
+                        onStart();
+                    }
+                });
+
+                builder.show();
             }
         });
 

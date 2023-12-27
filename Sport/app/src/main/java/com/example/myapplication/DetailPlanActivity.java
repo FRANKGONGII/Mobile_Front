@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.bean.Schedule;
 import com.github.airsaid.calendarview.widget.CalendarView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,12 +68,34 @@ public class DetailPlanActivity extends AppCompatActivity {
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String key = getIntent().getStringExtra("key");
-                if (key != null) {
-                    editor.putStringSet(key, null);
-                    editor.apply();
-                    finish();
-                }
+                // 创建builder
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(DetailPlanActivity.this);
+
+                // 设置builder属性
+//                builder.setTitle("修改昵称");
+                builder.setMessage("相信您一定可以坚持完成计划哦!\n确定要删除这个计划吗?");
+
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+
+                builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String key = getIntent().getStringExtra("key");
+                        if (key != null) {
+                            editor.putStringSet(key, null);
+                            editor.apply();
+                            finish();
+                        }
+                    }
+                });
+
+                builder.show();
             }
         });
 
