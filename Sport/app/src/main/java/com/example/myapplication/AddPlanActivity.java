@@ -211,6 +211,8 @@ public class AddPlanActivity extends AppCompatActivity {
                             planDetail.getText().toString()+'。',calendarView.getSelectDate()).toSetString();
                     editor.putStringSet("item"+numOfSets, set);
                     editor.putInt("numOfSets", numOfSets+1);
+
+                    editor.putInt("item"+numOfSets+"Size", calendarView.getSelectDate().size());
                     editor.apply();
 
 

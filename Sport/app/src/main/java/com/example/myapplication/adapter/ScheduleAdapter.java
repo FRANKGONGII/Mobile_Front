@@ -1,5 +1,6 @@
 package com.example.myapplication.adapter;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.DetailPlanActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.ResultActivity;
 import com.example.myapplication.bean.Schedule;
 
 import java.util.List;
@@ -46,7 +49,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Log.d("SH_TEST",position+" ");
-
+                Intent intent = new Intent(v.getContext(), DetailPlanActivity.class);
+                intent.putExtra("index",position);
+                v.getContext().startActivity(intent);
             }
         });
     }

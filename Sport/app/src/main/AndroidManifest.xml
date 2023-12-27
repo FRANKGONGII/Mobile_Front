@@ -129,6 +129,10 @@
             android:name=".AddPlanActivity">
         </activity>
 
+        <activity
+            android:name=".DetailPlanActivity">
+        </activity>
+
 
 
         <meta-data

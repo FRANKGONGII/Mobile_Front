@@ -13,7 +13,6 @@ import java.util.Set;
 public class Schedule {
     private String title;
     private String time;
-
     private List<String> dates;
 
     public Schedule(String title, String time, List<String> dates) {
@@ -60,6 +59,21 @@ public class Schedule {
         }
         return ret;
     }
+
+    public  List<String> getDates(){
+        return dates;
+    }
+
+
+    public boolean ifInDates(String s){
+        for(String str:dates){
+            if(s.equals(str)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     // 可以根据需要添加其他属性和方法
 }
