@@ -31,6 +31,7 @@ public class DetailPlanActivity extends AppCompatActivity {
     private ImageButton button;
     private CalendarView calendarView;
     private ImageButton back;
+    private ImageButton del;
 
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -58,6 +59,19 @@ public class DetailPlanActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        del = findViewById(R.id.plan_del_button);
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String key = getIntent().getStringExtra("key");
+                if (key != null) {
+                    editor.putStringSet(key, null);
+                    editor.apply();
+                    finish();
+                }
             }
         });
 

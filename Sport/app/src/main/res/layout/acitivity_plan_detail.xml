@@ -35,6 +35,17 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <ImageButton
+            android:id="@+id/plan_del_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:background="#00C0C0C0"
+            android:src="@drawable/baseline_delete_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -65,7 +76,9 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:text="名称"
-                android:textSize="18dp"/>
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/textViewTime"
@@ -76,7 +89,9 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:text="描述"
-                android:textSize="18dp"/>
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/textViewIfPlanToday"
@@ -99,6 +114,8 @@
                 android:layout_marginStart="16dp"
                 android:text="任务已完成0/0"
                 android:textSize="18dp"/>
+
+
 
 
             <!--            <com.haibin.calendarview.CalendarView-->

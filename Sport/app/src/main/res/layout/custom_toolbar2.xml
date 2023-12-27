@@ -26,6 +26,7 @@
         android:layout_centerVertical="true"
         android:text="运动记录"
         android:textStyle="bold"
+        android:textSize="18sp"
         android:textColor="@color/white" />
 
 

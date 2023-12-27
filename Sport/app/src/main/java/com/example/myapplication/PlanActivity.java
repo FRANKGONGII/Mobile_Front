@@ -24,6 +24,7 @@ public class PlanActivity extends AppCompatActivity {
     private RecyclerView recyclerViewScheduleList;
     private ImageButton buttonAddSchedule;
     private ImageButton buttonBack;
+    private ImageButton buttonDel;
 
     private static List<Schedule> scheduleList;
     private ScheduleAdapter scheduleAdapter;
@@ -73,7 +74,14 @@ public class PlanActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        buttonDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.clear();
+                editor.apply();
+                onStart();
+            }
+        });
 
     }
 
@@ -81,16 +89,20 @@ public class PlanActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         List<Set<String>> list = new ArrayList<>();
+        List<String> keyList = new ArrayList<>();
         int numOfSets = pref.getInt("numOfSets", 0);
         for (int i = 0; i < numOfSets; ++i) {
             Set<String> set = pref.getStringSet("item"+i, null);
             if (set != null) {
                 list.add(set);
+                keyList.add("item"+i);
             }
         }
         // 初始化日程列表
-        initScheduleList(list);
+//        initScheduleList(list);
+        newInitScheduleList(list, keyList);
     }
+
 
     public static void addItem(Schedule s){
         scheduleList.add(s);
@@ -101,6 +113,7 @@ public class PlanActivity extends AppCompatActivity {
         recyclerViewScheduleList = findViewById(R.id.recyclerViewScheduleList);
         buttonAddSchedule = findViewById(R.id.plan_add_button);
         buttonBack = findViewById(R.id.plan_back_button);
+        buttonDel = findViewById(R.id.plan_del_all_button);
     }
 
     // 初始化日程列表数据
@@ -111,6 +124,23 @@ public class PlanActivity extends AppCompatActivity {
         for(Set<String>set:list){
             if(Schedule.parseSet(set)!=null)scheduleList.add(Schedule.parseSet(set));
         }
+        // 添加更多日程数据...
+
+        // 初始化适配器
+        scheduleAdapter = new ScheduleAdapter(scheduleList);
+        recyclerViewScheduleList.setAdapter(scheduleAdapter);
+    }
+
+    private void newInitScheduleList(List<Set<String>> list, List<String> keyList) {
+        // 创建虚拟的日程数据
+        scheduleList = new ArrayList();
+        int i;
+        for (i = 0; i < list.size(); ++i) {
+            scheduleList.add(Schedule.newParseSet(list.get(i), keyList.get(i)));
+        }
+//        for(Set<String>set:list){
+//            if(Schedule.parseSet(set)!=null)scheduleList.add(Schedule.parseSet(set));
+//        }
         // 添加更多日程数据...
 
         // 初始化适配器

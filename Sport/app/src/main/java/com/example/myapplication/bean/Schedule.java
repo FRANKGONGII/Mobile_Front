@@ -13,12 +13,20 @@ import java.util.Set;
 public class Schedule {
     private String title;
     private String time;
+    private String key;
     private List<String> dates;
 
     public Schedule(String title, String time, List<String> dates) {
         this.title = title;
         this.time = time;
         this.dates = dates;
+    }
+
+    public Schedule(String title, String time, List<String> dates, String key) {
+        this.title = title;
+        this.time = time;
+        this.dates = dates;
+        this.key = key;
     }
 
     public Schedule() {
@@ -32,6 +40,7 @@ public class Schedule {
     public String getTime() {
         return time;
     }
+    public String getKey() {return key;}
 
     public Set<String> toSetString(){
         Set<String> set = new LinkedHashSet<>();
@@ -59,6 +68,27 @@ public class Schedule {
         }
         return ret;
     }
+
+    public static Schedule newParseSet(Set<String> set, String key){
+//        if(set==null)return null;
+        Schedule ret = new Schedule();
+        for(String s:set){
+            Log.d("SAVE_TEST",s);
+            if(s.matches("[0-9]+")){
+                Log.d("SAVE_TEST","here1");
+                ret.dates.add(s);
+            }else if(s.charAt(s.length()-1)=='。'){
+                Log.d("SAVE_TEST","here2");
+                ret.time = s;
+            }else{
+                Log.d("SAVE_TEST","here3");
+                ret.title = s;
+            }
+        }
+        ret.key = key;
+        return ret;
+    }
+
 
     public  List<String> getDates(){
         return dates;
