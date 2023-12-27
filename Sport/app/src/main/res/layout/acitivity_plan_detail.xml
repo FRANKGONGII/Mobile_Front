@@ -216,6 +216,19 @@
                 android:background="@drawable/button_rectangle"
                 android:layout_marginBottom="10dp"
                 />
+            
+            <android.widget.Button
+                android:id="@+id/magic_elephant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🐘"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:layout_toEndOf="@id/detail_finish"
+                android:layout_alignTop="@id/detail_finish"
+                android:background="@drawable/button_rectangle"
+                android:layout_marginStart="20dp"
+                />
 
 
         </RelativeLayout>

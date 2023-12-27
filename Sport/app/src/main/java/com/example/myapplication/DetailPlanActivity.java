@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -14,7 +15,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+import com.chaquo.python.android.AndroidPlatform;
+import com.example.myapplication.bean.ChatBean;
 import com.example.myapplication.bean.Schedule;
+import com.example.myapplication.task.ChatEleTask;
+import com.example.myapplication.task.ChatTask;
 import com.github.airsaid.calendarview.widget.CalendarView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -34,7 +41,7 @@ public class DetailPlanActivity extends AppCompatActivity {
     private CalendarView calendarView;
     private ImageButton back;
     private ImageButton del;
-
+    private Button magicEle;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
 
@@ -98,6 +105,7 @@ public class DetailPlanActivity extends AppCompatActivity {
                 builder.show();
             }
         });
+        magicEle = findViewById(R.id.magic_elephant);
 
 
         // 获取从总览页面传递过来的日程数据
@@ -121,6 +129,7 @@ public class DetailPlanActivity extends AppCompatActivity {
         }
 
         // 设置日程详情
+        setMagicEleEnabled(false);
     }
 
     // 初始化视图
@@ -218,4 +227,82 @@ public class DetailPlanActivity extends AppCompatActivity {
         textViewDetailScheduleDetail.setText("计划详情：" + schedule.getTime());
         calendarView.setSelectDate(schedule.getDates());
     }
+
+
+
+    // 🤔
+
+    private List<String> promptList;
+    private List<String> roleList;
+    private List<ChatBean> chatBeanList;
+    private ProgressDialog progressDialog;
+    private PyObject pyChatObject;
+
+    private void setMagicEleEnabled(boolean enabled) {
+        if (enabled) {
+            promptList = new ArrayList<>();
+            roleList = new ArrayList<>();
+            chatBeanList = new ArrayList<>();
+            progressDialog = new ProgressDialog(DetailPlanActivity.this);
+
+            if (! Python.isStarted()) {
+                Python.start(new AndroidPlatform(this));
+            }
+
+            Python python = Python.getInstance();
+            pyChatObject = python.getModule("AIConversation");
+
+            magicEle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(v.getContext());
+                    builder.setMessage("我是可爱的运动大象，一起玩吗?");
+                    builder.setNegativeButton("算啦", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+
+                    builder.setPositiveButton("如何评价我的计划", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            promptList.add("我想让你对我的计划作出评价，但是你的评价必须遵守以下规则：以”我的评价是X“开头，X必须是”寄、棒“中的一个字，”寄“表示你认为我这个计划不太好或很难实现，”棒“表示你认为我的计划很有希望顺利进行，说完这句话后再给出解释。");
+                            roleList.add("system");
+                            String data = "我的计划是" + schedule.getTime() + "目前我完成的进度是" + ((size-schedule.getDates().size())+"/"+size) + "如何评价我的计划";
+                            promptList.add(data);
+                            roleList.add("user");
+                            LLM_Post();
+                        }
+                    });
+
+                    builder.show();
+                }
+            });
+        } else {
+
+        }
+    }
+
+    private void LLM_Post(){
+        StringBuilder promptsBuilder = new StringBuilder();
+        StringBuilder rolesBuilder = new StringBuilder();
+        int len = promptList.size();
+        for(int i=0;i<len;i++){
+            promptsBuilder.append(promptList.get(i));
+            rolesBuilder.append(roleList.get(i));
+            if(i < len-1){
+                promptsBuilder.append('#');
+                rolesBuilder.append('#');
+            }
+        }
+        String prompts = promptsBuilder.toString();
+        String roles = rolesBuilder.toString();
+        //用于执行与LLM交流的线程，注意每个AsyncTask只能执行一次，所以一定要new
+        ChatEleTask chatEleTask = new ChatEleTask(pyChatObject, progressDialog, chatBeanList, DetailPlanActivity.this);
+
+        chatEleTask.execute(roles, prompts, roleList, promptList);
+    }
+
 }

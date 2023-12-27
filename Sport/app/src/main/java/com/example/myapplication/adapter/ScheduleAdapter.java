@@ -13,6 +13,7 @@ import com.example.myapplication.DetailPlanActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.ResultActivity;
 import com.example.myapplication.bean.Schedule;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 import java.util.Locale;
@@ -54,6 +55,19 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                 Log.d("SET", "onClick: "+schedule.getKey());
                 intent.putExtra("key", schedule.getKey());
                 v.getContext().startActivity(intent);
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(v.getContext());
+
+                // 设置builder属性
+//                builder.setTitle("修改昵称");
+                builder.setMessage("🥵");
+                builder.show();
+                return false;
             }
         });
     }
