@@ -34,6 +34,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         return new ViewHolder(view);
     }
 
+    private boolean isMagic = false;
     // 绑定数据到ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -54,6 +55,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                 intent.putExtra("index",position);
                 Log.d("SET", "onClick: "+schedule.getKey());
                 intent.putExtra("key", schedule.getKey());
+                intent.putExtra("isMagic?", isMagic);
                 v.getContext().startActivity(intent);
             }
         });
@@ -65,8 +67,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
                 // 设置builder属性
 //                builder.setTitle("修改昵称");
-                builder.setMessage("🥵");
+                builder.setMessage("🤔");
                 builder.show();
+                isMagic = true;
                 return false;
             }
         });

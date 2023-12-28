@@ -105,7 +105,7 @@ public class DetailPlanActivity extends AppCompatActivity {
                 builder.show();
             }
         });
-        magicEle = findViewById(R.id.magic_elephant);
+
 
 
         // 获取从总览页面传递过来的日程数据
@@ -122,6 +122,7 @@ public class DetailPlanActivity extends AppCompatActivity {
                 // 初始化视图
                 schedule = Schedule.newParseSet(set, key);
                 initView();
+                setMagicEleEnabled(getIntent().getBooleanExtra("isMagic?", false));
             }else{
                 Toast.makeText(getApplicationContext(),"读取数据出错了",Toast.LENGTH_LONG);
             }
@@ -129,7 +130,7 @@ public class DetailPlanActivity extends AppCompatActivity {
         }
 
         // 设置日程详情
-        setMagicEleEnabled(false);
+
     }
 
     // 初始化视图
@@ -217,8 +218,12 @@ public class DetailPlanActivity extends AppCompatActivity {
             textViewDetailToday.setTextColor(Color.DKGRAY);
         }
 
-
-
+        magicEle = findViewById(R.id.magic_elephant);
+        if (getIntent().getBooleanExtra("isMagic?", false)) {
+            magicEle.setVisibility(View.VISIBLE);
+        } else {
+            magicEle.setVisibility(View.INVISIBLE);
+        }
     }
 
     // 设置日程详情
@@ -255,29 +260,34 @@ public class DetailPlanActivity extends AppCompatActivity {
             magicEle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(v.getContext());
-                    builder.setMessage("我是可爱的运动大象，一起玩吗?");
-                    builder.setNegativeButton("算啦", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                    if (magicEle.getVisibility() == View.INVISIBLE) {
+                        magicEle.setVisibility(View.VISIBLE);
+                    } else {
+                        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(v.getContext());
+                        builder.setMessage("我是可爱的运动大象，一起玩吗?");
+                        builder.setNegativeButton("算啦", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    });
+                            }
+                        });
 
 
-                    builder.setPositiveButton("如何评价我的计划", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            promptList.add("我想让你对我的计划作出评价，但是你的评价必须遵守以下规则：以”我的评价是X“开头，X必须是”寄、棒“中的一个字，”寄“表示你认为我这个计划不太好或很难实现，”棒“表示你认为我的计划很有希望顺利进行，说完这句话后再给出解释。");
-                            roleList.add("system");
-                            String data = "我的计划是" + schedule.getTime() + "目前我完成的进度是" + ((size-schedule.getDates().size())+"/"+size) + "如何评价我的计划";
-                            promptList.add(data);
-                            roleList.add("user");
-                            LLM_Post();
-                        }
-                    });
+                        builder.setPositiveButton("如何评价我的计划", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                promptList.add("我想让你对我的计划作出评价，但是你的评价必须遵守以下规则：以”我的评价是X“开头，X必须是”寄、棒“中的一个字，”寄“表示你认为我这个计划不太好或很难实现，”棒“表示你认为我的计划很有希望顺利进行，说完这句话后再给出解释。");
+                                roleList.add("system");
+                                String data = "我的计划是" + schedule.getTime() + "目前我完成的进度是" + ((size-schedule.getDates().size())+"/"+size) + "如何评价我的计划";
+                                promptList.add(data);
+                                roleList.add("user");
+                                LLM_Post();
+                            }
+                        });
 
-                    builder.show();
+                        builder.show();
+                    }
+
                 }
             });
         } else {
