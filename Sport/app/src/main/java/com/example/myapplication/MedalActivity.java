@@ -4,7 +4,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -70,6 +72,8 @@ public class MedalActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
 
+
+
 //        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 //            @Override
 //            public void onTabSelected(TabLayout.Tab tab) {
@@ -88,8 +92,19 @@ public class MedalActivity extends AppCompatActivity {
 //            }
 //        });
 
+        // 按sp值修改TabLayout中标题的字体
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            if (tab != null) {
+                // Create a custom TextView for the tab
+                TextView customTextView = new TextView(this);
+                customTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12); // Adjust the text size as per your requirement
+                customTextView.setText(tab.getText());
 
-
+                // Set the custom view for the tab
+                tab.setCustomView(customTextView);
+            }
+        }
 
     }
 
