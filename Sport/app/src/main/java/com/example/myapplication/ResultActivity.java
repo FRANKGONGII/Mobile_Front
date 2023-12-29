@@ -50,7 +50,7 @@ public class ResultActivity extends AppCompatActivity {
     TextView tvSpeed;
     TextView tvDistribution;
     TextView tvCalorie;
-    Button chat_btn;
+    TextView chat_text;
 
 
 //    private LineChart chart;
@@ -203,7 +203,7 @@ public class ResultActivity extends AppCompatActivity {
         tvSpeed = findViewById(R.id.tvSpeed);
         tvDistribution = findViewById(R.id.tvDistribution);
         tvCalorie = findViewById(R.id.tvCalorie);
-        chat_btn = findViewById(R.id.btn_chat);
+        chat_text = findViewById(R.id.text_chat);
 
         tvDistance.setText(record.getDistanceByStr());
         tvDuration.setText(record.getDurationByStr());
@@ -213,7 +213,7 @@ public class ResultActivity extends AppCompatActivity {
 
         String type_name = record.getRecordTypeByStr();
 
-        chat_btn.setOnClickListener(new View.OnClickListener() {
+        chat_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ChatActivity.class);
