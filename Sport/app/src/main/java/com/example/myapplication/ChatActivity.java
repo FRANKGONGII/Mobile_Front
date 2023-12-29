@@ -89,11 +89,6 @@ public class ChatActivity extends AppCompatActivity{
                     promptList.add(data);
                     roleList.add("user");
                     LLM_Post();
-//                    if (!chatBeanList.get(chatBeanList.size() - 1).equals("网络错误，请检查网络连接，并退出重试")) {
-//                        ChatBean next = new ChatBean(1, "如果您还有疑问或需要进一步建议，请随时向我提出");
-//                        chatBeanList.add(next);
-//                        adapter.notifyDataSetChanged();
-//                    }
                 }
             }
             else{
@@ -110,8 +105,9 @@ public class ChatActivity extends AppCompatActivity{
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =  new Intent(ChatActivity.this,MainActivity.class);
-                startActivity(intent);
+//                Intent intent =  new Intent(ChatActivity.this,MainActivity.class);
+//                startActivity(intent);
+                finish();
             }
         });
 

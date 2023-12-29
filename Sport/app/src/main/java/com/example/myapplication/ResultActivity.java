@@ -194,10 +194,6 @@ public class ResultActivity extends AppCompatActivity {
         //Log.d("ID_TEST", list.get(0).latitude+" "+list.get(0).longitude);
         Log.d("ID_TEST",String.valueOf(record.getId()));
 
-        //TODO:图表测试
-
-
-         //TODO:暂时不用这个，我想要测试图表
         MapView mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mapView.getMap();
@@ -224,7 +220,9 @@ public class ResultActivity extends AppCompatActivity {
                 intent.putExtra("TaskType", "EvalRecord");
                 String data = "我进行了一次" + type_name + "运动，总距离为" +
                         tvDistance.getText() + "公里， 用时" + tvDuration.getText() +
-                        "。请你根据上述数据对我本次运动的表现给出意见。";
+                        "。我的性别为男，年龄为20岁，身高、体重等身体数据假定为同年龄人群中的平均值。请你根据" +
+                        "上述数据对我本次运动的表现给出意见和建议。省略计算过程，忽略其他条件的影响，如果需要其他数据，" +
+                        "可以挑最重要的在最后提出，不超过2条。结尾加上'如果您还有什么其他问题，欢迎随时向我提出'";
 
                 intent.putExtra("RecordData", data);
 
