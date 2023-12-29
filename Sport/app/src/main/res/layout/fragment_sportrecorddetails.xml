@@ -22,7 +22,7 @@
             <View
                 android:layout_width="10dp"
                 android:layout_height="10dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="7dp"
                 android:background="@drawable/green_round" />
 
             <LinearLayout
@@ -37,7 +37,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="总距离(公里)"
                     android:textColor="@color/text_color_3"
-                    android:textSize="@dimen/textsize_2" />
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/tvDistance"
@@ -46,8 +46,9 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="@dimen/margin_edge"
                     android:text="0.00"
-                    android:textColor="@color/text_color_1"
-                    android:textSize="20sp" />
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textColor="@color/text_color_2"
+                    android:textSize="32dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -69,7 +70,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="总时长"
                     android:textColor="@color/text_color_3"
-                    android:textSize="@dimen/textsize_2" />
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/tvDuration"
@@ -78,8 +79,9 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="@dimen/margin_edge"
                     android:text="00:00:00"
-                    android:textColor="@color/text_color_1"
-                    android:textSize="20sp" />
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textColor="@color/text_color_2"
+                    android:textSize="32dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -102,7 +104,7 @@
             <View
                 android:layout_width="10dp"
                 android:layout_height="10dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="7dp"
                 android:background="@drawable/green_round" />
 
             <LinearLayout
@@ -117,7 +119,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="平均时速(公里/小时)"
                     android:textColor="@color/text_color_3"
-                    android:textSize="@dimen/textsize_2" />
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/tvSpeed"
@@ -126,8 +128,9 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="@dimen/margin_edge"
                     android:text="0.00"
-                    android:textColor="@color/text_color_1"
-                    android:textSize="20sp" />
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textColor="@color/text_color_2"
+                    android:textSize="32dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -149,7 +152,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="平均配速(分钟/公里)"
                     android:textColor="@color/text_color_3"
-                    android:textSize="@dimen/textsize_2" />
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/tvDistribution"
@@ -158,8 +161,9 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="@dimen/margin_edge"
                     android:text="0.00"
-                    android:textColor="@color/text_color_1"
-                    android:textSize="20sp" />
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textColor="@color/text_color_2"
+                    android:textSize="32dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -187,13 +191,14 @@
             <View
                 android:layout_width="10dp"
                 android:layout_height="10dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="7dp"
                 android:background="@drawable/green_round" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginLeft="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -201,7 +206,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="消耗热量(卡)"
                     android:textColor="@color/text_color_3"
-                    android:textSize="@dimen/textsize_2" />
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/tvCalorie"
@@ -210,8 +215,9 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="@dimen/margin_edge"
                     android:text="0"
-                    android:textColor="@color/text_color_1"
-                    android:textSize="20sp" />
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textColor="@color/text_color_2"
+                    android:textSize="32dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -223,12 +229,6 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <View
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="3dp"
-                android:background="@drawable/circle_blue" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -239,18 +239,19 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="AI智能分析"
+                    android:textStyle="bold"
                     android:textColor="@color/blue_5"
-                    android:textSize="15sp" />
+                    android:textSize="15dp" />
 
                 <android.widget.Button
                     android:id="@+id/btn_chat"
-                    android:layout_width="62dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_width="85dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/btn_send_selector"
                     android:text="开始"
-                    android:textColor="#000000"
-                    android:textSize="12sp" />
+                    android:textColor="#38618F"
+                    android:textSize="20dp" />
             </LinearLayout>
 
         </LinearLayout>
