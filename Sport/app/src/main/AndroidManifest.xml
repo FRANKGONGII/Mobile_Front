@@ -12,6 +12,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.GCM_HB_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -76,10 +80,19 @@
             android:exported="true">
         </activity>
 
+        <receiver android:name=".RingReceived"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.example.action.SET_ALARM"/>
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="20ab218af4d1cea77b431b723aba0b89"></meta-data>
         <service android:name="com.amap.api.location.APSService" />
     </application>
+
+
 
 </manifest>

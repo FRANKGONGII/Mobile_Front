@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -102,14 +103,14 @@ public class RegistActivity extends AppCompatActivity {
                     finish();
                 } else if (id == R.id.chronometer) {
                     String phone = etAccount.getText().toString();
-                    if (TextUtils.isEmpty(phone)) {
-                        showInfo("请输入11位手机号码");
-                        return;
-                    }
-                    if (!Utils.isMobile(phone)) {
-                        showInfo("请输入正确的手机号码");
-                        return;
-                    }
+//                    if (TextUtils.isEmpty(phone)) {
+//                        showInfo("请输入11位手机号码");
+//                        return;
+//                    }
+//                    if (!Utils.isMobile(phone)) {
+//                        showInfo("请输入正确的手机号码");
+//                        return;
+//                    }
 
                     // 先隐藏输入法
                     hideSoftKeyBoard();
@@ -167,34 +168,44 @@ public class RegistActivity extends AppCompatActivity {
     public void showNotification(String title,String text) {
         // 发送消息之前要先创建通知渠道，创建代码见MainApplication.java
         // 创建一个跳转到活动页面的意图
-        if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.POST_NOTIFICATIONS)!=
+
+        if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.SET_ALARM)!=
                 PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.POST_NOTIFICATIONS},1);
+            ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.SET_ALARM},1);
         }
-        Intent clickIntent = new Intent(this, MainActivity.class);
-        // 创建一个用于页面跳转的延迟意图
-        PendingIntent contentIntent = PendingIntent.getActivity(this,
-                R.string.app_name, clickIntent, PendingIntent.FLAG_IMMUTABLE);
-        // 创建一个通知消息的建造器
-        Notification.Builder builder = new Notification.Builder(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Android 8.0开始必须给每个通知分配对应的渠道
-            builder = new Notification.Builder(this, "channel_regist");
-        }
-        builder.setContentIntent(contentIntent) // 设置内容的点击意图
-                .setAutoCancel(true) // 点击通知栏后是否自动清除该通知
-                .setSmallIcon(R.mipmap.icon_code) // 设置应用名称左边的小图标
-                .setPriority(Notification.PRIORITY_MAX)
-                // 设置通知栏右边的大图标
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.smile_icon))
-                .setContentTitle(title) // 设置通知栏里面的标题文本
-                .setContentText(text); // 设置通知栏里面的内容文本
-        Notification notify = builder.build(); // 根据通知建造器构建一个通知对象
-        // 从系统服务中获取通知管理器
-        NotificationManager notifyMgr = (NotificationManager)
-                getSystemService(Context.NOTIFICATION_SERVICE);
-        // 使用通知管理器推送通知，然后在手机的通知栏就会看到该消息
-        notifyMgr.notify(R.string.app_name, notify);
+
+        Intent intent = new Intent(this, RingReceived.class);
+
+//        startActivity(intent);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0x101, intent, PendingIntent.FLAG_IMMUTABLE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+5*1000, pendingIntent);
+        Log.d("test10", "alarm");
+//        Intent clickIntent = new Intent(this, MainActivity.class);
+//        // 创建一个用于页面跳转的延迟意图
+//        PendingIntent contentIntent = PendingIntent.getActivity(this,
+//                R.string.app_name, clickIntent, PendingIntent.FLAG_IMMUTABLE);
+//        // 创建一个通知消息的建造器
+//        Notification.Builder builder = new Notification.Builder(this);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            // Android 8.0开始必须给每个通知分配对应的渠道
+//            builder = new Notification.Builder(this, "channel_regist");
+//        }
+//        builder.setContentIntent(contentIntent) // 设置内容的点击意图
+//                .setAutoCancel(true) // 点击通知栏后是否自动清除该通知
+//                .setSmallIcon(R.mipmap.icon_code) // 设置应用名称左边的小图标
+//                .setPriority(Notification.PRIORITY_MAX)
+//                // 设置通知栏右边的大图标
+//                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.smile_icon))
+//                .setContentTitle(title) // 设置通知栏里面的标题文本
+//                .setContentText(text); // 设置通知栏里面的内容文本
+//        Notification notify = builder.build(); // 根据通知建造器构建一个通知对象
+//        // 从系统服务中获取通知管理器
+//        NotificationManager notifyMgr = (NotificationManager)
+//                getSystemService(Context.NOTIFICATION_SERVICE);
+//        // 使用通知管理器推送通知，然后在手机的通知栏就会看到该消息
+//        notifyMgr.notify(R.string.app_name, notify);
 
     }
 
