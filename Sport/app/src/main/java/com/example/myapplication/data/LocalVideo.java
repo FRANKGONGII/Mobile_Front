@@ -7,7 +7,7 @@ public class LocalVideo implements VideoService {
             "https://stream7.iqilu.com/10339/article/202002/18/2fca1c77730e54c7b500573c2437003f.mp4",
             "https://stream7.iqilu.com/10339/upload_transcode/202002/18/20200218025702PSiVKDB5ap.mp4",
             //"https://stream7.iqilu.com/10339/upload_transcode/202002/18/202002181038474liyNnnSzz.mp4"
-            "https://box.nju.edu.cn/lib/fb825718-d741-4b96-8b3e-a9e585fa22ae/file/%E8%BF%90%E5%8A%A8%E8%AE%AD%E7%BB%831.mp4"
+            "https://box.nju.edu.cn/seafhttp/files/af65164e-176d-446d-8bb6-84ca10e87065/%E8%BF%90%E5%8A%A8%E8%AE%AD%E7%BB%831.mp4"
     }
     };
 
