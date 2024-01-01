@@ -44,7 +44,7 @@ public class LocalData implements DataService {
     @Override
     public long updateRecord(Record record){
         records.add(record);
-        return record.id+1;
+        return record.id;
     }
 
     @Override

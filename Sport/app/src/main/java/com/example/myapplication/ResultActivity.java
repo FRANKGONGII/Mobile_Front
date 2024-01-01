@@ -146,7 +146,7 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sportresult);
-        Log.d("ID_TEST","jump");
+        Log.d("URL_TEST","jump");
         ToastUtils.init(this.getApplication());
         dataService = DataServiceFactory.getInstance();
 
@@ -156,7 +156,7 @@ public class ResultActivity extends AppCompatActivity {
         long id = intent.getLongExtra("passId",-1);
         Log.d("URL_TEST","need id:"+id);
         String act = intent.getStringExtra("formActivity");
-        Log.d("JUMP_TEST","need id:"+id+" from: "+act);
+        //Log.d("JUMP_TEST","need id:"+id+" from: "+act);
 
         if(id==-1) {
             ToastUtils.show("获取运动数据错误");
@@ -185,6 +185,7 @@ public class ResultActivity extends AppCompatActivity {
         Record record = dataService.getRecord(id);
         if(record == null){
             // 正常不会到这里，除非你真的是故意找茬
+            Log.d("URL_TEST","need id:"+id);
             Toast.makeText(this, "Record not exists (errorNo:404)", Toast.LENGTH_SHORT).show();
             record = Record.getDefaultOne();
         }
@@ -192,7 +193,7 @@ public class ResultActivity extends AppCompatActivity {
         //Log.d("ID_TEST","after find"+record);
         List<LatLng> list = record.getLatLngList();
         //Log.d("ID_TEST", list.get(0).latitude+" "+list.get(0).longitude);
-        Log.d("ID_TEST",String.valueOf(record.getId()));
+        Log.d("URL_TEST",String.valueOf(record.getId()));
 
         MapView mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
