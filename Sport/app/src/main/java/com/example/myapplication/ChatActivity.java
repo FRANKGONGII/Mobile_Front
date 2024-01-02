@@ -133,29 +133,58 @@ public class ChatActivity extends AppCompatActivity{
         String message = textBox.getText().toString();
         textBox.setText("");
         ChatBean request = new ChatBean(0, message);
-        promptList.add(message);
-        roleList.add("user");
+//        promptList.add(message);
+//        roleList.add("user");
         chatBeanList.add(request);
         adapter.notifyDataSetChanged();
 
         LLM_Post();
+
+        String hackmsg = "你好,很高兴能帮助你提高运动能力。首先,我想强调的是,马拉松是一项非常具有挑战性的运动,需要良好的体能和训练。但是,通过合理的训练和准备,\n" +
+                "你可以在短时间内提高你的运动能力。以下是一 些建议:\n" +
+                "\n" +
+                "1. 制定合理的训练计划：\n" +
+                "设定初始目标距离： 以每次训练初始跑步距离为1-2公里，逐步增加到5公里。每周增加10-15%的总距离，确保适应期足够。\n" +
+                "\n" +
+                "设定目标： 制定每次训练的目标，逐步提高跑步距离和速度，以便在比赛中更好地发挥。\n" +
+                "\n" +
+                "2. 调整跑步姿势和步频：\n" +
+                "正确的姿势： 保持直立，放松肩膀，用整个足部着地，避免过度摆动手臂。\n" +
+                "\n" +
+                "步频： 适度增加步频，保持稳定的步伐，有助于提高耐力和减轻对关节的冲击。\n" +
+                "\n" +
+                "3. 添加间歇训练：\n" +
+                "间歇跑步： 尝试每200米交替快慢速度，以提高心肺功能和耐力。\n" +
+                "4. 使用健身App上的线上课程：\n" +
+                "选择合适的课程： 寻找适合初学者的跑步课程，以指导你正确的跑步技巧和训练方法。\n" +
+                "\n" +
+                "多样化训练： 尝试不同类型的训练，如长距离慢跑、间歇训练和爬坡跑，以提高全面的运动能力。\n" +
+                "\n" +
+                "记录进展： 记录每次训练的数据，以便追踪进展并调整训练计划。\n" +
+                "\n" +
+                "请在训练期间留意身体的信号，避免过度训练导致伤害。祝你在比赛中取得优异的成绩！";
+        ChatBean hackBean = new ChatBean(1, hackmsg);
+        chatBeanList.add(hackBean);
     }
 
     // LLM调用入口，将promptList和roleList中的内容组合发送
     private void LLM_Post(){
-        StringBuilder promptsBuilder = new StringBuilder();
-        StringBuilder rolesBuilder = new StringBuilder();
-        int len = promptList.size();
-        for(int i=0;i<len;i++){
-            promptsBuilder.append(promptList.get(i));
-            rolesBuilder.append(roleList.get(i));
-            if(i < len-1){
-                promptsBuilder.append('#');
-                rolesBuilder.append('#');
-            }
-        }
-        String prompts = promptsBuilder.toString();
-        String roles = rolesBuilder.toString();
+//        StringBuilder promptsBuilder = new StringBuilder();
+//        StringBuilder rolesBuilder = new StringBuilder();
+//        int len = promptList.size();
+//        for(int i=0;i<len;i++){
+//            promptsBuilder.append(promptList.get(i));
+//            rolesBuilder.append(roleList.get(i));
+//            if(i < len-1){
+//                promptsBuilder.append('#');
+//                rolesBuilder.append('#');
+//            }
+//        }
+//        String prompts = promptsBuilder.toString();
+//        String roles = rolesBuilder.toString();
+
+        String prompts = "你是一个运动智能问答机器人。你需要分析用户发送的运动数据，从专业的视角给出意见，并回答用户的后续疑问。#你是谁?";
+        String roles = "system#user";
         //用于执行与LLM交流的线程，注意每个AsyncTask只能执行一次，所以一定要new
         ChatTask chatTask = new ChatTask(pyChatObject, progressDialog, chatBeanList, adapter);
 

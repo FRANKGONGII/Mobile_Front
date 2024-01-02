@@ -310,10 +310,10 @@ public class ResultActivity extends AppCompatActivity {
 //        glowDrawable.
 
         TextView textView = dialogView.findViewById(R.id.hint);
-        SpannableString spannableString = new SpannableString("初见成效\n已获得!");
-        spannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString.setSpan(new AbsoluteSizeSpan(30, true), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FFD700")), 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        SpannableString spannableString = new SpannableString("5km征服者\n已获得!");
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, 6, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new AbsoluteSizeSpan(30, true), 0, 6, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FFD700")), 0, 6, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         textView.setText(spannableString);
         textView.setVisibility(View.INVISIBLE);

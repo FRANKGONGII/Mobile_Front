@@ -52,7 +52,7 @@ public class ChatTask extends AsyncTask<Object, Void, String> {
             promptList.add(res);
             roleList.add("assistant");
         }
-        chatBeanList.add(response);
+//        chatBeanList.add(response);
         return res;
     }
 
