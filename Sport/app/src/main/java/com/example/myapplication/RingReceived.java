@@ -29,8 +29,8 @@ public class RingReceived extends BroadcastReceiver {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             builder = new Notification.Builder(context, "channel_regist");
         }
-        builder.setContentTitle("My Notification")
-                .setContentText("This is a test notification.")
+        builder.setContentTitle("Notice from FitPro")
+                .setContentText("有一个待完成的运动计划")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setPriority(Notification.PRIORITY_MAX)
                 .setContentIntent(pendingIntent)

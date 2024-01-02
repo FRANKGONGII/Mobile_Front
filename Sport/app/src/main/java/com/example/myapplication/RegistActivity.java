@@ -180,7 +180,7 @@ public class RegistActivity extends AppCompatActivity {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0x101, intent, PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+5*1000, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+15*1000, pendingIntent);
         Log.d("test10", "alarm");
 //        Intent clickIntent = new Intent(this, MainActivity.class);
 //        // 创建一个用于页面跳转的延迟意图
