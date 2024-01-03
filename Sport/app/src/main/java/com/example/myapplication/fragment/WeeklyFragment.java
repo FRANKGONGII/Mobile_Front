@@ -33,6 +33,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import lecho.lib.hellocharts.formatter.ColumnChartValueFormatter;
 import lecho.lib.hellocharts.formatter.SimpleColumnChartValueFormatter;
@@ -80,7 +81,7 @@ public class WeeklyFragment extends Fragment {
         //初始化，也就是进来要先找一次
         List<Record> results = dataService.queryRecordByBoth(
                 Record.RecordType.valueOf(sportTypesEn[chosen_type]),
-                weekRangeView.startDate,weekRangeView.endDate);
+                weekRangeView.startDate,addOneDay(weekRangeView.endDate));
         if(results==null){
             Toast.makeText(getContext(),"查询失败",Toast.LENGTH_SHORT);
         }else{
@@ -98,7 +99,7 @@ public class WeeklyFragment extends Fragment {
                 weekRangeView.updateWeekRangeText();
                 List<Record> results = dataService.queryRecordByBoth(
                         Record.RecordType.valueOf(sportTypesEn[chosen_type]),
-                        weekRangeView.startDate,weekRangeView.endDate);
+                        weekRangeView.startDate,addOneDay(weekRangeView.endDate));
                 if(results==null){
                     //没找到
                     Toast.makeText(getContext(),"查询失败",Toast.LENGTH_SHORT);
@@ -127,7 +128,7 @@ public class WeeklyFragment extends Fragment {
                 weekRangeView.updateWeekRangeText();
                 List<Record> results = dataService.queryRecordByBoth(
                         Record.RecordType.valueOf(sportTypesEn[chosen_type]),
-                        weekRangeView.startDate,weekRangeView.endDate);
+                        weekRangeView.startDate,addOneDay(weekRangeView.endDate));
                 if(results==null){
                     //没找到
                     Toast.makeText(getContext(),"查询失败",Toast.LENGTH_SHORT);
@@ -183,7 +184,7 @@ public class WeeklyFragment extends Fragment {
                 // 查询
                 List<Record> results = dataService.queryRecordByBoth(
                         Record.RecordType.valueOf(sportTypesEn[chosen_type]),
-                        weekRangeView.startDate,weekRangeView.endDate);
+                        weekRangeView.startDate,addOneDay(weekRangeView.endDate));
                 if(results==null){
                     //没找到
                     Toast.makeText(getContext(),"查询失败",Toast.LENGTH_SHORT);
@@ -278,7 +279,7 @@ public class WeeklyFragment extends Fragment {
                 // 选中时的操作
                 List<Record> results = dataService.queryRecordByBoth(
                         Record.RecordType.valueOf(sportTypesEn[chosen_type]),
-                        weekRangeView.startDate,weekRangeView.endDate);
+                        weekRangeView.startDate,addOneDay(weekRangeView.endDate));
                 if(results==null){
                     Toast.makeText(getContext(),"获取数据错误",Toast.LENGTH_LONG);
                     return;
@@ -497,6 +498,15 @@ public class WeeklyFragment extends Fragment {
         textViewTotalCalories.setText(Record.getCalorie((int) sumDistance)+"ka");
 
     }
+
+    public Date addOneDay(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(TimeZone.getTimeZone("Asia/Macao"));
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_WEEK,1);
+        return calendar.getTime();
+    }
+
 
 
 
