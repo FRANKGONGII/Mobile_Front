@@ -149,7 +149,9 @@ public class DetailPlanActivity extends AppCompatActivity {
         int year = calendar.get(java.util.Calendar.YEAR);
         int month = calendar.get(java.util.Calendar.MONTH)+1; // 注意：Calendar.MONTH 是从 0 开始的，显示的话需要加 1
         int day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
-        format = String.valueOf(year)+String.valueOf(month)+String.valueOf(day);
+        String str_m = month>=10?String.valueOf(month) : "0"+String.valueOf(month);
+        String str_d = month>=10?String.valueOf(day) : "0"+String.valueOf(day);
+        format = String.valueOf(year)+str_m+str_d;
         Log.d("FINISH_TEST",format);
         if(schedule.ifInDates(format)){
             //有

@@ -67,7 +67,7 @@
                         android:textSize="13dp"
                         android:text="全部"
                         android:background="@drawable/bg_btn"
-                        android:drawableEnd="@drawable/baseline_keyboard_arrow_up_24"
+                        android:drawableEnd="@drawable/baseline_keyboard_arrow_down_24"
                         />
 
                     <android.widget.Button
@@ -79,7 +79,7 @@
                         android:textSize="13dp"
                         android:text="时间"
                         android:background="@drawable/bg_btn"
-                        android:drawableEnd="@drawable/baseline_keyboard_arrow_up_24"
+                        android:drawableEnd="@drawable/baseline_keyboard_arrow_down_24"
                         />
 
 
@@ -92,7 +92,7 @@
                         android:textSize="13dp"
                         android:text="距离"
                         android:background="@drawable/bg_btn"
-                        android:drawableEnd="@drawable/baseline_keyboard_arrow_up_24"
+                        android:drawableEnd="@drawable/baseline_keyboard_arrow_down_24"
                         />
 
 

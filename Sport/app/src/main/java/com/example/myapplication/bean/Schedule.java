@@ -97,6 +97,7 @@ public class Schedule {
 
     public boolean ifInDates(String s){
         for(String str:dates){
+            Log.d("FINISH_TEST",str);
             if(s.equals(str)){
                 return true;
             }

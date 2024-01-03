@@ -68,6 +68,8 @@ import org.w3c.dom.Text;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -92,6 +94,8 @@ public class TestActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     private Toolbar toolbar;
     private View customToolbar;
+
+    private boolean distanceLargeToSmall = true;
 
     //Record.RecordType recordType = null;
     @Override
@@ -198,6 +202,41 @@ public class TestActivity extends AppCompatActivity {
 
         Log.d("CHECK","3");
 
+        //距离按钮
+        Button distance = findViewById(R.id.history_distance);
+        distance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("DIS_TEST",distanceLargeToSmall+"");
+                if(distanceLargeToSmall){
+                    Collections.sort(recordList, new Comparator<Record>() {
+                        @Override
+                        public int compare(Record o1, Record o2) {
+                            return (o2.getDistance() - o1.getDistance() > 0 ? 1 : -1);
+                        }
+                    });
+                    for(Record re:recordList){
+                        Log.d("DIS_TEST",re.getDistance()+" ");
+                    }
+
+
+                }else{
+                    Collections.sort(recordList, new Comparator<Record>() {
+                        @Override
+                        public int compare(Record o1, Record o2) {
+                            return (o1.getDistance() - o2.getDistance() > 0 ? 1 : -1);
+                        }
+                    });
+                    Button distance = findViewById(R.id.history_distance);
+
+                }
+                reFreshView(recordList);
+                distanceLargeToSmall = !distanceLargeToSmall;
+            }
+        });
+
+
+
         //时间选择按钮
         Button sortByTime = findViewById(R.id.history_time);
         sortByTime.setOnClickListener(new View.OnClickListener() {
@@ -227,14 +266,6 @@ public class TestActivity extends AppCompatActivity {
 
         Log.d("CHECK","4");
 
-        Button sortByDis = findViewById(R.id.history_distance);
-        sortByDis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        Log.d("CHECK","5");
 
         //返回按钮
         ImageButton backButton  =  customToolbar.findViewById(R.id.history_back_button);

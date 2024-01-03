@@ -106,7 +106,9 @@ public class AddPlanActivity extends AppCompatActivity {
         month_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("cal_test","before: "+calendarView.getYear()+" "+calendarView.getMonth());
                 calendarView.lastMonth();
+                Log.d("cal_test","after: "+calendarView.getYear()+" "+calendarView.getMonth());
                 month_show.setText(calendarView.getYear()+"-"+(calendarView.getMonth()+1));
             }
         });
@@ -114,7 +116,9 @@ public class AddPlanActivity extends AppCompatActivity {
         month_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("cal_test","before: "+calendarView.getYear()+" "+calendarView.getMonth());
                 calendarView.nextMonth();
+                Log.d("cal_test","after: "+calendarView.getYear()+" "+calendarView.getMonth());
                 month_show.setText(calendarView.getYear()+"-"+(calendarView.getMonth()+1));
             }
         });
