@@ -31,7 +31,6 @@ import java.io.IOException;
 public class CameraActivity extends AppCompatActivity {
 
     private Uri photoUri;
-
     private final ActivityResultLauncher<Uri> takePicture = registerForActivityResult(
             new ActivityResultContracts.TakePicture(),
             new ActivityResultCallback<Boolean>() {
@@ -39,12 +38,9 @@ public class CameraActivity extends AppCompatActivity {
                 public void onActivityResult(Boolean success) {
                     if (success) {
                         if (photoUri != null) {
-//                            binding.ivPhoto.setImageURI(photoUri);
-                            Log.d("CAMERA", "SUCCESS");
                             Intent resultIntent = new Intent();
                             resultIntent.setData(photoUri);
                             setResult(Activity.RESULT_OK, resultIntent);
-//                            finish();
                         }
                     }
                     finish();
@@ -55,16 +51,8 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        binding = DataBindingUtil.setContentView(this, R.layout.layout_photo_activity);
-
         photoUri = getPhotoFileUri();
         takePicture.launch(photoUri);
-//        binding.btnTakePhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
     }
 
     private Uri getPhotoFileUri() {

@@ -140,7 +140,7 @@ public class TestActivity extends AppCompatActivity {
                 float alpha = 1 - alpha_toolbar;
 
                 linearLayout.setAlpha(alpha);
-                if (alpha < alpha_toolbar) {
+                if (alpha < 0.3 * alpha_toolbar) {
                     coordinatorLayout.setBackgroundColor(Color.WHITE);
                     toolbar.setBackgroundColor(Color.WHITE);
 //                    TextView textView = customToolbar.findViewById(R.id.title);

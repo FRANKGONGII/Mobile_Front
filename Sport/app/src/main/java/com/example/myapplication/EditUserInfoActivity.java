@@ -160,13 +160,10 @@ public class EditUserInfoActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-//                        Log.d("AVA", "OK");
                         Intent data = result.getData();
                         if (data != null) {
                             Uri photoUri = data.getData();
-//                            Log.d("CAMERA", "get photo uri");
                             if (photoUri != null) {
-//                                Log.d("CAMERA", String.valueOf(photoUri));
                                 File file = PhotoUtil.uriToFile(photoUri, EditUserInfoActivity.this);
                                 avatarViewHolder.updateData(file.getPath());
                             }
